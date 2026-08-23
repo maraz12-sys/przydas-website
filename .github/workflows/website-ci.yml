@@ -1,0 +1,35 @@
+name: Website CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build landing page
+        run: npm run build
+
+      - name: Validate generated page
+        shell: bash
+        run: |
+          test -s dist/index.html
+          grep -q 'START' dist/index.html
+          grep -q 'ZESPÓŁ' dist/index.html
+          grep -q 'BIZNES' dist/index.html
+          grep -q 'Najczęstsze pytania o Przydasia' dist/index.html
+          grep -q 'app.xn--przyda-8ib.pl' dist/index.html
