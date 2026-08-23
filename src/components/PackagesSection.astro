@@ -2,6 +2,7 @@
 const plans = [
   {
     name: 'START',
+    price: '59 zł',
     kicker: 'Porządek na co dzień',
     title: 'Ogarnij rezerwacje i podstawową organizację.',
     description: 'Dla firmy, która chce zebrać kalendarz, zespół i najważniejsze dane operacyjne w jednym miejscu.',
@@ -18,6 +19,7 @@ const plans = [
   },
   {
     name: 'ZESPÓŁ',
+    price: '149 zł',
     kicker: 'Więcej ludzi, mniej pilnowania',
     title: 'Zarządzaj zespołem i przygotowaniem realizacji.',
     description: 'Dla rozwijającej się firmy, w której samo zapisanie terminu już nie wystarcza.',
@@ -34,6 +36,7 @@ const plans = [
   },
   {
     name: 'BIZNES',
+    price: '199 zł',
     kicker: 'Pełna kontrola firmy',
     title: 'Rozliczaj, analizuj i podejmuj decyzje na danych.',
     description: 'Dla firmy, która chce kontrolować materiały, finanse, proces po evencie i rozwój całej organizacji.',
@@ -71,6 +74,10 @@ const plans = [
             <span class="package-name">{plan.name}</span>
             <span class="package-kicker">{plan.kicker}</span>
           </div>
+          <div class="package-price-row">
+            <strong class="package-price">{plan.price}</strong>
+            <span class="package-period">/ miesiąc</span>
+          </div>
           <h3>{plan.title}</h3>
           <p class="package-description">{plan.description}</p>
           <div class="package-divider"></div>
@@ -81,7 +88,7 @@ const plans = [
           </ul>
           <div class="package-note">{plan.note}</div>
           <a class:list={['button', plan.featured || plan.business ? 'button-primary' : 'button-secondary', 'package-button']} href="#start">
-            Zobacz ten pakiet <span>→</span>
+            Wybieram {plan.name} <span>→</span>
           </a>
         </article>
       ))}
@@ -101,7 +108,7 @@ const plans = [
   .packages-section { padding: 112px 0; background: #f5f9f7; }
   .packages-head { max-width: 860px; }
   .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
-  .package-card { position: relative; display: flex; flex-direction: column; min-height: 650px; padding: 30px; border-radius: 24px; border: 1px solid #dce7e1; background: #fff; box-shadow: 0 16px 42px rgba(28,74,52,.05); }
+  .package-card { position: relative; display: flex; flex-direction: column; min-height: 690px; padding: 30px; border-radius: 24px; border: 1px solid #dce7e1; background: #fff; box-shadow: 0 16px 42px rgba(28,74,52,.05); }
   .package-card-featured { transform: translateY(-10px); border-color: #88dbb4; box-shadow: 0 24px 52px rgba(18,173,112,.12); }
   .package-card-business { border-color: #73cfa4; background: linear-gradient(160deg, #f1fbf6, #e5f7ee); }
   .package-recommended { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); padding: 7px 12px; border-radius: 999px; white-space: nowrap; color: #fff; background: #078a59; font-size: 9px; font-weight: 850; letter-spacing: .07em; }
@@ -109,7 +116,10 @@ const plans = [
   .package-name { display: inline-flex; padding: 8px 11px; border-radius: 999px; color: #087f53; background: #eaf8f2; font-size: 11px; font-weight: 900; letter-spacing: .08em; }
   .package-card-business .package-name { color: #fff; background: #078a59; }
   .package-kicker { color: #86938c; font-size: 12px; font-weight: 700; }
-  .package-card h3 { margin: 14px 0 14px; font-size: 27px; line-height: 1.08; letter-spacing: -.04em; }
+  .package-price-row { display: flex; align-items: baseline; gap: 7px; margin: 12px 0 18px; }
+  .package-price { font-size: 42px; line-height: 1; letter-spacing: -.05em; }
+  .package-period { color: #7d8a83; font-size: 13px; font-weight: 650; }
+  .package-card h3 { margin: 0 0 14px; font-size: 27px; line-height: 1.08; letter-spacing: -.04em; }
   .package-description { min-height: 112px; margin: 0; color: #6f7a74; font-size: 14px; line-height: 1.55; }
   .package-divider { height: 1px; margin: 24px 0; background: #e4ece8; }
   .package-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
@@ -134,6 +144,7 @@ const plans = [
   @media (max-width: 640px) {
     .packages-section { padding: 76px 0; }
     .package-card { padding: 24px; }
+    .package-price { font-size: 38px; }
     .package-card h3 { font-size: 24px; }
     .package-comparison { align-items: flex-start; flex-direction: column; }
   }
