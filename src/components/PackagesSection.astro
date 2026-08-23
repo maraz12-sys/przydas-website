@@ -1,0 +1,140 @@
+---
+const plans = [
+  {
+    name: 'START',
+    kicker: 'Porządek na co dzień',
+    title: 'Ogarnij rezerwacje i podstawową organizację.',
+    description: 'Dla firmy, która chce zebrać kalendarz, zespół i najważniejsze dane operacyjne w jednym miejscu.',
+    featured: false,
+    bullets: [
+      'Kalendarz i pełna obsługa rezerwacji',
+      'Dyspozycyjność, przypisania i potwierdzenia',
+      'Podstawowe powiadomienia i braki w rezerwacji',
+      'Tworzenie i zarządzanie zespołem',
+      'Notatnik Przydasia',
+      'Podstawowy panel rozliczeń',
+    ],
+    note: '1 firma · częściowa konfiguracja formularza',
+  },
+  {
+    name: 'ZESPÓŁ',
+    kicker: 'Więcej ludzi, mniej pilnowania',
+    title: 'Zarządzaj zespołem i przygotowaniem realizacji.',
+    description: 'Dla rozwijającej się firmy, w której samo zapisanie terminu już nie wystarcza.',
+    featured: true,
+    bullets: [
+      'Wszystko z pakietu START',
+      'Dni kluczowe i osoba odpowiedzialna',
+      'Ankiety po wydarzeniach i wszystkie powiadomienia',
+      'Stanowiska, zadania, garderoba i rozliczenia pracowników',
+      'Checklisty, standardy, instrukcje i współdzielone notatki',
+      'Podstawowe statystyki i 1 kategoria magazynowa',
+    ],
+    note: 'Do 3 firm · backup · pełna konfiguracja formularza',
+  },
+  {
+    name: 'BIZNES',
+    kicker: 'Pełna kontrola firmy',
+    title: 'Rozliczaj, analizuj i podejmuj decyzje na danych.',
+    description: 'Dla firmy, która chce kontrolować materiały, finanse, proces po evencie i rozwój całej organizacji.',
+    featured: false,
+    business: true,
+    bullets: [
+      'Wszystko z pakietu ZESPÓŁ',
+      'Checklisty materiałowe i zakupowe',
+      'Braki dotyczące materiałów i rozliczeń',
+      'Asystent AI, podwykonawcy i nielimitowany magazyn',
+      'Faktury, integracja z programem fakturowym i eksport do Excela',
+      'Zaawansowane statystyki klientów, wydarzeń i źródeł zleceń',
+    ],
+    note: 'Nielimitowane firmy · zaawansowane uprawnienia i automatyzacje',
+  },
+];
+---
+
+<section class="packages-section" id="cennik">
+  <div class="shell packages-shell">
+    <div class="section-head packages-head">
+      <span class="eyebrow-text">Pakiety Przydasia</span>
+      <h2>Wybierasz poziom, nie nowy system.</h2>
+      <p>
+        Każdy wyższy pakiet zawiera funkcje niższego. Zaczynasz od tego, czego potrzebujesz dzisiaj,
+        a wraz z rozwojem firmy odblokowujesz kolejne możliwości bez przenoszenia danych i zmiany narzędzia.
+      </p>
+    </div>
+
+    <div class="packages-grid">
+      {plans.map((plan) => (
+        <article class:list={['package-card', plan.featured && 'package-card-featured', plan.business && 'package-card-business']}>
+          {plan.featured && <span class="package-recommended">NAJCZĘŚCIEJ WYBIERANY</span>}
+          <div class="package-top">
+            <span class="package-name">{plan.name}</span>
+            <span class="package-kicker">{plan.kicker}</span>
+          </div>
+          <h3>{plan.title}</h3>
+          <p class="package-description">{plan.description}</p>
+          <div class="package-divider"></div>
+          <ul class="package-list">
+            {plan.bullets.map((bullet) => (
+              <li><span>✓</span><b>{bullet}</b></li>
+            ))}
+          </ul>
+          <div class="package-note">{plan.note}</div>
+          <a class:list={['button', plan.featured || plan.business ? 'button-primary' : 'button-secondary', 'package-button']} href="#start">
+            Zobacz ten pakiet <span>→</span>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <div class="package-comparison">
+      <div>
+        <strong>Nie pokazujemy tu wszystkich kilkudziesięciu opcji.</strong>
+        <span>Pełne porównanie rozbijemy niżej na konkretne funkcje i limity, żeby wybór pakietu był czytelny.</span>
+      </div>
+      <a href="#start">Pełne porównanie pakietów <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .packages-section { padding: 112px 0; background: #f5f9f7; }
+  .packages-head { max-width: 860px; }
+  .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
+  .package-card { position: relative; display: flex; flex-direction: column; min-height: 650px; padding: 30px; border-radius: 24px; border: 1px solid #dce7e1; background: #fff; box-shadow: 0 16px 42px rgba(28,74,52,.05); }
+  .package-card-featured { transform: translateY(-10px); border-color: #88dbb4; box-shadow: 0 24px 52px rgba(18,173,112,.12); }
+  .package-card-business { border-color: #73cfa4; background: linear-gradient(160deg, #f1fbf6, #e5f7ee); }
+  .package-recommended { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); padding: 7px 12px; border-radius: 999px; white-space: nowrap; color: #fff; background: #078a59; font-size: 9px; font-weight: 850; letter-spacing: .07em; }
+  .package-top { min-height: 70px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .package-name { display: inline-flex; padding: 8px 11px; border-radius: 999px; color: #087f53; background: #eaf8f2; font-size: 11px; font-weight: 900; letter-spacing: .08em; }
+  .package-card-business .package-name { color: #fff; background: #078a59; }
+  .package-kicker { color: #86938c; font-size: 12px; font-weight: 700; }
+  .package-card h3 { margin: 14px 0 14px; font-size: 27px; line-height: 1.08; letter-spacing: -.04em; }
+  .package-description { min-height: 112px; margin: 0; color: #6f7a74; font-size: 14px; line-height: 1.55; }
+  .package-divider { height: 1px; margin: 24px 0; background: #e4ece8; }
+  .package-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  .package-list li { display: grid; grid-template-columns: 23px 1fr; gap: 10px; align-items: start; font-size: 13px; line-height: 1.42; }
+  .package-list li span { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 8px; color: #078a59; background: #eaf8f2; font-size: 11px; font-weight: 900; }
+  .package-list li b { font-weight: 680; }
+  .package-note { margin-top: auto; padding-top: 26px; color: #7f8c85; font-size: 11px; line-height: 1.45; }
+  .package-button { width: 100%; margin-top: 18px; }
+  .package-comparison { margin-top: 28px; padding: 26px 28px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; gap: 28px; background: #fff; border: 1px solid #dfe8e3; }
+  .package-comparison div { display: grid; gap: 5px; }
+  .package-comparison strong { font-size: 15px; }
+  .package-comparison span { color: #6f7a74; font-size: 12px; line-height: 1.45; }
+  .package-comparison > a { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; color: #078a59; font-size: 13px; font-weight: 800; }
+
+  @media (max-width: 900px) {
+    .packages-grid { grid-template-columns: 1fr; }
+    .package-card { min-height: auto; }
+    .package-card-featured { transform: none; }
+    .package-description { min-height: auto; }
+  }
+
+  @media (max-width: 640px) {
+    .packages-section { padding: 76px 0; }
+    .package-card { padding: 24px; }
+    .package-card h3 { font-size: 24px; }
+    .package-comparison { align-items: flex-start; flex-direction: column; }
+  }
+</style>
