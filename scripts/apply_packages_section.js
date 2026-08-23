@@ -6,9 +6,14 @@ const filePath = path.join(root, 'src/pages/index.astro');
 let source = fs.readFileSync(filePath, 'utf8');
 let changed = false;
 
+function countOccurrences(haystack, needle) {
+  if (!needle) return 0;
+  return haystack.split(needle).length - 1;
+}
+
 function replaceOnce(oldText, newText, label) {
-  const oldCount = source.split(oldText).length - 1;
-  const newCount = source.split(newText).length - 1;
+  const oldCount = countOccurrences(source, oldText);
+  const newCount = countOccurrences(source, newText);
 
   if (oldCount === 1) {
     source = source.replace(oldText, newText);
@@ -20,12 +25,6 @@ function replaceOnce(oldText, newText, label) {
 
   throw new Error(`${label}: expected one old occurrence or one already-applied occurrence; old=${oldCount}, new=${newCount}`);
 }
-
-replaceOnce(
-  "const audiences = [",
-  "const audiences = [",
-  'audiences-anchor',
-);
 
 const importLine = "import PackagesSection from '../components/PackagesSection.astro';";
 if (!source.includes(importLine)) {
@@ -61,11 +60,11 @@ if (!source.includes(packagesTag)) {
   changed = true;
 }
 
-replaceOnce(
-  '      <div id="cennik" hidden></div>\n',
-  '',
-  'remove-hidden-cennik',
-);
+const hiddenCennik = '      <div id="cennik" hidden></div>\n';
+if (source.includes(hiddenCennik)) {
+  source = source.replace(hiddenCennik, '');
+  changed = true;
+}
 
 replaceOnce(
   '<span class="eyebrow-text">Kolejny etap</span>\n            <h2>Teraz pokażemy, co dokładnie dostajesz.</h2>\n            <p>Następna sekcja rozpisze pakiety START, ZESPÓŁ i BIZNES oraz przygotuje miejsce pod finalny cennik.</p>',
