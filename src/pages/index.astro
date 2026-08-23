@@ -24,18 +24,45 @@ const problems = [
 
 const capabilities = [
   ['Rezerwacje i kalendarz', 'Wszystkie wydarzenia, szczegóły i terminy w jednym miejscu.'],
-  ['Zespół i dyspozycyjność', 'Wiesz, kto może pracować i kto został przypisany do wydarzenia.'],
+  ['Zespół i dyspozycyjność', 'Wiesz, kto może pracować, kto został przypisany i za co odpowiada.'],
   ['Powiadomienia i braki', 'Przydaś przypomina o rzeczach, których nie warto pilnować ręcznie.'],
-  ['Organizacja firmy', 'Zespół, dane, przydatne materiały i codzienna organizacja w jednym systemie.'],
+  ['Rozliczenia i statystyki', 'Po evencie dane zostają w systemie i pomagają rozliczać oraz rozwijać firmę.'],
 ];
 
-const lifecycle = [
-  ['Wpada zapytanie', 'Zapisujesz klienta, termin, rodzaj wydarzenia, ofertę i najważniejsze ustalenia.'],
-  ['Powstaje rezerwacja', 'Wydarzenie trafia do kalendarza razem ze szczegółami, atrakcjami, płatnościami i przygotowaniem.'],
-  ['Kompletujesz zespół', 'Sprawdzasz dyspozycyjność, przypisujesz pracowników i widzisz, kto potwierdził udział.'],
-  ['Realizujecie event', 'Zespół ma pod ręką potrzebne informacje, a Przydaś pomaga pilnować braków i organizacji.'],
-  ['Rozliczasz realizację', 'Po wydarzeniu dane są gotowe do rozliczenia zespołu, kosztów, przychodów i wykonanej pracy.'],
-  ['Firma uczy się na danych', 'Każdy event zasila statystyki i pomaga analizować wyniki, rentowność oraz podejmować lepsze decyzje.'],
+const beforeEvent = [
+  {
+    no: '01',
+    title: 'Przyjmujesz rezerwację',
+    text: 'Termin, klient, kategoria wydarzenia, szczegóły, atrakcje, materiały i najważniejsze ustalenia trafiają do jednego miejsca.',
+  },
+  {
+    no: '02',
+    title: 'Zbierasz dyspozycyjność',
+    text: 'Zbierasz dostępność zespołu, przygotowujesz zadania, przypinasz checklisty i od razu widzisz, czego jeszcze brakuje.',
+  },
+  {
+    no: '03',
+    title: 'Kompletujesz zespół',
+    text: 'Wybierasz animatorów, przypisujesz role i zadania, wskazujesz osobę odpowiedzialną i kontrolujesz gotowość zespołu.',
+  },
+];
+
+const afterEvent = [
+  {
+    no: '04',
+    title: 'Ankieta po zleceniu',
+    text: 'Zespół zostawia feedback po realizacji, zgłasza braki lub uszkodzenia i przekazuje informacje o przebiegu oraz jakości zlecenia.',
+  },
+  {
+    no: '05',
+    title: 'Rozliczasz zlecenie',
+    text: 'Kontrolujesz rozliczenie pracowników i wydarzenia, płatności oraz informacje potrzebne do zamknięcia zlecenia i wystawienia faktury.',
+  },
+  {
+    no: '06',
+    title: 'Budujesz statystyki',
+    text: 'Zakończone zlecenie trafia do zestawień i analiz, dzięki którym widzisz wyniki, rentowność i dane potrzebne do kolejnych decyzji.',
+  },
 ];
 ---
 
@@ -93,7 +120,7 @@ const lifecycle = [
           </div>
           <div class="micro-proof">
             <span class="proof-dot"></span>
-            Jeden system od pierwszego zapytania aż po rozliczenie i statystyki.
+            Jeden system od przyjęcia rezerwacji aż po rozliczenie i statystyki.
           </div>
         </div>
 
@@ -147,7 +174,7 @@ const lifecycle = [
 
       <section class="problem-section" id="dla-kogo">
         <div class="shell">
-          <div class="section-head section-head-narrow">
+          <div class="section-head problem-head">
             <span class="eyebrow-text">Brzmi znajomo?</span>
             <h2>Firma rośnie. Chaos razem z nią.</h2>
             <p>
@@ -180,8 +207,8 @@ const lifecycle = [
             <span class="eyebrow-text">Jedno miejsce zamiast dziesięciu</span>
             <h2>Przydaś ogarnia codzienność Twojej firmy.</h2>
             <p>
-              Od pierwszej rezerwacji aż po realizację wydarzenia. Wszystko, czego potrzebujesz do zarządzania eventami i zespołem,
-              masz zawsze pod ręką.
+              Od pierwszej rezerwacji, przez przygotowanie i realizację wydarzenia, aż po rozliczenie i analizę wyników.
+              Najważniejsze informacje o firmie masz zawsze pod ręką.
             </p>
           </div>
 
@@ -217,7 +244,7 @@ const lifecycle = [
                   </div>
                 </article>
               ))}
-              <a class="button button-secondary capability-cta" href="#jak-dziala">Zobacz wszystkie funkcje <span>→</span></a>
+              <a class="button button-secondary capability-cta" href="#jak-dziala">Zobacz, jak działa <span>→</span></a>
             </div>
           </div>
         </div>
@@ -227,29 +254,57 @@ const lifecycle = [
         <div class="shell">
           <div class="section-head lifecycle-head">
             <span class="eyebrow-text">Cały proces w jednym systemie</span>
-            <h2>Event się kończy.<br />Przydaś pracuje dalej.</h2>
+            <h2>Od rezerwacji do danych.<br />Cały cykl wydarzenia w jednym miejscu.</h2>
             <p>
-              Od pierwszego zapytania, przez przygotowanie zespołu i realizację, aż po rozliczenie i analizę danych.
-              Każdy event zostawia informacje, które pomagają lepiej prowadzić firmę.
+              Przydaś pomaga przygotować wydarzenie i zespół, a po realizacji zbiera informacje potrzebne do podsumowania,
+              rozliczenia i dalszego rozwoju firmy.
             </p>
           </div>
 
-          <div class="phase-labels" aria-hidden="true">
-            <span>Przed i w trakcie eventu</span>
-            <span>Po evencie · BIZNES</span>
+          <div class="phase-block before-phase">
+            <div class="phase-header">
+              <div>
+                <span class="phase-kicker">PRZED WYDARZENIEM</span>
+                <h3>Przygotuj realizację bez biegania po wiadomościach i arkuszach.</h3>
+              </div>
+              <span class="phase-count">01-03</span>
+            </div>
+            <div class="phase-grid">
+              {beforeEvent.map((step) => (
+                <article class="lifecycle-card">
+                  <span class="step-number">{step.no}</span>
+                  <h4>{step.title}</h4>
+                  <p>{step.text}</p>
+                </article>
+              ))}
+            </div>
           </div>
 
-          <div class="lifecycle-grid">
-            {lifecycle.map(([title, text], index) => (
-              <article class:list={['lifecycle-card', index >= 4 && 'post-event']}>
-                <div class="step-top">
-                  <span class="step-number">{String(index + 1).padStart(2, '0')}</span>
-                  {index >= 4 && <span class="business-badge">PO EVENCIE</span>}
-                </div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
+          <div class="phase-bridge" aria-hidden="true">
+            <span>EVENT</span>
+            <i></i>
+          </div>
+
+          <div class="phase-block after-phase">
+            <div class="phase-header">
+              <div>
+                <span class="phase-kicker">PO WYDARZENIU · BIZNES</span>
+                <h3>Event się kończy. Przydaś pracuje dalej.</h3>
+              </div>
+              <span class="phase-count">04-06</span>
+            </div>
+            <div class="phase-grid">
+              {afterEvent.map((step) => (
+                <article class="lifecycle-card post-event">
+                  <div class="step-top">
+                    <span class="step-number">{step.no}</span>
+                    <span class="business-badge">PO EVENCIE</span>
+                  </div>
+                  <h4>{step.title}</h4>
+                  <p>{step.text}</p>
+                </article>
+              ))}
+            </div>
           </div>
 
           <div class="business-value">
@@ -257,8 +312,8 @@ const lifecycle = [
               <span class="eyebrow-text">Dane zamiast domysłów</span>
               <h3>Każde wydarzenie buduje wiedzę o Twojej firmie.</h3>
               <p>
-                Przydaś nie kończy pracy po zamknięciu eventu. Zebrane dane wspierają rozliczenia, pokazują koszty i wyniki,
-                a z czasem tworzą statystyki potrzebne do podejmowania lepszych decyzji biznesowych.
+                Zakończone zlecenia nie znikają w archiwum. Zebrane dane wspierają rozliczenia, pokazują wyniki i z czasem
+                tworzą statystyki potrzebne do podejmowania lepszych decyzji biznesowych.
               </p>
             </div>
             <div class="stats-demo" aria-label="Przykładowe statystyki firmy">
@@ -277,7 +332,7 @@ const lifecycle = [
             <h2>To dopiero początek.</h2>
             <p>W kolejnej iteracji dodamy realne screeny aplikacji, pakiety, cennik, FAQ, social proof i finalne CTA.</p>
           </div>
-          <span class="draft-badge">Wersja 0.1</span>
+          <span class="draft-badge">Wersja 0.2</span>
         </div>
       </section>
 
@@ -312,7 +367,7 @@ const lifecycle = [
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; text-decoration: none; }
-  h1, h2, h3, p { margin-top: 0; }
+  h1, h2, h3, h4, p { margin-top: 0; }
   .shell { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
 
   .site-header {
@@ -339,10 +394,11 @@ const lifecycle = [
   .button-secondary { background: #fff; border: 1px solid var(--line); }
   .button-small { min-height: 44px; padding-inline: 18px; }
 
-  .hero { min-height: 680px; display: grid; grid-template-columns: .95fr 1.05fr; gap: 72px; align-items: center; padding-block: 72px 82px; }
+  .hero { min-height: 660px; display: grid; grid-template-columns: 1.04fr .96fr; gap: 54px; align-items: center; padding-block: 66px 76px; }
+  .hero-copy { min-width: 0; }
   .eyebrow-pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 999px; background: var(--green-soft); color: var(--green-dark); font-size: 13px; font-weight: 750; }
-  .hero h1 { margin: 30px 0 24px; font-size: clamp(54px, 5.2vw, 76px); line-height: .98; letter-spacing: -.055em; font-weight: 820; }
-  .hero-lead { max-width: 580px; color: var(--muted); font-size: 19px; line-height: 1.55; letter-spacing: -.015em; }
+  .hero h1 { margin: 30px 0 24px; font-size: clamp(52px, 4.8vw, 70px); line-height: .98; letter-spacing: -.055em; font-weight: 820; }
+  .hero-lead { max-width: 590px; color: var(--muted); font-size: 19px; line-height: 1.55; letter-spacing: -.015em; }
   .hero-actions { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
   .micro-proof { margin-top: 22px; display: flex; align-items: center; gap: 10px; color: #718078; font-size: 13px; }
   .proof-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 5px var(--green-soft); }
@@ -377,10 +433,12 @@ const lifecycle = [
 
   .problem-section { background: #f7faf8; padding: 96px 0 82px; }
   .section-head { margin-bottom: 46px; }
-  .section-head-narrow { max-width: 760px; }
+  .section-head-narrow { max-width: 780px; }
+  .problem-head { max-width: 930px; }
   .eyebrow-text { display: inline-block; margin-bottom: 18px; color: var(--green-dark); font-size: 13px; font-weight: 800; letter-spacing: -.01em; }
-  .section-head h2, .lifecycle-head h2, .draft-card h2 { margin-bottom: 20px; font-size: clamp(38px, 4.2vw, 58px); line-height: 1.03; letter-spacing: -.045em; }
-  .section-head p, .lifecycle-head p { color: var(--muted); max-width: 760px; font-size: 18px; line-height: 1.55; }
+  .section-head h2, .lifecycle-head h2, .draft-card h2 { margin-bottom: 20px; font-size: clamp(38px, 4.05vw, 56px); line-height: 1.03; letter-spacing: -.045em; }
+  .problem-head h2 { max-width: 900px; }
+  .section-head p, .lifecycle-head p { color: var(--muted); max-width: 800px; font-size: 18px; line-height: 1.55; }
   .problem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .problem-card { min-height: 178px; padding: 28px; border-radius: 20px; background: #fff; border: 1px solid rgba(223,231,226,.7); box-shadow: 0 10px 30px rgba(38,75,57,.04); }
   .problem-number { display: inline-grid; place-items: center; min-width: 31px; height: 26px; padding-inline: 8px; border-radius: 999px; background: var(--green-soft); color: var(--green-dark); font-size: 11px; font-weight: 800; }
@@ -418,21 +476,30 @@ const lifecycle = [
 
   .lifecycle-section { padding: 108px 0 112px; background: #101914; color: #f8fbf9; }
   .lifecycle-section .eyebrow-text { color: #68dea8; }
-  .lifecycle-head { max-width: 800px; margin-bottom: 60px; }
+  .lifecycle-head { max-width: 900px; margin-bottom: 54px; }
   .lifecycle-head p { color: #a8b5ad; }
-  .phase-labels { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 12px; }
-  .phase-labels span { padding: 0 8px; color: #7f9086; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
-  .phase-labels span:last-child { color: #68dea8; }
-  .lifecycle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .lifecycle-card { min-height: 225px; position: relative; padding: 25px; border-radius: 20px; border: 1px solid #26372e; background: #16221b; overflow: hidden; }
-  .lifecycle-card:nth-child(n+4) { margin-top: 14px; }
-  .lifecycle-card.post-event { border-color: rgba(73,214,151,.4); background: linear-gradient(145deg, #173126, #10251c); }
-  .lifecycle-card.post-event::after { content: ''; position: absolute; inset: auto -35px -60px auto; width: 170px; height: 170px; border-radius: 50%; background: rgba(62,211,145,.08); filter: blur(2px); }
+  .phase-block { padding: 28px; border-radius: 26px; border: 1px solid #26372e; background: #131f18; }
+  .after-phase { border-color: rgba(73,214,151,.34); background: linear-gradient(135deg, #143023, #102219); }
+  .phase-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 30px; margin-bottom: 24px; }
+  .phase-header h3 { max-width: 700px; margin: 8px 0 0; font-size: 25px; line-height: 1.15; letter-spacing: -.03em; }
+  .phase-kicker { color: #83978b; font-size: 10px; font-weight: 850; letter-spacing: .12em; }
+  .after-phase .phase-kicker { color: #68dea8; }
+  .phase-count { flex: 0 0 auto; padding: 8px 10px; border-radius: 999px; color: #7c9185; background: rgba(255,255,255,.04); font-size: 10px; font-weight: 800; }
+  .after-phase .phase-count { color: #72e3b0; background: rgba(82,220,158,.1); }
+  .phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .lifecycle-card { min-height: 220px; position: relative; padding: 25px; border-radius: 20px; border: 1px solid #2a3a31; background: #17241c; overflow: hidden; }
+  .lifecycle-card.post-event { border-color: rgba(73,214,151,.38); background: linear-gradient(145deg, #183428, #12271e); }
+  .lifecycle-card.post-event::after { content: ''; position: absolute; inset: auto -35px -60px auto; width: 170px; height: 170px; border-radius: 50%; background: rgba(62,211,145,.08); }
   .step-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .step-number { color: #61dca4; font-size: 12px; font-weight: 850; }
   .business-badge { padding: 6px 8px; border-radius: 999px; background: rgba(82,220,158,.12); color: #70e4af; font-size: 9px; font-weight: 850; letter-spacing: .08em; }
-  .lifecycle-card h3 { margin: 48px 0 10px; font-size: 21px; letter-spacing: -.025em; }
-  .lifecycle-card p { margin-bottom: 0; color: #9eadA4; font-size: 14px; line-height: 1.5; }
+  .lifecycle-card h4 { margin: 46px 0 10px; font-size: 20px; letter-spacing: -.025em; }
+  .lifecycle-card .step-top + h4 { margin-top: 40px; }
+  .lifecycle-card p { margin-bottom: 0; color: #a5b2aa; font-size: 14px; line-height: 1.52; }
+  .phase-bridge { height: 78px; display: grid; place-items: center; position: relative; }
+  .phase-bridge::before { content: ''; position: absolute; top: 0; bottom: 0; width: 1px; background: linear-gradient(#365043, #52dca0); }
+  .phase-bridge span { position: relative; z-index: 1; padding: 7px 10px; border-radius: 999px; background: #101914; border: 1px solid #315141; color: #6de0aa; font-size: 9px; font-weight: 850; letter-spacing: .12em; }
+  .phase-bridge i { display: none; }
   .business-value { margin-top: 58px; padding: 40px; border-radius: 27px; display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; background: linear-gradient(120deg, #142a20, #183b2c); border: 1px solid rgba(95,221,164,.24); }
   .business-value h3 { margin: 2px 0 15px; font-size: 32px; line-height: 1.08; letter-spacing: -.035em; }
   .business-value p { margin-bottom: 0; color: #a9b8af; line-height: 1.55; }
@@ -457,9 +524,8 @@ const lifecycle = [
     .hero-copy { max-width: 700px; }
     .solution-grid { grid-template-columns: 1fr; }
     .product-preview { max-width: 720px; }
-    .phase-labels { display: none; }
-    .lifecycle-grid { grid-template-columns: repeat(2, 1fr); }
-    .lifecycle-card:nth-child(n+4) { margin-top: 0; }
+    .phase-grid { grid-template-columns: 1fr; }
+    .lifecycle-card { min-height: auto; }
     .business-value { grid-template-columns: 1fr; }
   }
 
@@ -472,7 +538,7 @@ const lifecycle = [
     .login-link { display: none; }
     .button-small { min-height: 40px; font-size: 12px; padding-inline: 13px; }
     .hero { min-height: auto; padding: 48px 0 64px; gap: 42px; }
-    .hero h1 { margin-top: 24px; font-size: clamp(46px, 15vw, 62px); }
+    .hero h1 { margin-top: 24px; font-size: clamp(44px, 14vw, 60px); }
     .hero-lead { font-size: 16px; }
     .hero-actions { flex-direction: column; align-items: stretch; }
     .hero-actions .button { width: 100%; }
@@ -490,10 +556,16 @@ const lifecycle = [
     .transition-line { display: none; }
     .preview-content { grid-template-columns: 1fr; }
     .preview-team { display: none; }
-    .lifecycle-grid { grid-template-columns: 1fr; position: relative; padding-left: 18px; }
-    .lifecycle-grid::before { content: ''; position: absolute; left: 4px; top: 15px; bottom: 15px; width: 2px; background: linear-gradient(#315343, #4cd99b); }
-    .lifecycle-card { min-height: auto; padding: 23px; }
-    .lifecycle-card h3 { margin-top: 32px; }
+    .phase-block { padding: 20px; }
+    .phase-header { gap: 16px; }
+    .phase-header h3 { font-size: 21px; }
+    .phase-count { display: none; }
+    .phase-grid { position: relative; padding-left: 16px; }
+    .phase-grid::before { content: ''; position: absolute; left: 3px; top: 12px; bottom: 12px; width: 2px; background: linear-gradient(#315343, #4cd99b); }
+    .lifecycle-card { padding: 22px; }
+    .lifecycle-card h4 { margin-top: 30px; }
+    .lifecycle-card .step-top + h4 { margin-top: 28px; }
+    .phase-bridge { height: 62px; }
     .business-value { padding: 25px; }
     .business-value h3 { font-size: 28px; }
     .stats-demo { grid-template-columns: 1fr; }
