@@ -33,3 +33,5 @@ jobs:
           grep -q 'BIZNES' dist/index.html
           grep -q 'Najczęstsze pytania o Przydasia' dist/index.html
           grep -q 'app.xn--przyda-8ib.pl' dist/index.html
+
+# CI validates the assembled production landing page, not only source fragments.
