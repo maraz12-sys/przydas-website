@@ -26,11 +26,17 @@ function replaceOnce(oldText, newText, label) {
   throw new Error(`${label}: expected one old occurrence or one already-applied occurrence; old=${oldCount}, new=${newCount}`);
 }
 
-const importLine = "import PackagesSection from '../components/PackagesSection.astro';";
-if (!source.includes(importLine)) {
-  const frontmatterEnd = '\n---\n\n<!doctype html>';
+const packageImport = "import PackagesSection from '../components/PackagesSection.astro';";
+const finalImport = "import FinalSections from '../components/FinalSections.astro';";
+const frontmatterEnd = '\n---\n\n<!doctype html>';
+
+if (!source.includes(packageImport) || !source.includes(finalImport)) {
   if (!source.includes(frontmatterEnd)) throw new Error('frontmatter end not found');
-  source = source.replace(frontmatterEnd, `\n${importLine}\n---\n\n<!doctype html>`);
+  const imports = [
+    source.includes(packageImport) ? '' : packageImport,
+    source.includes(finalImport) ? '' : finalImport,
+  ].filter(Boolean).join('\n');
+  source = source.replace(frontmatterEnd, `\n${imports}\n---\n\n<!doctype html>`);
   changed = true;
 }
 
@@ -52,29 +58,79 @@ replaceOnce(
   'business-audience-bullets',
 );
 
-const packagesTag = '      <PackagesSection />';
-if (!source.includes(packagesTag)) {
-  const marker = '      <section class="draft-next" id="start">';
-  if (!source.includes(marker)) throw new Error('draft section marker not found');
-  source = source.replace(marker, `${packagesTag}\n\n${marker}`);
-  changed = true;
-}
-
-const hiddenCennik = '      <div id="cennik" hidden></div>\n';
-if (source.includes(hiddenCennik)) {
-  source = source.replace(hiddenCennik, '');
-  changed = true;
-}
+replaceOnce(
+  '<a class="button button-primary button-small" href="#start">Wypróbuj za darmo <span>→</span></a>',
+  '<a class="button button-primary button-small" href="#cennik">Zobacz pakiety <span>→</span></a>',
+  'nav-primary-cta',
+);
 
 replaceOnce(
-  '<span class="eyebrow-text">Kolejny etap</span>\n            <h2>Teraz pokażemy, co dokładnie dostajesz.</h2>\n            <p>Następna sekcja rozpisze pakiety START, ZESPÓŁ i BIZNES oraz przygotuje miejsce pod finalny cennik.</p>',
-  '<span class="eyebrow-text">Kolejny etap</span>\n            <h2>Teraz dopinamy ofertę.</h2>\n            <p>Kolejna iteracja doda ceny, pełne porównanie funkcji, FAQ i finalne CTA do rozpoczęcia korzystania z Przydasia.</p>',
-  'draft-next-copy',
+  '<a class="button button-primary" href="#start">Wypróbuj za darmo <span>→</span></a>',
+  '<a class="button button-primary" href="#cennik">Zobacz pakiety <span>→</span></a>',
+  'hero-primary-cta',
 );
+
+const packageTag = '      <PackagesSection />';
+const finalTag = '      <FinalSections />';
+const draftMarker = '      <section class="draft-next" id="start">';
+
+if (!source.includes(packageTag) || !source.includes(finalTag)) {
+  if (!source.includes(draftMarker)) throw new Error('draft section marker not found');
+  const tags = [
+    source.includes(packageTag) ? '' : packageTag,
+    source.includes(finalTag) ? '' : finalTag,
+  ].filter(Boolean).join('\n\n');
+  source = source.replace(draftMarker, `${tags}\n\n${draftMarker}`);
+  changed = true;
+}
+
+const draftBlock = `      <section class="draft-next" id="start">
+        <div class="shell draft-card">
+          <div>
+            <span class="eyebrow-text">Kolejny etap</span>
+            <h2>Teraz pokażemy, co dokładnie dostajesz.</h2>
+            <p>Następna sekcja rozpisze pakiety START, ZESPÓŁ i BIZNES oraz przygotuje miejsce pod finalny cennik.</p>
+          </div>
+          <span class="draft-badge">Draft 0.2</span>
+        </div>
+      </section>
+
+`;
+
+const alternateDraftBlock = `      <section class="draft-next" id="start">
+        <div class="shell draft-card">
+          <div>
+            <span class="eyebrow-text">Kolejny etap</span>
+            <h2>Teraz dopinamy ofertę.</h2>
+            <p>Kolejna iteracja doda ceny, pełne porównanie funkcji, FAQ i finalne CTA do rozpoczęcia korzystania z Przydasia.</p>
+          </div>
+          <span class="draft-badge">Draft 0.2</span>
+        </div>
+      </section>
+
+`;
+
+if (source.includes(draftBlock)) {
+  source = source.replace(draftBlock, '');
+  changed = true;
+} else if (source.includes(alternateDraftBlock)) {
+  source = source.replace(alternateDraftBlock, '');
+  changed = true;
+}
+
+for (const placeholder of [
+  '      <div id="cennik" hidden></div>\n',
+  '      <div id="faq" hidden></div>\n',
+]) {
+  if (source.includes(placeholder)) {
+    source = source.replace(placeholder, '');
+    changed = true;
+  }
+}
 
 if (changed) {
   fs.writeFileSync(filePath, source, 'utf8');
-  console.log('OK: packages section applied to homepage before Astro build');
+  console.log('OK: full Przydas landing page assembled before Astro build');
 } else {
-  console.log('OK: packages section already applied');
+  console.log('OK: full Przydas landing page already assembled');
 }
