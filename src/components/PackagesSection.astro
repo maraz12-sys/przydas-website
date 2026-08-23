@@ -2,8 +2,9 @@
 const plans = [
   {
     name: 'START',
-    price: '59 zł',
+    monthlyPrice: '59 zł',
     annualPrice: '590 zł',
+    annualMonthly: '49,17 zł',
     annualSaving: '118 zł',
     kicker: 'Porządek na co dzień',
     title: 'Ogarnij rezerwacje i podstawową organizację.',
@@ -21,8 +22,9 @@ const plans = [
   },
   {
     name: 'ZESPÓŁ',
-    price: '149 zł',
+    monthlyPrice: '149 zł',
     annualPrice: '1 490 zł',
+    annualMonthly: '124,17 zł',
     annualSaving: '298 zł',
     kicker: 'Więcej ludzi, mniej pilnowania',
     title: 'Zarządzaj zespołem i przygotowaniem realizacji.',
@@ -40,8 +42,9 @@ const plans = [
   },
   {
     name: 'BIZNES',
-    price: '199 zł',
+    monthlyPrice: '199 zł',
     annualPrice: '1 990 zł',
+    annualMonthly: '165,83 zł',
     annualSaving: '398 zł',
     kicker: 'Pełna kontrola firmy',
     title: 'Rozliczaj, analizuj i podejmuj decyzje na danych.',
@@ -61,7 +64,7 @@ const plans = [
 ];
 ---
 
-<section class="packages-section" id="cennik">
+<section class="packages-section" id="cennik" data-billing="monthly">
   <div class="shell packages-shell">
     <div class="section-head packages-head">
       <span class="eyebrow-text">Pakiety Przydasia</span>
@@ -70,9 +73,18 @@ const plans = [
         Każdy wyższy pakiet zawiera funkcje niższego. Zaczynasz od tego, czego potrzebujesz dzisiaj,
         a wraz z rozwojem firmy odblokowujesz kolejne możliwości bez przenoszenia danych i zmiany narzędzia.
       </p>
-      <div class="annual-banner">
-        <span class="annual-banner-badge">2 MIESIĄCE GRATIS</span>
-        <span>Przy płatności z góry za 12 miesięcy płacisz tylko za 10.</span>
+
+      <div class="pricing-controls">
+        <div class="billing-toggle" role="group" aria-label="Sposób rozliczenia" data-billing-toggle>
+          <button type="button" class="active" data-billing-value="monthly" aria-pressed="true">Miesięcznie</button>
+          <button type="button" data-billing-value="annual" aria-pressed="false">
+            Rocznie <span>2 mies. gratis</span>
+          </button>
+        </div>
+        <div class="annual-banner">
+          <span class="annual-banner-badge">2 MIESIĄCE GRATIS</span>
+          <span>Przy płatności z góry za 12 miesięcy płacisz tylko za 10.</span>
+        </div>
       </div>
     </div>
 
@@ -84,17 +96,28 @@ const plans = [
             <span class="package-name">{plan.name}</span>
             <span class="package-kicker">{plan.kicker}</span>
           </div>
-          <div class="package-price-row">
-            <strong class="package-price">{plan.price}</strong>
+
+          <div class="package-price-row monthly-only">
+            <strong class="package-price">{plan.monthlyPrice}</strong>
             <span class="package-period">brutto / miesiąc</span>
           </div>
+          <div class="package-price-row annual-only" aria-hidden="true">
+            <strong class="package-price">{plan.annualPrice}</strong>
+            <span class="package-period">brutto / rok</span>
+          </div>
+
           <div class="annual-offer">
-            <div>
-              <span class="annual-label">Abonament 12 miesięcy</span>
+            <div class="monthly-only">
+              <span class="annual-label">Przy płatności rocznej</span>
               <strong>{plan.annualPrice} brutto / rok</strong>
+            </div>
+            <div class="annual-only" aria-hidden="true">
+              <span class="annual-label">Efektywnie miesięcznie</span>
+              <strong>{plan.annualMonthly} brutto / mies.</strong>
             </div>
             <span class="annual-saving">Oszczędzasz {plan.annualSaving}</span>
           </div>
+
           <h3>{plan.title}</h3>
           <p class="package-description">{plan.description}</p>
           <div class="package-divider"></div>
@@ -104,7 +127,11 @@ const plans = [
             ))}
           </ul>
           <div class="package-note">{plan.note}</div>
-          <a class:list={['button', plan.featured || plan.business ? 'button-primary' : 'button-secondary', 'package-button']} href="#start">
+          <a
+            class:list={['button', plan.featured || plan.business ? 'button-primary' : 'button-secondary', 'package-button']}
+            href="#start"
+            data-plan={plan.name}
+          >
             Wybieram {plan.name} <span>→</span>
           </a>
         </article>
@@ -121,10 +148,44 @@ const plans = [
   </div>
 </section>
 
+<script is:inline>
+  (() => {
+    const section = document.querySelector('.packages-section[data-billing]');
+    if (!section) return;
+    const buttons = section.querySelectorAll('[data-billing-value]');
+
+    const setBilling = (value) => {
+      section.setAttribute('data-billing', value);
+      buttons.forEach((button) => {
+        const active = button.getAttribute('data-billing-value') === value;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+
+      section.querySelectorAll('.monthly-only').forEach((element) => {
+        element.setAttribute('aria-hidden', String(value !== 'monthly'));
+      });
+      section.querySelectorAll('.annual-only').forEach((element) => {
+        element.setAttribute('aria-hidden', String(value !== 'annual'));
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => setBilling(button.getAttribute('data-billing-value') || 'monthly'));
+    });
+  })();
+</script>
+
 <style>
   .packages-section { padding: 112px 0; background: #f5f9f7; }
-  .packages-head { max-width: 860px; }
-  .annual-banner { width: fit-content; margin-top: 24px; padding: 10px 14px; border: 1px solid #bde7d2; border-radius: 14px; display: flex; align-items: center; gap: 10px; background: #edf9f3; color: #426254; font-size: 13px; font-weight: 650; }
+  .packages-head { max-width: 900px; }
+  .pricing-controls { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .billing-toggle { display: inline-flex; padding: 4px; border: 1px solid #d5e5dc; border-radius: 14px; background: #fff; box-shadow: 0 8px 24px rgba(28,74,52,.05); }
+  .billing-toggle button { min-height: 42px; padding: 0 15px; border: 0; border-radius: 10px; background: transparent; color: #68766f; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; transition: background .18s ease, color .18s ease, box-shadow .18s ease; }
+  .billing-toggle button span { margin-left: 5px; color: #078a59; font-size: 9px; font-weight: 900; }
+  .billing-toggle button.active { background: #078a59; color: #fff; box-shadow: 0 7px 16px rgba(7,138,89,.18); }
+  .billing-toggle button.active span { color: #c9f3df; }
+  .annual-banner { width: fit-content; padding: 10px 14px; border: 1px solid #bde7d2; border-radius: 14px; display: flex; align-items: center; gap: 10px; background: #edf9f3; color: #426254; font-size: 13px; font-weight: 650; }
   .annual-banner-badge { padding: 6px 9px; border-radius: 999px; background: #078a59; color: #fff; font-size: 9px; font-weight: 900; letter-spacing: .07em; }
   .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
   .package-card { position: relative; display: flex; flex-direction: column; min-height: 760px; padding: 30px; border-radius: 24px; border: 1px solid #dce7e1; background: #fff; box-shadow: 0 16px 42px rgba(28,74,52,.05); }
@@ -135,9 +196,13 @@ const plans = [
   .package-name { display: inline-flex; padding: 8px 11px; border-radius: 999px; color: #087f53; background: #eaf8f2; font-size: 11px; font-weight: 900; letter-spacing: .08em; }
   .package-card-business .package-name { color: #fff; background: #078a59; }
   .package-kicker { color: #86938c; font-size: 12px; font-weight: 700; }
-  .package-price-row { display: flex; align-items: baseline; gap: 7px; margin: 12px 0 12px; }
+  .package-price-row { display: flex; align-items: baseline; gap: 7px; margin: 12px 0; }
   .package-price { font-size: 42px; line-height: 1; letter-spacing: -.05em; }
   .package-period { color: #7d8a83; font-size: 13px; font-weight: 650; }
+  .annual-only { display: none !important; }
+  .packages-section[data-billing='annual'] .monthly-only { display: none !important; }
+  .packages-section[data-billing='annual'] .annual-only { display: flex !important; }
+  .packages-section[data-billing='annual'] .annual-offer .annual-only { display: grid !important; }
   .annual-offer { margin-bottom: 20px; padding: 13px 14px; border: 1px solid #d9ebe2; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(234,248,242,.7); }
   .annual-offer > div { display: grid; gap: 3px; }
   .annual-label { color: #74847b; font-size: 10px; font-weight: 750; text-transform: uppercase; letter-spacing: .06em; }
@@ -167,7 +232,10 @@ const plans = [
 
   @media (max-width: 640px) {
     .packages-section { padding: 76px 0; }
-    .annual-banner { align-items: flex-start; flex-direction: column; }
+    .pricing-controls { align-items: stretch; flex-direction: column; }
+    .billing-toggle { width: 100%; }
+    .billing-toggle button { flex: 1; padding-inline: 10px; }
+    .annual-banner { width: 100%; align-items: flex-start; flex-direction: column; }
     .package-card { padding: 24px; }
     .package-price { font-size: 38px; }
     .annual-offer { align-items: flex-start; flex-direction: column; }
