@@ -48,3 +48,5 @@ jobs:
           git add src/pages/index.astro package.json scripts/assemble_landing_page.js
           git commit -m "Materialize complete landing page source"
           git push
+
+# Triggered once to convert the landing into normal Astro source.
