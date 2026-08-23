@@ -41,6 +41,30 @@ if (!source.includes(packageImport) || !source.includes(finalImport)) {
 }
 
 replaceOnce(
+  '<title>Przydaś - ogarnij eventy, zespół i firmę</title>',
+  `<title>Przydaś — system dla firm animacyjnych</title>\n    <link rel="canonical" href="https://xn--przyda-8ib.pl/" />\n    <meta property="og:type" content="website" />\n    <meta property="og:locale" content="pl_PL" />\n    <meta property="og:title" content="Przydaś — ogarnij eventy, zespół i firmę" />\n    <meta property="og:description" content="Rezerwacje, kalendarz, zespół, dyspozycyjność, braki, rozliczenia i statystyki w jednym systemie dla branży animacyjnej." />\n    <meta property="og:url" content="https://xn--przyda-8ib.pl/" />\n    <meta name="twitter:card" content="summary" />\n    <script type="application/ld+json">\n      {\n        "@context": "https://schema.org",\n        "@type": "SoftwareApplication",\n        "name": "Przydaś",\n        "applicationCategory": "BusinessApplication",\n        "operatingSystem": "Web",\n        "description": "System do zarządzania rezerwacjami, kalendarzem, zespołem, dyspozycyjnością, rozliczeniami i statystykami firm z branży animacyjnej.",\n        "offers": {\n          "@type": "AggregateOffer",\n          "priceCurrency": "PLN",\n          "lowPrice": "59",\n          "highPrice": "199",\n          "offerCount": "3"\n        }\n      }\n    </script>`,
+  'seo-head',
+);
+
+replaceOnce(
+  `          <span class="brand-mark" aria-hidden="true">\n            <svg viewBox="0 0 24 24" fill="none">\n              <path d="M7 5.5h10A2.5 2.5 0 0 1 19.5 8v8A2.5 2.5 0 0 1 17 18.5H7A2.5 2.5 0 0 1 4.5 16V8A2.5 2.5 0 0 1 7 5.5Z" stroke="currentColor" stroke-width="2" />\n              <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />\n            </svg>\n          </span>`,
+  `          <span class="brand-mark" aria-hidden="true"><span class="brand-letter">P</span></span>`,
+  'brand-mark',
+);
+
+replaceOnce(
+  '  .brand-mark svg { width: 19px; height: 19px; }',
+  '  .brand-letter { display: block; transform: translateY(-.5px); font-size: 18px; line-height: 1; font-weight: 900; letter-spacing: -.06em; }',
+  'brand-letter-css',
+);
+
+replaceOnce(
+  '<a class="login-link" href="#">Zaloguj się</a>',
+  '<a class="login-link" href="https://app.xn--przyda-8ib.pl/">Zaloguj się</a>',
+  'login-link',
+);
+
+replaceOnce(
   "bullets: ['Rezerwacje i kalendarz', 'Porządek w danych zlecenia', 'Mniej notatek i wiadomości'],",
   "bullets: ['Rezerwacje i kalendarz', 'Dyspozycyjność i przypisania', 'Podstawowe powiadomienia i braki'],",
   'start-audience-bullets',
@@ -70,6 +94,12 @@ replaceOnce(
   'hero-primary-cta',
 );
 
+replaceOnce(
+  '            Jeden system od przyjęcia rezerwacji aż po rozliczenie i statystyki.',
+  '            Kalendarz, zespół, dyspozycyjność, braki, rozliczenia i statystyki — w jednym miejscu.',
+  'hero-proof',
+);
+
 const packageTag = '      <PackagesSection />';
 const finalTag = '      <FinalSections />';
 const draftMarker = '      <section class="draft-next" id="start">';
@@ -85,30 +115,8 @@ if (!source.includes(packageTag) || !source.includes(finalTag)) {
 }
 
 const draftBlocks = [
-`      <section class="draft-next" id="start">
-        <div class="shell draft-card">
-          <div>
-            <span class="eyebrow-text">Kolejny etap</span>
-            <h2>Teraz pokażemy, co dokładnie dostajesz.</h2>
-            <p>Następna sekcja rozpisze pakiety START, ZESPÓŁ i BIZNES oraz przygotuje miejsce pod finalny cennik.</p>
-          </div>
-          <span class="draft-badge">Draft 0.2</span>
-        </div>
-      </section>
-
-`,
-`      <section class="draft-next" id="start">
-        <div class="shell draft-card">
-          <div>
-            <span class="eyebrow-text">Kolejny etap</span>
-            <h2>Teraz dopinamy ofertę.</h2>
-            <p>Kolejna iteracja doda ceny, pełne porównanie funkcji, FAQ i finalne CTA do rozpoczęcia korzystania z Przydasia.</p>
-          </div>
-          <span class="draft-badge">Draft 0.2</span>
-        </div>
-      </section>
-
-`,
+`      <section class="draft-next" id="start">\n        <div class="shell draft-card">\n          <div>\n            <span class="eyebrow-text">Kolejny etap</span>\n            <h2>Teraz pokażemy, co dokładnie dostajesz.</h2>\n            <p>Następna sekcja rozpisze pakiety START, ZESPÓŁ i BIZNES oraz przygotuje miejsce pod finalny cennik.</p>\n          </div>\n          <span class="draft-badge">Draft 0.2</span>\n        </div>\n      </section>\n\n`,
+`      <section class="draft-next" id="start">\n        <div class="shell draft-card">\n          <div>\n            <span class="eyebrow-text">Kolejny etap</span>\n            <h2>Teraz dopinamy ofertę.</h2>\n            <p>Kolejna iteracja doda ceny, pełne porównanie funkcji, FAQ i finalne CTA do rozpoczęcia korzystania z Przydasia.</p>\n          </div>\n          <span class="draft-badge">Draft 0.2</span>\n        </div>\n      </section>\n\n`,
 ];
 
 for (const block of draftBlocks) {
