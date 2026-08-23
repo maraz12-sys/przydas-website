@@ -1,0 +1,331 @@
+---
+const comparisonSections = [
+  {
+    title: 'Kalendarz i rezerwacje',
+    rows: [
+      ['Widok kalendarza dzień / tydzień / miesiąc', '✓', '✓', '✓'],
+      ['Dodawanie, edycja i duplikacja rezerwacji', '✓', '✓', '✓'],
+      ['Dyspozycyjność, przypisania i potwierdzenia', '✓', '✓', '✓'],
+      ['Dni kluczowe', '—', '✓', '✓'],
+      ['Osoba odpowiedzialna za wydarzenie', '—', '✓', '✓'],
+      ['Ankieta po wydarzeniu', '—', '✓', '✓'],
+      ['Checklisty materiałowe i zakupowe', '—', '—', '✓'],
+    ],
+  },
+  {
+    title: 'Powiadomienia i braki',
+    rows: [
+      ['Powiadomienia o przypisaniu i odrzuceniu', '✓', '✓', '✓'],
+      ['Pełny system powiadomień', '—', '✓', '✓'],
+      ['Braki w danych rezerwacji', '✓', '✓', '✓'],
+      ['Braki dotyczące przypisania zespołu', '—', '✓', '✓'],
+      ['Braki materiałowe i rozliczeniowe', '—', '—', '✓'],
+    ],
+  },
+  {
+    title: 'Zespół i organizacja pracy',
+    rows: [
+      ['Tworzenie i zarządzanie zespołem', '✓', '✓', '✓'],
+      ['Zbiorczy widok zespołu', '✓', '✓', '✓'],
+      ['Stanowiska, role i zadania pracowników', '—', '✓', '✓'],
+      ['Garderoba i informacje pracownicze', '—', '✓', '✓'],
+      ['Rozliczenia pracowników', '—', '✓', '✓'],
+    ],
+  },
+  {
+    title: 'Wiedza i Przydaś',
+    rows: [
+      ['Notatnik Przydasia', '✓', '✓', '✓'],
+      ['Współdzielone notatki', '—', '✓', '✓'],
+      ['Checklisty, standardy i instrukcje', '—', '✓', '✓'],
+    ],
+  },
+  {
+    title: 'Finanse, magazyn i dane',
+    rows: [
+      ['Podstawowy panel rozliczeń', '✓', '✓', '✓'],
+      ['Podstawowe statystyki', '—', '✓', '✓'],
+      ['Magazyn', '—', '1 kategoria', 'Bez limitu'],
+      ['Materiały i zakupy', '—', '—', '✓'],
+      ['Faktury, integracja i eksport danych', '—', '—', '✓'],
+      ['Asystent AI i podwykonawcy', '—', '—', '✓'],
+      ['Zaawansowane statystyki i zestawienia', '—', '—', '✓'],
+    ],
+  },
+  {
+    title: 'Konfiguracja organizacji',
+    rows: [
+      ['Liczba obsługiwanych firm', '1', 'Do 3', 'Bez limitu'],
+      ['Konfiguracja formularza rezerwacji', 'Częściowa', 'Pełna', 'Pełna'],
+      ['Backup', '—', '✓', '✓'],
+      ['Zaawansowane uprawnienia i automatyzacje', '—', '—', '✓'],
+    ],
+  },
+];
+
+const trustItems = [
+  ['Branża animacyjna', 'Nie jest to uniwersalny CRM przerobiony na eventy. Funkcje wynikają z realnego procesu firmy animacyjnej.'],
+  ['Własne konta zespołu', 'Pracownicy logują się na swoje konta i widzą informacje oraz wydarzenia zgodnie z nadanymi uprawnieniami.'],
+  ['Telefon i komputer', 'Przydaś działa jako aplikacja webowa i PWA, więc zespół może korzystać z niego również podczas realizacji.'],
+  ['Dane oddzielone per organizacja', 'Dostęp do informacji jest rozdzielany według organizacji, użytkownika i jego roli w systemie.'],
+];
+
+const faq = [
+  {
+    q: 'Czy wyższy pakiet zawiera funkcje niższego?',
+    a: 'Tak. ZESPÓŁ zawiera funkcje START, a BIZNES zawiera funkcje START i ZESPÓŁ. Zmiana pakietu nie wymaga przechodzenia na inny system ani przenoszenia danych.',
+  },
+  {
+    q: 'Czy podane ceny są brutto?',
+    a: 'Tak. Ceny 59 zł, 149 zł i 199 zł są kwotami brutto za jeden miesiąc korzystania z odpowiedniego pakietu.',
+  },
+  {
+    q: 'Jak działa abonament roczny i 2 miesiące gratis?',
+    a: 'Przy płatności z góry za 12 miesięcy płacisz równowartość 10 miesięcy. START kosztuje 590 zł brutto rocznie, ZESPÓŁ 1 490 zł brutto, a BIZNES 1 990 zł brutto.',
+  },
+  {
+    q: 'Czy mogę później zmienić pakiet?',
+    a: 'Tak. Przydaś jest projektowany tak, aby firma mogła zacząć od prostszego pakietu i przejść wyżej, kiedy pojawi się większy zespół, więcej wydarzeń albo potrzeba rozliczeń i analiz.',
+  },
+  {
+    q: 'Czy każdy pracownik ma własne konto?',
+    a: 'Tak. Członkowie zespołu korzystają z własnych kont. Dzięki temu właściciel zarządza dostępem, a pracownik widzi to, co jest mu potrzebne do pracy.',
+  },
+  {
+    q: 'Czy Przydaś działa na telefonie?',
+    a: 'Tak. Interfejs jest przygotowywany do pracy na komputerze i urządzeniach mobilnych. Przydaś może być również instalowany jako PWA.',
+  },
+  {
+    q: 'Czy mogę prowadzić w Przydasiu więcej niż jedną firmę?',
+    a: 'Tak. START obejmuje jedną firmę, ZESPÓŁ do trzech, a BIZNES pozwala obsługiwać firmy bez tego limitu.',
+  },
+  {
+    q: 'Co dzieje się z informacjami po zakończeniu wydarzenia?',
+    a: 'Event nie znika po realizacji. W zależności od pakietu jego dane mogą zasilać ankiety, rozliczenia, braki, statystyki i zestawienia potrzebne do dalszego prowadzenia firmy.',
+  },
+  {
+    q: 'Czy dane różnych firm i użytkowników są od siebie oddzielone?',
+    a: 'Tak. Przydaś korzysta z modelu organizacji i ról użytkowników. Dostęp do informacji jest kontrolowany na podstawie organizacji oraz uprawnień konta.',
+  },
+];
+---
+
+<section class="comparison-section" id="porownanie">
+  <div class="shell">
+    <div class="section-head comparison-head">
+      <span class="eyebrow-text">Pełne porównanie</span>
+      <h2>Sprawdź, co dokładnie dostajesz.</h2>
+      <p>
+        Pakiety różnią się zakresem automatyzacji i kontroli nad firmą. Wszystkie zaczynają od tego samego fundamentu:
+        porządku w wydarzeniach i codziennej pracy.
+      </p>
+    </div>
+
+    <div class="comparison-table-wrap" role="region" aria-label="Porównanie pakietów" tabindex="0">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Funkcja</th>
+            <th>START<br /><span>59 zł brutto / mies.</span></th>
+            <th class="team-col">ZESPÓŁ<br /><span>149 zł brutto / mies.</span></th>
+            <th class="business-col">BIZNES<br /><span>199 zł brutto / mies.</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparisonSections.map((section) => (
+            <>
+              <tr class="comparison-category">
+                <td colspan="4">{section.title}</td>
+              </tr>
+              {section.rows.map(([label, start, team, business]) => (
+                <tr>
+                  <td>{label}</td>
+                  <td>{start}</td>
+                  <td class="team-col">{team}</td>
+                  <td class="business-col">{business}</td>
+                </tr>
+              ))}
+            </>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="comparison-note">Zakres funkcji będzie rozwijany razem z Przydasiem. Wyższy pakiet zawsze zawiera funkcje pakietów niższych.</p>
+  </div>
+</section>
+
+<section class="trust-section">
+  <div class="shell">
+    <div class="section-head trust-head">
+      <span class="eyebrow-text">Zbudowany pod realną pracę</span>
+      <h2>System dla firmy animacyjnej, nie dla „każdego biznesu”.</h2>
+      <p>
+        Przydaś powstaje wokół procesu, który naprawdę przechodzi firma eventowa: rezerwacja, zespół, realizacja,
+        feedback, rozliczenie i dane do kolejnych decyzji.
+      </p>
+    </div>
+
+    <div class="trust-grid">
+      {trustItems.map(([title, text], index) => (
+        <article class="trust-card">
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="onboarding-section">
+  <div class="shell onboarding-box">
+    <div class="onboarding-copy">
+      <span class="eyebrow-text">Start bez wdrożenia na tygodnie</span>
+      <h2>Wchodzisz, konfigurujesz i zaczynasz działać.</h2>
+      <p>Przydaś ma skrócić codzienną pracę, a nie dokładać kolejny projekt wdrożeniowy.</p>
+    </div>
+    <div class="onboarding-steps">
+      <article><span>01</span><div><strong>Wybierasz pakiet</strong><p>Dobierasz zakres do obecnego etapu firmy.</p></div></article>
+      <article><span>02</span><div><strong>Konfigurujesz organizację</strong><p>Uzupełniasz dane firmy i ustawienia potrzebne do pracy.</p></div></article>
+      <article><span>03</span><div><strong>Zapraszasz zespół</strong><p>Dodajesz pracowników i pierwsze wydarzenia do wspólnego systemu.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="shell faq-shell">
+    <div class="section-head faq-head">
+      <span class="eyebrow-text">FAQ</span>
+      <h2>Najczęstsze pytania o Przydasia.</h2>
+      <p>Najważniejsze informacje przed wyborem pakietu i rozpoczęciem pracy z systemem.</p>
+    </div>
+
+    <div class="faq-list">
+      {faq.map((item) => (
+        <details class="faq-item">
+          <summary>{item.q}<span>+</span></summary>
+          <p>{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="final-cta-section" id="start">
+  <div class="shell final-cta-box">
+    <div>
+      <span class="final-kicker">Mniej chaosu. Więcej kontroli.</span>
+      <h2>Jedno miejsce do prowadzenia eventów, zespołu i firmy.</h2>
+      <p>
+        Zacznij od pakietu dopasowanego do tego, czego potrzebujesz dziś. Gdy firma urośnie, Przydaś urośnie razem z nią.
+      </p>
+    </div>
+    <div class="final-actions">
+      <a class="button final-primary" href="#cennik">Wybierz pakiet <span>→</span></a>
+      <a class="button final-secondary" href="#funkcje">Wróć do funkcji</a>
+      <small>Abonament miesięczny lub 12 miesięcy z 2 miesiącami gratis.</small>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="shell footer-main">
+    <a href="#top" class="footer-brand" aria-label="Przydaś - strona główna">
+      <span class="footer-mark">+</span>
+      <span><strong>Przydaś</strong><small>System dla branży animacyjnej</small></span>
+    </a>
+    <nav aria-label="Nawigacja w stopce">
+      <a href="#funkcje">Funkcje</a>
+      <a href="#dla-kogo">Dla kogo</a>
+      <a href="#cennik">Cennik</a>
+      <a href="#porownanie">Porównanie</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+  <div class="shell footer-bottom">
+    <span>© 2026 Przydaś</span>
+    <span>Od rezerwacji do danych. Cały cykl wydarzenia w jednym miejscu.</span>
+  </div>
+</footer>
+
+<style>
+  .comparison-section { padding: 112px 0; background: #fff; }
+  .comparison-head { max-width: 840px; }
+  .comparison-table-wrap { overflow-x: auto; border: 1px solid #dfe8e3; border-radius: 22px; background: #fff; box-shadow: 0 14px 38px rgba(30,74,53,.05); }
+  .comparison-table { width: 100%; min-width: 880px; border-collapse: collapse; font-size: 13px; }
+  .comparison-table th, .comparison-table td { padding: 16px 18px; border-bottom: 1px solid #e7eeea; text-align: center; vertical-align: middle; }
+  .comparison-table th:first-child, .comparison-table td:first-child { width: 43%; text-align: left; }
+  .comparison-table thead th { position: sticky; top: 0; z-index: 1; color: #15231c; background: #f8fbf9; font-size: 12px; font-weight: 850; letter-spacing: .02em; }
+  .comparison-table thead th span { display: inline-block; margin-top: 5px; color: #7c8982; font-size: 10px; font-weight: 650; letter-spacing: 0; }
+  .comparison-table .team-col { background: rgba(240,250,245,.65); }
+  .comparison-table .business-col { background: rgba(227,247,237,.7); }
+  .comparison-category td { padding-top: 22px; padding-bottom: 11px; color: #078a59; background: #fff !important; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+  .comparison-note { margin: 16px 0 0; color: #7c8982; font-size: 11px; line-height: 1.5; }
+
+  .trust-section { padding: 108px 0; background: #f6faf8; }
+  .trust-head { max-width: 880px; }
+  .trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .trust-card { min-height: 190px; padding: 28px; border: 1px solid #dfe9e3; border-radius: 21px; background: #fff; }
+  .trust-card > span { display: inline-flex; padding: 6px 8px; border-radius: 999px; color: #078a59; background: #eaf8f2; font-size: 10px; font-weight: 900; }
+  .trust-card h3 { margin: 22px 0 8px; font-size: 20px; letter-spacing: -.025em; }
+  .trust-card p { margin: 0; color: #6f7a74; font-size: 14px; line-height: 1.55; }
+
+  .onboarding-section { padding: 94px 0; background: #fff; }
+  .onboarding-box { padding: 42px; border-radius: 28px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 54px; align-items: center; color: #f7fbf8; background: linear-gradient(135deg, #101914, #173427); }
+  .onboarding-copy .eyebrow-text { color: #69dfaa; }
+  .onboarding-copy h2 { margin-bottom: 18px; font-size: clamp(34px, 3.6vw, 48px); line-height: 1.03; letter-spacing: -.045em; }
+  .onboarding-copy p { margin: 0; color: #aab9b0; line-height: 1.55; }
+  .onboarding-steps { display: grid; gap: 10px; }
+  .onboarding-steps article { padding: 17px 18px; border: 1px solid rgba(114,220,170,.16); border-radius: 16px; display: grid; grid-template-columns: 38px 1fr; gap: 13px; background: rgba(255,255,255,.045); }
+  .onboarding-steps article > span { color: #65dfa7; font-size: 11px; font-weight: 900; }
+  .onboarding-steps strong { display: block; margin-bottom: 4px; font-size: 14px; }
+  .onboarding-steps p { margin: 0; color: #9fb0a6; font-size: 12px; line-height: 1.45; }
+
+  .faq-section { padding: 108px 0; background: #f7faf8; }
+  .faq-shell { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: start; }
+  .faq-head { position: sticky; top: 118px; margin-bottom: 0; }
+  .faq-list { display: grid; gap: 10px; }
+  .faq-item { border: 1px solid #dfe8e3; border-radius: 16px; background: #fff; overflow: hidden; }
+  .faq-item summary { cursor: pointer; list-style: none; padding: 20px 21px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 14px; font-weight: 780; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary span { width: 28px; height: 28px; flex: 0 0 28px; display: grid; place-items: center; border-radius: 9px; color: #078a59; background: #eaf8f2; font-size: 18px; transition: transform .2s ease; }
+  .faq-item[open] summary span { transform: rotate(45deg); }
+  .faq-item p { margin: 0; padding: 0 21px 20px; color: #6f7a74; font-size: 13px; line-height: 1.6; }
+
+  .final-cta-section { padding: 96px 0; background: #fff; }
+  .final-cta-box { padding: 54px; border-radius: 30px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 50px; align-items: center; color: #f8fbf9; background: linear-gradient(135deg, #0c8e5b, #12ad70); box-shadow: 0 24px 60px rgba(18,173,112,.18); }
+  .final-kicker { display: inline-block; margin-bottom: 16px; color: #d9f7e8; font-size: 12px; font-weight: 850; }
+  .final-cta-box h2 { max-width: 760px; margin-bottom: 16px; font-size: clamp(38px, 4vw, 56px); line-height: 1.01; letter-spacing: -.05em; }
+  .final-cta-box p { max-width: 700px; margin: 0; color: #ddf5e9; font-size: 16px; line-height: 1.55; }
+  .final-actions { display: grid; gap: 10px; }
+  .final-primary { background: #fff; color: #087f53; box-shadow: none; }
+  .final-secondary { color: #fff; border: 1px solid rgba(255,255,255,.38); background: rgba(255,255,255,.08); }
+  .final-actions small { margin-top: 3px; color: #d8f3e6; font-size: 10px; line-height: 1.45; text-align: center; }
+
+  .site-footer { padding: 48px 0 26px; color: #b7c5bd; background: #101914; }
+  .footer-main { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding-bottom: 38px; }
+  .footer-brand { display: flex; align-items: center; gap: 11px; color: #fff; }
+  .footer-mark { width: 31px; height: 31px; border-radius: 9px; display: grid; place-items: center; background: #12ad70; font-size: 20px; font-weight: 500; }
+  .footer-brand > span:last-child { display: grid; gap: 3px; }
+  .footer-brand strong { font-size: 18px; }
+  .footer-brand small { color: #84968c; font-size: 9px; }
+  .footer-main nav { display: flex; gap: 24px; flex-wrap: wrap; font-size: 12px; font-weight: 700; }
+  .footer-main nav a:hover { color: #6fe0ad; }
+  .footer-bottom { padding-top: 22px; border-top: 1px solid #26352d; display: flex; justify-content: space-between; gap: 24px; color: #71837a; font-size: 10px; }
+
+  @media (max-width: 900px) {
+    .trust-grid { grid-template-columns: 1fr; }
+    .onboarding-box, .faq-shell, .final-cta-box { grid-template-columns: 1fr; }
+    .faq-head { position: static; }
+    .footer-main { align-items: flex-start; flex-direction: column; }
+  }
+
+  @media (max-width: 640px) {
+    .comparison-section, .trust-section, .faq-section { padding: 76px 0; }
+    .onboarding-section, .final-cta-section { padding: 70px 0; }
+    .onboarding-box, .final-cta-box { padding: 27px; }
+    .final-cta-box h2 { font-size: 39px; }
+    .footer-bottom { flex-direction: column; }
+  }
+</style>
