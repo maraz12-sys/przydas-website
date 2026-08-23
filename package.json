@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/apply_packages_section.js && astro build",
+    "build": "node scripts/assemble_landing_page.js && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
