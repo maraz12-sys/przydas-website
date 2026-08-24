@@ -2,6 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "przydas-website",
   "compatibility_date": "2026-08-24",
+  "routes": [
+    {
+      "pattern": "xn--przyda-8ib.pl",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",
