@@ -74,72 +74,71 @@ const comparisonSections = [
 const comparisonOutcomes = [
   {
     plan: 'START',
-    label: 'Kupujesz porządek',
-    text: 'Żeby rezerwacje, dane klienta i podstawowa organizacja nie były porozrzucane po kalendarzu, Messengerze i notatkach.',
+    price: '59 zł / mies.',
+    label: 'Gdy najbardziej boli chaos',
+    text: 'Rezerwacje, dane klienta i podstawowa organizacja przestają być porozrzucane po kalendarzu, wiadomościach i notatkach.',
   },
   {
     plan: 'ZESPÓŁ',
-    label: 'Kupujesz czas',
-    text: 'Żeby właściciel przestał ręcznie pilnować dyspozycyjności, potwierdzeń, zadań i tego, kto za co odpowiada.',
+    price: '149 zł / mies.',
+    label: 'Gdy najbardziej boli brak czasu',
+    text: 'Właściciel przestaje być ręcznym centrum dyspozycyjności, potwierdzeń, zadań i rozliczeń pracowników.',
   },
   {
     plan: 'BIZNES',
-    label: 'Kupujesz kontrolę i wzrost',
-    text: 'Żeby pilnować kosztów, materiałów, rentowności i wracać do klientów wtedy, kiedy jest największa szansa na kolejne zlecenie.',
+    price: '199 zł / mies.',
+    label: 'Gdy chcesz pilnować wyniku',
+    text: 'Do operacji dochodzą pieniądze, materiały, zaawansowane dane oraz praca nad powrotami klientów i kolejną sprzedażą.',
   },
 ];
 
 const trustItems = [
-  ['Branża animacyjna od środka', 'Przydaś nie jest uniwersalnym CRM-em z podmienionymi nazwami. Funkcje wynikają z realnego procesu firmy animacyjnej i eventowej.'],
-  ['Własne konta zespołu', 'Pracownicy logują się na swoje konta i widzą informacje oraz wydarzenia zgodnie z nadanymi uprawnieniami.'],
-  ['Telefon i komputer', 'Przydaś działa jako aplikacja webowa i PWA, więc zespół może korzystać z niego również podczas realizacji.'],
-  ['Dane oddzielone per organizacja', 'Dostęp do informacji jest rozdzielany według organizacji, użytkownika i jego roli w systemie.'],
+  ['Zbudowany pod branżę', 'Nie jest to uniwersalny CRM z podmienionymi nazwami. Funkcje wynikają z procesu firmy animacyjnej i eventowej.'],
+  ['Własne konta zespołu', 'Pracownicy logują się na swoje konta i widzą informacje zgodnie z rolą oraz nadanymi uprawnieniami.'],
+  ['Telefon i komputer', 'Przydaś działa jako aplikacja webowa i PWA, więc może być pod ręką również podczas realizacji.'],
+  ['Dane rozdzielone per organizacja', 'Dostęp do informacji jest rozdzielany według organizacji, użytkownika i jego roli w systemie.'],
 ];
 
 const faq = [
   {
-    q: 'Czy wyższy pakiet zawiera funkcje niższego?',
-    a: 'Tak. ZESPÓŁ zawiera funkcje START, a BIZNES zawiera funkcje START i ZESPÓŁ. Zmiana pakietu nie wymaga przechodzenia na inny system ani przenoszenia danych.',
-  },
-  {
-    q: 'Czy podane ceny są brutto?',
-    a: 'Tak. Ceny 59 zł, 149 zł i 199 zł są kwotami brutto za jeden miesiąc korzystania z odpowiedniego pakietu.',
-  },
-  {
-    q: 'Jak działa abonament roczny i 2 miesiące gratis?',
-    a: 'Przy płatności z góry za 12 miesięcy płacisz równowartość 10 miesięcy. START kosztuje 590 zł brutto rocznie, ZESPÓŁ 1 490 zł brutto, a BIZNES 1 990 zł brutto.',
-  },
-  {
     q: 'Czy 149 zł miesięcznie ma sens dla małej firmy?',
-    a: 'To zależy od sposobu pracy firmy. Pakiet ZESPÓŁ ma sens wtedy, gdy ręczne zbieranie dyspozycyjności, potwierdzeń, zadań i rozliczeń zabiera Ci czas albo generuje pomyłki. Przy płatności rocznej koszt efektywny wynosi 124,17 zł brutto miesięcznie. Warto porównać tę kwotę z czasem właściciela i kosztem jednej pominiętej lub źle przygotowanej realizacji.',
+    a: 'Jeśli koordynowanie zespołu zabiera Ci realny czas albo ręczne pilnowanie powoduje pomyłki — właśnie z tym trzeba porównać cenę. Przy płatności rocznej pakiet ZESPÓŁ kosztuje efektywnie 124,17 zł brutto miesięcznie. Kalkulator wyżej pozwala dodatkowo odnieść abonament do wartości własnych zleceń.',
   },
   {
     q: 'Czy jeden odzyskany klient może pokryć abonament?',
-    a: 'Zależy od wartości Twoich zleceń. Dla prostego przykładu: zlecenie o wartości 1 000 zł odpowiada około 67% rocznej ceny pakietu ZESPÓŁ. Dwa takie zlecenia mają wartość sprzedaży większą niż roczny abonament. To porównanie wartości sprzedaży, a nie gwarancja zysku — dlatego na stronie możesz policzyć je na własnych liczbach.',
+    a: 'To zależy od wartości Twoich zleceń. Przykładowe zlecenie za 1 000 zł odpowiada około 67% rocznej ceny pakietu ZESPÓŁ, a dwa takie zlecenia mają wartość sprzedaży większą niż roczny abonament. To porównanie wartości sprzedaży, nie gwarancja zysku.',
   },
   {
     q: 'Jak Przydaś pomaga wracać do byłych klientów?',
-    a: 'Zlecenie nie kończy się dla systemu w dniu eventu. Historia klienta zostaje w jednym miejscu, a pakiet BIZNES obejmuje przypomnienia o ponownym kontakcie. Dzięki temu łatwiej odezwać się do klienta przed kolejną okazją, zamiast liczyć na to, że sam o Tobie pamięta.',
+    a: 'Historia klienta nie znika po zakończeniu eventu. W pakiecie BIZNES dochodzą przypomnienia o ponownym kontakcie, dzięki czemu łatwiej odezwać się przed kolejną okazją zamiast liczyć, że klient sam będzie o Tobie pamiętał.',
+  },
+  {
+    q: 'Czy wyższy pakiet zawiera funkcje niższego?',
+    a: 'Tak. ZESPÓŁ zawiera START, a BIZNES zawiera START i ZESPÓŁ. Zmiana pakietu nie oznacza przechodzenia na inny system ani przenoszenia danych.',
+  },
+  {
+    q: 'Czy podane ceny są brutto?',
+    a: 'Tak. Ceny 59 zł, 149 zł i 199 zł są kwotami brutto za miesiąc korzystania z odpowiedniego pakietu.',
+  },
+  {
+    q: 'Jak działa abonament roczny i 2 miesiące gratis?',
+    a: 'Przy płatności z góry za 12 miesięcy płacisz równowartość 10 miesięcy: START 590 zł brutto, ZESPÓŁ 1 490 zł brutto, BIZNES 1 990 zł brutto.',
   },
   {
     q: 'Czy mogę później zmienić pakiet?',
-    a: 'Tak. Przydaś jest projektowany tak, aby firma mogła zacząć od prostszego pakietu i przejść wyżej, kiedy pojawi się większy zespół, więcej wydarzeń albo potrzeba rozliczeń i analiz.',
+    a: 'Tak. Możesz zacząć od prostszego zakresu i przejść wyżej, kiedy pojawi się większy zespół, więcej wydarzeń albo potrzeba dokładniejszych rozliczeń i analiz.',
   },
   {
     q: 'Czy każdy pracownik ma własne konto?',
-    a: 'Tak. Członkowie zespołu korzystają z własnych kont. Dzięki temu właściciel zarządza dostępem, a pracownik widzi to, co jest mu potrzebne do pracy.',
+    a: 'Tak. Członkowie zespołu korzystają z własnych kont. Właściciel zarządza dostępem, a pracownik widzi informacje potrzebne do swojej pracy.',
   },
   {
     q: 'Czy Przydaś działa na telefonie?',
-    a: 'Tak. Interfejs jest przygotowywany do pracy na komputerze i urządzeniach mobilnych. Przydaś może być również instalowany jako PWA.',
-  },
-  {
-    q: 'Czy mogę prowadzić w Przydasiu więcej niż jedną firmę?',
-    a: 'Tak. START obejmuje jedną firmę, ZESPÓŁ do trzech, a BIZNES pozwala obsługiwać firmy bez tego limitu.',
+    a: 'Tak. Interfejs jest przygotowywany do pracy na komputerze i urządzeniach mobilnych, a Przydaś może być instalowany jako PWA.',
   },
   {
     q: 'Co dzieje się z informacjami po zakończeniu wydarzenia?',
-    a: 'Event nie znika po realizacji. W zależności od pakietu jego dane mogą zasilać ankiety, rozliczenia, braki, statystyki i zestawienia potrzebne do dalszego prowadzenia firmy.',
+    a: 'Event nie znika po realizacji. W zależności od pakietu jego dane mogą zasilać feedback, rozliczenia, braki, historię klienta, statystyki i zestawienia potrzebne do dalszego prowadzenia firmy.',
   },
   {
     q: 'Czy dane różnych firm i użytkowników są od siebie oddzielone?',
@@ -151,43 +150,48 @@ const faq = [
 <section class="comparison-section" id="porownanie">
   <div class="shell">
     <div class="section-head comparison-head">
-      <span class="eyebrow-text">Pełne porównanie</span>
-      <h2>Nie wybieraj pakietu po liczbie funkcji.</h2>
+      <span class="eyebrow-text">Jeśli chcesz porównać wszystko</span>
+      <h2>Najpierw wybierz problem. Potem sprawdź checkboxy.</h2>
       <p>
-        Wybierz po problemie, który ma zniknąć. START ma uporządkować codzienność. ZESPÓŁ ma oddać Ci czas.
-        BIZNES ma dołożyć kontrolę nad pieniędzmi, danymi i powrotami klientów.
+        Lista funkcji ma pomóc potwierdzić wybór — nie zastąpić decyzji. START porządkuje podstawy, ZESPÓŁ odzyskuje czas właściciela,
+        a BIZNES dokłada kontrolę nad wynikiem i klientami.
       </p>
     </div>
 
     <div class="comparison-outcomes">
       {comparisonOutcomes.map((item, index) => (
         <article class:list={['comparison-outcome', index === 1 && 'comparison-outcome-team', index === 2 && 'comparison-outcome-business']}>
-          <span>{item.plan}</span>
+          <div class="comparison-outcome-top">
+            <span>{item.plan}</span>
+            <small>{item.price}</small>
+          </div>
           <strong>{item.label}</strong>
           <p>{item.text}</p>
         </article>
       ))}
     </div>
 
-    <div class="comparison-table-wrap" role="region" aria-label="Porównanie pakietów" tabindex="0">
+    <div class="comparison-mobile-hint">← Przesuń tabelę w bok, żeby zobaczyć wszystkie pakiety →</div>
+    <div class="comparison-table-wrap" role="region" aria-label="Pełne porównanie pakietów Przydasia" tabindex="0">
       <table class="comparison-table">
+        <caption class="sr-only">Porównanie funkcji pakietów START, ZESPÓŁ i BIZNES</caption>
         <thead>
           <tr>
-            <th>Funkcja</th>
-            <th>START<br /><span>59 zł brutto / mies.</span></th>
-            <th class="team-col">ZESPÓŁ<br /><span>149 zł brutto / mies.</span></th>
-            <th class="business-col">BIZNES<br /><span>199 zł brutto / mies.</span></th>
+            <th scope="col">Funkcja</th>
+            <th scope="col">START<br /><span>59 zł / mies.</span></th>
+            <th scope="col" class="team-col">ZESPÓŁ<br /><span>149 zł / mies.</span></th>
+            <th scope="col" class="business-col">BIZNES<br /><span>199 zł / mies.</span></th>
           </tr>
         </thead>
         <tbody>
           {comparisonSections.map((section) => (
             <>
               <tr class="comparison-category">
-                <td colspan="4">{section.title}</td>
+                <th scope="rowgroup" colspan="4">{section.title}</th>
               </tr>
               {section.rows.map(([label, start, team, business]) => (
                 <tr>
-                  <td>{label}</td>
+                  <th scope="row">{label}</th>
                   <td>{start}</td>
                   <td class="team-col">{team}</td>
                   <td class="business-col">{business}</td>
@@ -198,19 +202,18 @@ const faq = [
         </tbody>
       </table>
     </div>
-
-    <p class="comparison-note">Zakres funkcji będzie rozwijany razem z Przydasiem. Wyższy pakiet zawsze zawiera funkcje pakietów niższych.</p>
+    <p class="comparison-note">Wyższy pakiet zawiera funkcje pakietów niższych. Zakres Przydasia będzie rozwijany wraz z produktem.</p>
   </div>
 </section>
 
 <section class="trust-section">
   <div class="shell">
     <div class="section-head trust-head">
-      <span class="eyebrow-text">Zbudowany z realnych problemów branży</span>
-      <h2>Nie musisz dopasowywać firmy do przypadkowego CRM-u.</h2>
+      <span class="eyebrow-text">Po co kolejny system?</span>
+      <h2>Bo ten nie wymaga tłumaczenia, czym jest event animacyjny.</h2>
       <p>
-        Przydaś powstaje wokół procesu, który naprawdę przechodzi firma animacyjna: rezerwacja, zespół, realizacja,
-        feedback, rozliczenie, klient po evencie i dane do kolejnych decyzji.
+        Przydaś jest budowany wokół tego, co dzieje się naprawdę: klient dzwoni, termin wpada do kalendarza, trzeba zebrać ludzi,
+        przygotować realizację, zamknąć rozliczenie i nie zgubić klienta po wszystkim.
       </p>
     </div>
 
@@ -229,14 +232,14 @@ const faq = [
 <section class="onboarding-section">
   <div class="shell onboarding-box">
     <div class="onboarding-copy">
-      <span class="eyebrow-text">Bez wdrożenia na tygodnie</span>
-      <h2>Nie kupujesz kolejnego projektu do wdrożenia.</h2>
-      <p>Wchodzisz, ustawiasz firmę, zapraszasz zespół i przenosisz codzienną pracę do jednego miejsca.</p>
+      <span class="eyebrow-text">System ma oszczędzać czas także na starcie</span>
+      <h2>Bez wdrożenia na pół sezonu.</h2>
+      <p>Ustawiasz organizację, dodajesz zespół i zaczynasz przenosić codzienną pracę do jednego procesu.</p>
     </div>
     <div class="onboarding-steps">
-      <article><span>01</span><div><strong>Wybierasz zakres</strong><p>Zaczynasz od problemów, które dziś zabierają Ci najwięcej czasu.</p></div></article>
-      <article><span>02</span><div><strong>Konfigurujesz firmę</strong><p>Ustawiasz dane i formularze pod swój sposób pracy.</p></div></article>
-      <article><span>03</span><div><strong>Zapraszasz zespół</strong><p>Każdy dostaje własne konto i informacje potrzebne do realizacji.</p></div></article>
+      <article><span>01</span><div><strong>Wybierasz zakres</strong><p>Zaczynasz od tego, co dziś najbardziej przeszkadza w pracy.</p></div></article>
+      <article><span>02</span><div><strong>Ustawiasz firmę</strong><p>Konfigurujesz dane i formularze potrzebne do obsługi wydarzeń.</p></div></article>
+      <article><span>03</span><div><strong>Zapraszasz zespół</strong><p>Każdy dostaje własne konto i dostęp zgodny z rolą.</p></div></article>
     </div>
   </div>
 </section>
@@ -244,15 +247,15 @@ const faq = [
 <section class="faq-section" id="faq">
   <div class="shell faq-shell">
     <div class="section-head faq-head">
-      <span class="eyebrow-text">FAQ</span>
-      <h2>Pytania, które warto zadać przed abonamentem.</h2>
-      <p>Zwłaszcza jeśli każda stała opłata w małej firmie musi mieć konkretne uzasadnienie.</p>
+      <span class="eyebrow-text">FAQ bez marketingowej waty</span>
+      <h2>Najważniejsze pytania przed abonamentem.</h2>
+      <p>Zwłaszcza gdy każda stała opłata w małej firmie musi mieć konkretne uzasadnienie.</p>
     </div>
 
     <div class="faq-list">
       {faq.map((item) => (
         <details class="faq-item">
-          <summary>{item.q}<span>+</span></summary>
+          <summary>{item.q}<span aria-hidden="true">+</span></summary>
           <p>{item.a}</p>
         </details>
       ))}
@@ -263,75 +266,93 @@ const faq = [
 <section class="final-cta-section" id="start">
   <div class="shell final-cta-box">
     <div>
-      <span class="final-kicker">Cena ma mieć uzasadnienie.</span>
-      <h2>Przydaś ma kosztować mniej niż chaos, który usuwa.</h2>
+      <span class="final-kicker">Najpierw policz, co kosztuje Cię obecny sposób pracy.</span>
+      <h2>Przydaś ma być tańszy niż chaos, który usuwa.</h2>
       <p>
-        Jeśli oddaje Ci czas, ogranicza jedną kosztowną pomyłkę albo pomaga odzyskać klienta, zaczyna być inwestycją w firmę — nie kolejną aplikacją na liście abonamentów.
+        Jeśli oddaje Ci czas, ogranicza pomyłki i pomaga wykorzystać dane po realizacji, abonament przestaje być opłatą za „kolejny program”.
+        Staje się kosztem procesu, który ma pracować razem z firmą.
       </p>
     </div>
     <div class="final-actions">
-      <a class="button final-primary" href="#cennik">Wybierz pakiet <span>→</span></a>
-      <a class="button final-secondary" href="#porownanie">Porównaj funkcje</a>
-      <small>Abonament miesięczny lub 12 miesięcy z 2 miesiącami gratis.</small>
+      <a class="button final-primary" href="https://app.xn--przyda-8ib.pl/">Przejdź do Przydasia <span>→</span></a>
+      <a class="button final-secondary" href="#cennik">Wróć do pakietów</a>
+      <small>Pakiety od 59 zł brutto miesięcznie · przy płatności rocznej 2 miesiące gratis.</small>
     </div>
   </div>
 </section>
 
 <footer class="site-footer">
   <div class="shell footer-main">
-    <a href="#top" class="footer-brand" aria-label="Przydaś - strona główna">
-      <span class="footer-mark">+</span>
+    <a href="#top" class="footer-brand" aria-label="Przydaś — strona główna">
+      <span class="footer-mark"><img src="/przydas-mark.svg" alt="" /></span>
       <span><strong>Przydaś</strong><small>System dla branży animacyjnej</small></span>
     </a>
     <nav aria-label="Nawigacja w stopce">
-      <a href="#funkcje">Funkcje</a>
-      <a href="#dla-kogo">Dla kogo</a>
+      <a href="#korzysci">Korzyści</a>
+      <a href="#jak-dziala">Jak działa</a>
       <a href="#cennik">Cennik</a>
       <a href="#porownanie">Porównanie</a>
       <a href="#faq">FAQ</a>
+      <a href="https://app.xn--przyda-8ib.pl/">Logowanie</a>
     </nav>
   </div>
   <div class="shell footer-bottom">
     <span>© 2026 Przydaś</span>
-    <span>Od rezerwacji do danych. Cały cykl wydarzenia w jednym miejscu.</span>
+    <span>Mniej pilnowania. Więcej czasu na firmę.</span>
   </div>
 </footer>
 
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+})}></script>
+
 <style>
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
   .comparison-section { padding: 112px 0; background: #fff; }
-  .comparison-head { max-width: 880px; }
+  .comparison-head { max-width: 900px; }
   .comparison-outcomes { margin: -4px 0 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .comparison-outcome { min-height: 180px; padding: 24px; border: 1px solid #dfe8e3; border-radius: 20px; background: #fbfdfc; }
+  .comparison-outcome { min-height: 202px; padding: 24px; border: 1px solid #dfe8e3; border-radius: 20px; background: #fbfdfc; }
   .comparison-outcome-team { border-color: #c5e7d5; background: #f3faf6; }
   .comparison-outcome-business { border-color: #8bd6b2; background: linear-gradient(155deg, #effaf4, #e1f6eb); }
-  .comparison-outcome > span { display: inline-flex; padding: 7px 10px; border-radius: 999px; color: #078a59; background: #eaf8f2; font-size: 9px; font-weight: 900; letter-spacing: .07em; }
-  .comparison-outcome-business > span { color: #fff; background: #078a59; }
-  .comparison-outcome strong { display: block; margin: 24px 0 8px; font-size: 18px; letter-spacing: -.025em; }
+  .comparison-outcome-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .comparison-outcome-top > span { display: inline-flex; padding: 7px 10px; border-radius: 999px; color: #078a59; background: #eaf8f2; font-size: 9px; font-weight: 900; letter-spacing: .07em; }
+  .comparison-outcome-business .comparison-outcome-top > span { color: #fff; background: #078a59; }
+  .comparison-outcome-top small { color: #7b8881; font-size: 10px; font-weight: 750; }
+  .comparison-outcome strong { display: block; margin: 25px 0 8px; font-size: 18px; letter-spacing: -.025em; }
   .comparison-outcome p { margin: 0; color: #6f7a74; font-size: 13px; line-height: 1.55; }
+  .comparison-mobile-hint { display: none; }
   .comparison-table-wrap { overflow-x: auto; border: 1px solid #dfe8e3; border-radius: 22px; background: #fff; box-shadow: 0 14px 38px rgba(30,74,53,.05); }
   .comparison-table { width: 100%; min-width: 880px; border-collapse: collapse; font-size: 13px; }
   .comparison-table th, .comparison-table td { padding: 16px 18px; border-bottom: 1px solid #e7eeea; text-align: center; vertical-align: middle; }
-  .comparison-table th:first-child, .comparison-table td:first-child { width: 43%; text-align: left; }
-  .comparison-table thead th { position: sticky; top: 84px; z-index: 1; color: #15231c; background: #f8fbf9; font-size: 12px; font-weight: 850; letter-spacing: .02em; }
+  .comparison-table thead th:first-child, .comparison-table tbody th[scope='row'] { width: 43%; text-align: left; }
+  .comparison-table tbody th[scope='row'] { color: #26372f; background: #fff; font-weight: 630; }
+  .comparison-table thead th { position: sticky; top: 82px; z-index: 2; color: #15231c; background: #f8fbf9; font-size: 12px; font-weight: 850; letter-spacing: .02em; }
   .comparison-table thead th span { display: inline-block; margin-top: 5px; color: #7c8982; font-size: 10px; font-weight: 650; letter-spacing: 0; }
   .comparison-table .team-col { background: rgba(240,250,245,.65); }
   .comparison-table .business-col { background: rgba(227,247,237,.7); }
-  .comparison-category td { padding-top: 22px; padding-bottom: 11px; color: #078a59; background: #fff !important; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+  .comparison-category th { padding: 22px 18px 11px; color: #078a59; background: #fff !important; text-align: left; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
   .comparison-note { margin: 16px 0 0; color: #7c8982; font-size: 11px; line-height: 1.5; }
 
   .trust-section { padding: 108px 0; background: #f6faf8; }
-  .trust-head { max-width: 880px; }
+  .trust-head { max-width: 900px; }
   .trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .trust-card { min-height: 190px; padding: 28px; border: 1px solid #dfe9e3; border-radius: 21px; background: #fff; }
   .trust-card > span { display: inline-flex; padding: 6px 8px; border-radius: 999px; color: #078a59; background: #eaf8f2; font-size: 10px; font-weight: 900; }
   .trust-card h3 { margin: 22px 0 8px; font-size: 20px; letter-spacing: -.025em; }
-  .trust-card p { margin: 0; color: #6f7a74; font-size: 14px; line-height: 1.55; }
+  .trust-card p { margin: 0; color: #6f7a74; font-size: 14px; line-height: 1.58; }
 
   .onboarding-section { padding: 94px 0; background: #fff; }
   .onboarding-box { padding: 42px; border-radius: 28px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 54px; align-items: center; color: #f7fbf8; background: linear-gradient(135deg, #101914, #173427); }
   .onboarding-copy .eyebrow-text { color: #69dfaa; }
   .onboarding-copy h2 { margin-bottom: 18px; font-size: clamp(34px, 3.6vw, 48px); line-height: 1.03; letter-spacing: -.045em; }
-  .onboarding-copy p { margin: 0; color: #aab9b0; line-height: 1.55; }
+  .onboarding-copy p { margin: 0; color: #aab9b0; line-height: 1.58; }
   .onboarding-steps { display: grid; gap: 10px; }
   .onboarding-steps article { padding: 17px 18px; border: 1px solid rgba(114,220,170,.16); border-radius: 16px; display: grid; grid-template-columns: 38px 1fr; gap: 13px; background: rgba(255,255,255,.045); }
   .onboarding-steps article > span { color: #65dfa7; font-size: 11px; font-weight: 900; }
@@ -340,33 +361,34 @@ const faq = [
 
   .faq-section { padding: 108px 0; background: #f7faf8; }
   .faq-shell { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: start; }
-  .faq-head { position: sticky; top: 118px; margin-bottom: 0; }
+  .faq-head { position: sticky; top: 112px; margin-bottom: 0; }
   .faq-list { display: grid; gap: 10px; }
   .faq-item { border: 1px solid #dfe8e3; border-radius: 16px; background: #fff; overflow: hidden; }
   .faq-item summary { cursor: pointer; list-style: none; padding: 20px 21px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 14px; font-weight: 780; }
   .faq-item summary::-webkit-details-marker { display: none; }
   .faq-item summary span { width: 28px; height: 28px; flex: 0 0 28px; display: grid; place-items: center; border-radius: 9px; color: #078a59; background: #eaf8f2; font-size: 18px; transition: transform .2s ease; }
   .faq-item[open] summary span { transform: rotate(45deg); }
-  .faq-item p { margin: 0; padding: 0 21px 20px; color: #6f7a74; font-size: 13px; line-height: 1.6; }
+  .faq-item p { margin: 0; padding: 0 21px 20px; color: #6f7a74; font-size: 13px; line-height: 1.62; }
 
   .final-cta-section { padding: 96px 0; background: #fff; }
-  .final-cta-box { padding: 54px; border-radius: 30px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 50px; align-items: center; color: #f8fbf9; background: linear-gradient(135deg, #0c8e5b, #12ad70); box-shadow: 0 24px 60px rgba(18,173,112,.18); }
+  .final-cta-box { padding: 54px; border-radius: 30px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 50px; align-items: center; color: #f8fbf9; background: linear-gradient(135deg, #0c8254, #12ad70); box-shadow: 0 24px 60px rgba(18,173,112,.18); }
   .final-kicker { display: inline-block; margin-bottom: 16px; color: #d9f7e8; font-size: 12px; font-weight: 850; }
   .final-cta-box h2 { max-width: 760px; margin-bottom: 16px; font-size: clamp(38px, 4vw, 56px); line-height: 1.01; letter-spacing: -.05em; }
-  .final-cta-box p { max-width: 700px; margin: 0; color: #ddf5e9; font-size: 16px; line-height: 1.55; }
+  .final-cta-box p { max-width: 720px; margin: 0; color: #ddf5e9; font-size: 15px; line-height: 1.6; }
   .final-actions { display: grid; gap: 10px; }
   .final-primary { background: #fff; color: #087f53; box-shadow: none; }
   .final-secondary { color: #fff; border: 1px solid rgba(255,255,255,.38); background: rgba(255,255,255,.08); }
   .final-actions small { margin-top: 3px; color: #d8f3e6; font-size: 10px; line-height: 1.45; text-align: center; }
 
   .site-footer { padding: 48px 0 26px; color: #b7c5bd; background: #101914; }
-  .footer-main { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding-bottom: 38px; }
+  .footer-main { padding-bottom: 38px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
   .footer-brand { display: flex; align-items: center; gap: 11px; color: #fff; }
-  .footer-mark { width: 31px; height: 31px; border-radius: 9px; display: grid; place-items: center; background: #12ad70; font-size: 20px; font-weight: 500; }
+  .footer-mark { width: 31px; height: 31px; border-radius: 9px; overflow: hidden; display: grid; place-items: center; }
+  .footer-mark img { width: 31px; height: 31px; display: block; }
   .footer-brand > span:last-child { display: grid; gap: 3px; }
   .footer-brand strong { font-size: 18px; }
   .footer-brand small { color: #84968c; font-size: 9px; }
-  .footer-main nav { display: flex; gap: 24px; flex-wrap: wrap; font-size: 12px; font-weight: 700; }
+  .footer-main nav { display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; font-weight: 700; }
   .footer-main nav a:hover { color: #6fe0ad; }
   .footer-bottom { padding-top: 22px; border-top: 1px solid #26352d; display: flex; justify-content: space-between; gap: 24px; color: #71837a; font-size: 10px; }
 
@@ -381,8 +403,11 @@ const faq = [
   @media (max-width: 640px) {
     .comparison-section, .trust-section, .faq-section { padding: 76px 0; }
     .onboarding-section, .final-cta-section { padding: 70px 0; }
+    .comparison-mobile-hint { margin-bottom: 10px; display: block; color: #77857e; font-size: 10px; text-align: center; }
+    .comparison-table thead th { position: static; }
     .onboarding-box, .final-cta-box { padding: 27px; }
-    .final-cta-box h2 { font-size: 39px; }
+    .final-cta-box h2 { font-size: 38px; }
+    .final-actions .button { width: 100%; }
     .footer-bottom { flex-direction: column; }
   }
 </style>
