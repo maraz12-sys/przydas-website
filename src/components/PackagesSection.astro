@@ -6,9 +6,11 @@ const plans = [
     annualPrice: '590 zł',
     annualMonthly: '49,17 zł',
     annualSaving: '118 zł',
+    dailyPrice: 'ok. 1,97 zł dziennie',
     kicker: 'Porządek na co dzień',
-    title: 'Ogarnij rezerwacje i podstawową organizację.',
-    description: 'Dla firmy, która chce zebrać kalendarz, zespół i najważniejsze dane operacyjne w jednym miejscu.',
+    title: 'Odzyskaj porządek, zanim chaos zacznie kosztować.',
+    description: 'Dla firmy, która chce przestać szukać rezerwacji, ustaleń i informacji o zespole w kilku różnych miejscach.',
+    value: 'Kupujesz przede wszystkim porządek i mniej ręcznego pilnowania podstaw.',
     featured: false,
     bullets: [
       'Kalendarz i pełna obsługa rezerwacji',
@@ -26,9 +28,11 @@ const plans = [
     annualPrice: '1 490 zł',
     annualMonthly: '124,17 zł',
     annualSaving: '298 zł',
+    dailyPrice: 'ok. 4,97 zł dziennie',
     kicker: 'Więcej ludzi, mniej pilnowania',
-    title: 'Zarządzaj zespołem i przygotowaniem realizacji.',
-    description: 'Dla rozwijającej się firmy, w której samo zapisanie terminu już nie wystarcza.',
+    title: 'Oddaj systemowi pilnowanie zespołu i przygotowania eventów.',
+    description: 'Dla rozwijającej się firmy, w której właściciel nie chce być już centrum każdej wiadomości, potwierdzenia i zadania.',
+    value: 'Kupujesz czas właściciela i mniej pomyłek wynikających z ręcznego pilnowania ludzi.',
     featured: true,
     bullets: [
       'Wszystko z pakietu START',
@@ -46,15 +50,18 @@ const plans = [
     annualPrice: '1 990 zł',
     annualMonthly: '165,83 zł',
     annualSaving: '398 zł',
-    kicker: 'Pełna kontrola firmy',
-    title: 'Rozliczaj, analizuj i podejmuj decyzje na danych.',
-    description: 'Dla firmy, która chce kontrolować materiały, finanse, proces po evencie i rozwój całej organizacji.',
+    dailyPrice: 'ok. 6,63 zł dziennie',
+    kicker: 'Kontrola i wzrost',
+    title: 'Nie tylko prowadź eventy. Pilnuj pieniędzy, klientów i decyzji.',
+    description: 'Dla firmy, która chce wiedzieć, na czym zarabia, gdzie traci pieniądze i kiedy warto wrócić do klienta po kolejne zlecenie.',
+    value: 'Kupujesz kontrolę nad firmą i narzędzia, które mają pomagać odzyskiwać sprzedaż oraz podejmować lepsze decyzje.',
     featured: false,
     business: true,
     bullets: [
       'Wszystko z pakietu ZESPÓŁ',
       'Checklisty materiałowe i zakupowe',
       'Braki dotyczące materiałów i rozliczeń',
+      'Przypomnienia o ponownym kontakcie z byłymi klientami',
       'Asystent AI, podwykonawcy i nielimitowany magazyn',
       'Faktury, integracja z programem fakturowym i eksport do Excela',
       'Zaawansowane statystyki klientów, wydarzeń i źródeł zleceń',
@@ -66,12 +73,89 @@ const plans = [
 
 <section class="packages-section" id="cennik" data-billing="monthly">
   <div class="shell packages-shell">
+    <div class="value-intro">
+      <div class="value-intro-copy">
+        <span class="eyebrow-text">Najpierw wartość, potem cena</span>
+        <h2>Program kosztuje. Chaos też.</h2>
+        <p>
+          Przydaś nie ma być kolejnym abonamentem „za program”. Ma oddawać Ci czas, ograniczać kosztowne pomyłki,
+          porządkować firmę i pomagać wracać do klientów, którzy po udanym evencie mogą kupić ponownie.
+        </p>
+      </div>
+
+      <div class="value-grid" aria-label="Jak Przydaś może zwracać swoją cenę">
+        <article class="value-card">
+          <span class="value-icon">01</span>
+          <strong>Odzyskujesz czas</strong>
+          <p>Mniej szukania ustaleń, wiadomości do zespołu, ręcznych przypomnień i sprawdzania wszystkiego drugi raz.</p>
+        </article>
+        <article class="value-card">
+          <span class="value-icon">02</span>
+          <strong>Ograniczasz straty</strong>
+          <p>Braki, zadania, materiały i rozliczenia wychodzą wcześniej — zanim zamienią się w zakup na ostatnią chwilę albo błąd na evencie.</p>
+        </article>
+        <article class="value-card value-card-accent">
+          <span class="value-icon">03</span>
+          <strong>Wracasz po kolejne zlecenia</strong>
+          <p>Klient nie powinien znikać po realizacji. Historia zleceń i przypomnienia pomagają odezwać się ponownie, zanim wybierze kogoś innego.</p>
+        </article>
+        <article class="value-card">
+          <span class="value-icon">04</span>
+          <strong>Wiesz, co naprawdę działa</strong>
+          <p>Rozliczenia i statystyki pokazują, które wydarzenia, źródła klientów i działania warto rozwijać, a które tylko zabierają czas.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="roi-calculator" data-roi-calculator>
+      <div class="roi-copy">
+        <span class="roi-kicker">Policz na swoich liczbach</span>
+        <h3>Ile może znaczyć jeden klient, który wróci?</h3>
+        <p>
+          Wpisz średnią wartość zlecenia i liczbę klientów, których uda Ci się odzyskać w ciągu roku.
+          Zobaczysz skalę w odniesieniu do ceny wybranego pakietu.
+        </p>
+      </div>
+
+      <div class="roi-fields">
+        <label>
+          <span>Średnia wartość zlecenia</span>
+          <div class="roi-input-wrap"><input type="number" min="0" step="100" value="1000" data-roi-order aria-label="Średnia wartość zlecenia" /><b>zł</b></div>
+        </label>
+        <label>
+          <span>Odzyskani klienci / rok</span>
+          <div class="roi-input-wrap"><input type="number" min="0" step="1" value="1" data-roi-clients aria-label="Liczba odzyskanych klientów rocznie" /><b>os.</b></div>
+        </label>
+        <label>
+          <span>Porównaj z pakietem</span>
+          <select data-roi-plan aria-label="Pakiet do porównania">
+            <option value="590">START · 590 zł / rok</option>
+            <option value="1490" selected>ZESPÓŁ · 1 490 zł / rok</option>
+            <option value="1990">BIZNES · 1 990 zł / rok</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="roi-result" aria-live="polite">
+        <div>
+          <span>Wartość odzyskanych zleceń</span>
+          <strong data-roi-value>1 000 zł</strong>
+        </div>
+        <div class="roi-result-highlight">
+          <span>W odniesieniu do rocznego abonamentu</span>
+          <strong data-roi-ratio>67%</strong>
+          <em data-roi-message>To równowartość ok. 67% rocznej ceny pakietu ZESPÓŁ.</em>
+        </div>
+      </div>
+      <small class="roi-disclaimer">To prosty kalkulator wartości sprzedaży, nie obietnica wyniku ani zysku. Rzeczywisty efekt zależy od wartości zleceń, marży i sposobu pracy firmy.</small>
+    </div>
+
     <div class="section-head packages-head">
       <span class="eyebrow-text">Pakiety Przydasia</span>
-      <h2>Wybierasz poziom, nie nowy system.</h2>
+      <h2>Wybierasz efekt, którego potrzebujesz dziś.</h2>
       <p>
-        Każdy wyższy pakiet zawiera funkcje niższego. Zaczynasz od tego, czego potrzebujesz dzisiaj,
-        a wraz z rozwojem firmy odblokowujesz kolejne możliwości bez przenoszenia danych i zmiany narzędzia.
+        START porządkuje podstawy. ZESPÓŁ oddaje Ci czas i automatyzuje pilnowanie ludzi. BIZNES dokłada kontrolę finansową,
+        dane i narzędzia do pracy nad powrotami klientów. Wyższy pakiet zawsze zawiera funkcje niższego.
       </p>
 
       <div class="pricing-controls">
@@ -105,6 +189,7 @@ const plans = [
             <strong class="package-price">{plan.annualPrice}</strong>
             <span class="package-period">brutto / rok</span>
           </div>
+          <span class="package-daily monthly-only">{plan.dailyPrice}</span>
 
           <div class="annual-offer">
             <div class="monthly-only">
@@ -120,6 +205,7 @@ const plans = [
 
           <h3>{plan.title}</h3>
           <p class="package-description">{plan.description}</p>
+          <div class="package-value"><span>Po co ten pakiet?</span><strong>{plan.value}</strong></div>
           <div class="package-divider"></div>
           <ul class="package-list">
             {plan.bullets.map((bullet) => (
@@ -140,8 +226,8 @@ const plans = [
 
     <div class="package-comparison">
       <div>
-        <strong>Chcesz porównać wszystko punkt po punkcie?</strong>
-        <span>Niżej znajdziesz pełną tabelę funkcji, limitów i różnic między START, ZESPÓŁ i BIZNES.</span>
+        <strong>Nie wiesz, czy 149 zł lub 199 zł ma sens?</strong>
+        <span>Niżej porównasz funkcje punkt po punkcie. Patrz nie tylko na liczbę opcji — sprawdź, które z nich zdejmują z Ciebie pracę albo chronią przychód.</span>
       </div>
       <a href="#porownanie">Pełne porównanie pakietów <span>→</span></a>
     </div>
@@ -173,11 +259,81 @@ const plans = [
     buttons.forEach((button) => {
       button.addEventListener('click', () => setBilling(button.getAttribute('data-billing-value') || 'monthly'));
     });
+
+    const calculator = section.querySelector('[data-roi-calculator]');
+    if (!calculator) return;
+
+    const orderInput = calculator.querySelector('[data-roi-order]');
+    const clientsInput = calculator.querySelector('[data-roi-clients]');
+    const planInput = calculator.querySelector('[data-roi-plan]');
+    const valueOutput = calculator.querySelector('[data-roi-value]');
+    const ratioOutput = calculator.querySelector('[data-roi-ratio]');
+    const messageOutput = calculator.querySelector('[data-roi-message]');
+    const money = new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN', maximumFractionDigits: 0 });
+
+    const updateRoi = () => {
+      const orderValue = Math.max(0, Number(orderInput?.value || 0));
+      const clients = Math.max(0, Number(clientsInput?.value || 0));
+      const planCost = Math.max(1, Number(planInput?.value || 1));
+      const recoveredValue = orderValue * clients;
+      const ratio = Math.round((recoveredValue / planCost) * 100);
+      const planName = planInput?.selectedOptions?.[0]?.textContent?.split('·')?.[0]?.trim() || 'wybranego pakietu';
+
+      if (valueOutput) valueOutput.textContent = money.format(recoveredValue);
+      if (ratioOutput) ratioOutput.textContent = `${ratio}%`;
+      if (messageOutput) {
+        if (recoveredValue >= planCost) {
+          const difference = recoveredValue - planCost;
+          messageOutput.textContent = `Wartość tych zleceń jest wyższa od rocznej ceny pakietu ${planName} o ${money.format(difference)}.`;
+        } else {
+          messageOutput.textContent = `To równowartość ok. ${ratio}% rocznej ceny pakietu ${planName}.`;
+        }
+      }
+    };
+
+    [orderInput, clientsInput, planInput].forEach((input) => input?.addEventListener('input', updateRoi));
+    planInput?.addEventListener('change', updateRoi);
+    updateRoi();
   })();
 </script>
 
 <style>
   .packages-section { padding: 112px 0; background: #f5f9f7; }
+  .value-intro { margin-bottom: 34px; }
+  .value-intro-copy { max-width: 900px; margin-bottom: 30px; }
+  .value-intro-copy h2 { margin: 0 0 20px; font-size: clamp(40px, 4.5vw, 62px); line-height: 1.02; letter-spacing: -.05em; }
+  .value-intro-copy p { max-width: 850px; margin: 0; color: #66756d; font-size: 17px; line-height: 1.62; }
+  .value-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .value-card { min-height: 220px; padding: 24px; border: 1px solid #dce8e1; border-radius: 20px; background: #fff; box-shadow: 0 12px 34px rgba(28,74,52,.04); }
+  .value-card-accent { border-color: #8edbb7; background: linear-gradient(155deg, #f1fbf6, #e4f7ed); }
+  .value-icon { width: 34px; height: 34px; margin-bottom: 28px; display: grid; place-items: center; border-radius: 11px; color: #078a59; background: #eaf8f2; font-size: 10px; font-weight: 900; }
+  .value-card-accent .value-icon { color: #fff; background: #078a59; }
+  .value-card strong { display: block; margin-bottom: 9px; font-size: 17px; letter-spacing: -.02em; }
+  .value-card p { margin: 0; color: #6f7a74; font-size: 13px; line-height: 1.58; }
+
+  .roi-calculator { margin: 28px 0 82px; padding: 34px; border: 1px solid #b7dfca; border-radius: 26px; background: linear-gradient(135deg, #10251b, #123b29); color: #f7fbf8; box-shadow: 0 22px 54px rgba(16,57,38,.12); }
+  .roi-copy { max-width: 820px; }
+  .roi-kicker { display: inline-block; margin-bottom: 12px; color: #6fe0ad; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+  .roi-copy h3 { margin: 0 0 12px; font-size: clamp(30px, 3vw, 43px); line-height: 1.04; letter-spacing: -.04em; }
+  .roi-copy p { max-width: 760px; margin: 0; color: #aec0b6; font-size: 14px; line-height: 1.58; }
+  .roi-fields { margin-top: 27px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .roi-fields label { display: grid; gap: 8px; }
+  .roi-fields label > span { color: #b9c9c0; font-size: 11px; font-weight: 750; }
+  .roi-input-wrap, .roi-fields select { min-height: 52px; border: 1px solid rgba(151,220,187,.2); border-radius: 13px; background: rgba(255,255,255,.08); color: #fff; }
+  .roi-input-wrap { padding: 0 14px; display: flex; align-items: center; gap: 8px; }
+  .roi-input-wrap input { min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; color: #fff; font: inherit; font-size: 16px; font-weight: 800; }
+  .roi-input-wrap b { color: #7ee2b4; font-size: 12px; }
+  .roi-fields select { width: 100%; padding: 0 14px; outline: 0; font: inherit; font-size: 13px; font-weight: 750; }
+  .roi-fields select option { color: #15231c; background: #fff; }
+  .roi-result { margin-top: 16px; display: grid; grid-template-columns: .8fr 1.2fr; gap: 12px; }
+  .roi-result > div { min-height: 120px; padding: 20px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; background: rgba(255,255,255,.06); }
+  .roi-result span { color: #9eb2a7; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+  .roi-result strong { margin-top: 7px; font-size: 30px; letter-spacing: -.04em; }
+  .roi-result-highlight { border: 1px solid rgba(111,224,173,.22); background: rgba(18,173,112,.14) !important; }
+  .roi-result-highlight strong { color: #7be3b4; }
+  .roi-result em { margin-top: 5px; color: #c3d5cb; font-size: 12px; font-style: normal; line-height: 1.45; }
+  .roi-disclaimer { display: block; margin-top: 14px; color: #82988c; font-size: 9px; line-height: 1.5; }
+
   .packages-head { max-width: 900px; }
   .pricing-controls { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
   .billing-toggle { display: inline-flex; padding: 4px; border: 1px solid #d5e5dc; border-radius: 14px; background: #fff; box-shadow: 0 8px 24px rgba(28,74,52,.05); }
@@ -188,7 +344,7 @@ const plans = [
   .annual-banner { width: fit-content; padding: 10px 14px; border: 1px solid #bde7d2; border-radius: 14px; display: flex; align-items: center; gap: 10px; background: #edf9f3; color: #426254; font-size: 13px; font-weight: 650; }
   .annual-banner-badge { padding: 6px 9px; border-radius: 999px; background: #078a59; color: #fff; font-size: 9px; font-weight: 900; letter-spacing: .07em; }
   .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
-  .package-card { position: relative; display: flex; flex-direction: column; min-height: 760px; padding: 30px; border-radius: 24px; border: 1px solid #dce7e1; background: #fff; box-shadow: 0 16px 42px rgba(28,74,52,.05); }
+  .package-card { position: relative; display: flex; flex-direction: column; min-height: 860px; padding: 30px; border-radius: 24px; border: 1px solid #dce7e1; background: #fff; box-shadow: 0 16px 42px rgba(28,74,52,.05); }
   .package-card-featured { transform: translateY(-10px); border-color: #88dbb4; box-shadow: 0 24px 52px rgba(18,173,112,.12); }
   .package-card-business { border-color: #73cfa4; background: linear-gradient(160deg, #f1fbf6, #e5f7ee); }
   .package-recommended { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); padding: 7px 12px; border-radius: 999px; white-space: nowrap; color: #fff; background: #078a59; font-size: 9px; font-weight: 850; letter-spacing: .07em; }
@@ -196,9 +352,10 @@ const plans = [
   .package-name { display: inline-flex; padding: 8px 11px; border-radius: 999px; color: #087f53; background: #eaf8f2; font-size: 11px; font-weight: 900; letter-spacing: .08em; }
   .package-card-business .package-name { color: #fff; background: #078a59; }
   .package-kicker { color: #86938c; font-size: 12px; font-weight: 700; }
-  .package-price-row { display: flex; align-items: baseline; gap: 7px; margin: 12px 0; }
+  .package-price-row { display: flex; align-items: baseline; gap: 7px; margin: 12px 0 4px; }
   .package-price { font-size: 42px; line-height: 1; letter-spacing: -.05em; }
   .package-period { color: #7d8a83; font-size: 13px; font-weight: 650; }
+  .package-daily { display: block; margin-bottom: 12px; color: #087f53; font-size: 11px; font-weight: 800; }
   .annual-only { display: none !important; }
   .packages-section[data-billing='annual'] .monthly-only { display: none !important; }
   .packages-section[data-billing='annual'] .annual-only { display: flex !important; }
@@ -210,6 +367,9 @@ const plans = [
   .annual-saving { flex: 0 0 auto; padding: 6px 8px; border-radius: 999px; color: #078a59; background: #fff; font-size: 10px; font-weight: 850; }
   .package-card h3 { margin: 0 0 14px; font-size: 27px; line-height: 1.08; letter-spacing: -.04em; }
   .package-description { min-height: 112px; margin: 0; color: #6f7a74; font-size: 14px; line-height: 1.55; }
+  .package-value { min-height: 118px; margin-top: 16px; padding: 14px; border: 1px solid #dcebe4; border-radius: 14px; display: grid; gap: 6px; background: rgba(247,251,249,.86); }
+  .package-value span { color: #078a59; font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: .07em; }
+  .package-value strong { font-size: 12px; line-height: 1.5; }
   .package-divider { height: 1px; margin: 24px 0; background: #e4ece8; }
   .package-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
   .package-list li { display: grid; grid-template-columns: 23px 1fr; gap: 10px; align-items: start; font-size: 13px; line-height: 1.42; }
@@ -220,18 +380,26 @@ const plans = [
   .package-comparison { margin-top: 28px; padding: 26px 28px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; gap: 28px; background: #fff; border: 1px solid #dfe8e3; }
   .package-comparison div { display: grid; gap: 5px; }
   .package-comparison strong { font-size: 15px; }
-  .package-comparison span { color: #6f7a74; font-size: 12px; line-height: 1.45; }
+  .package-comparison span { max-width: 720px; color: #6f7a74; font-size: 12px; line-height: 1.45; }
   .package-comparison > a { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; color: #078a59; font-size: 13px; font-weight: 800; }
 
+  @media (max-width: 1000px) {
+    .value-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
   @media (max-width: 900px) {
+    .roi-fields, .roi-result { grid-template-columns: 1fr; }
     .packages-grid { grid-template-columns: 1fr; }
     .package-card { min-height: auto; }
     .package-card-featured { transform: none; }
-    .package-description { min-height: auto; }
+    .package-description, .package-value { min-height: auto; }
   }
 
   @media (max-width: 640px) {
     .packages-section { padding: 76px 0; }
+    .value-grid { grid-template-columns: 1fr; }
+    .value-card { min-height: auto; }
+    .roi-calculator { margin-bottom: 64px; padding: 24px; }
     .pricing-controls { align-items: stretch; flex-direction: column; }
     .billing-toggle { width: 100%; }
     .billing-toggle button { flex: 1; padding-inline: 10px; }
