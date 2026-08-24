@@ -105,8 +105,8 @@ const faq = [
     a: 'Jeśli koordynowanie zespołu zabiera Ci realny czas albo ręczne pilnowanie powoduje pomyłki — właśnie z tym trzeba porównać cenę. Przy płatności rocznej pakiet ZESPÓŁ kosztuje efektywnie 124,17 zł brutto miesięcznie. Kalkulator wyżej pozwala dodatkowo odnieść abonament do wartości własnych zleceń.',
   },
   {
-    q: 'Czy jeden odzyskany klient może pokryć abonament?',
-    a: 'To zależy od wartości Twoich zleceń. Przykładowe zlecenie za 1 000 zł odpowiada około 67% rocznej ceny pakietu ZESPÓŁ, a dwa takie zlecenia mają wartość sprzedaży większą niż roczny abonament. To porównanie wartości sprzedaży, nie gwarancja zysku.',
+    q: 'Czy jeden dodatkowy klient może pokryć abonament?',
+    a: 'To zależy od wartości Twoich zleceń i wybranego pakietu. Kalkulator pokazuje wyłącznie relację wartości sprzedaży do ceny abonamentu, a nie zysk ani gwarantowany wynik. Przypomnienia o ponownym kontakcie z byłymi klientami są funkcją pakietu BIZNES.',
   },
   {
     q: 'Jak Przydaś pomaga wracać do byłych klientów?',
@@ -151,10 +151,10 @@ const faq = [
   <div class="shell">
     <div class="section-head comparison-head">
       <span class="eyebrow-text">Jeśli chcesz porównać wszystko</span>
-      <h2>Najpierw wybierz problem. Potem sprawdź checkboxy.</h2>
+      <h2>Potwierdź wybór funkcjami punkt po punkcie.</h2>
       <p>
-        Lista funkcji ma pomóc potwierdzić wybór — nie zastąpić decyzji. START porządkuje podstawy, ZESPÓŁ odzyskuje czas właściciela,
-        a BIZNES dokłada kontrolę nad wynikiem i klientami.
+        START porządkuje podstawy, ZESPÓŁ odzyskuje czas właściciela, a BIZNES dokłada kontrolę nad wynikiem i klientami.
+        Tabela niżej pokazuje dokładnie, gdzie przebiegają różnice.
       </p>
     </div>
 
@@ -171,7 +171,7 @@ const faq = [
       ))}
     </div>
 
-    <div class="comparison-mobile-hint">← Przesuń tabelę w bok, żeby zobaczyć wszystkie pakiety →</div>
+    <div class="comparison-mobile-hint">← Tabela przewija się w pionie i poziomie →</div>
     <div class="comparison-table-wrap" role="region" aria-label="Pełne porównanie pakietów Przydasia" tabindex="0">
       <table class="comparison-table">
         <caption class="sr-only">Porównanie funkcji pakietów START, ZESPÓŁ i BIZNES</caption>
@@ -266,15 +266,15 @@ const faq = [
 <section class="final-cta-section" id="start">
   <div class="shell final-cta-box">
     <div>
-      <span class="final-kicker">Najpierw policz, co kosztuje Cię obecny sposób pracy.</span>
-      <h2>Przydaś ma być tańszy niż chaos, który usuwa.</h2>
+      <span class="final-kicker" data-selected-plan-label>Obecnie: dostęp dla zaproszonych firm.</span>
+      <h2>Publiczny start dla nowych firm jest kolejnym krokiem.</h2>
       <p>
-        Jeśli oddaje Ci czas, ogranicza pomyłki i pomaga wykorzystać dane po realizacji, abonament przestaje być opłatą za „kolejny program”.
-        Staje się kosztem procesu, który ma pracować razem z firmą.
+        Cennik i zakres są już gotowe, ale nowych kont nie zakładamy jeszcze samodzielnie z tej strony.
+        Na etapie testów dostęp uruchamiamy zaproszonym firmom. Gdy sprzedaż wystartuje, tutaj pojawi się bezpośredni start dla nowego klienta.
       </p>
     </div>
     <div class="final-actions">
-      <a class="button final-primary" href="https://app.xn--przyda-8ib.pl/">Przejdź do Przydasia <span>→</span></a>
+      <a class="button final-primary" href="https://app.xn--przyda-8ib.pl/">Mam już konto — zaloguj się <span>→</span></a>
       <a class="button final-secondary" href="#cennik">Wróć do pakietów</a>
       <small>Pakiety od 59 zł brutto miesięcznie · przy płatności rocznej 2 miesiące gratis.</small>
     </div>
@@ -322,42 +322,42 @@ const faq = [
   .comparison-outcome-team { border-color: #c5e7d5; background: #f3faf6; }
   .comparison-outcome-business { border-color: #8bd6b2; background: linear-gradient(155deg, #effaf4, #e1f6eb); }
   .comparison-outcome-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .comparison-outcome-top > span { display: inline-flex; padding: 7px 10px; border-radius: 999px; color: #078a59; background: #eaf8f2; font-size: 9px; font-weight: 900; letter-spacing: .07em; }
-  .comparison-outcome-business .comparison-outcome-top > span { color: #fff; background: #078a59; }
-  .comparison-outcome-top small { color: #7b8881; font-size: 10px; font-weight: 750; }
+  .comparison-outcome-top > span { display: inline-flex; padding: 7px 10px; border-radius: 999px; color: #087f53; background: #eaf8f2; font-size: 9px; font-weight: 900; letter-spacing: .07em; }
+  .comparison-outcome-business .comparison-outcome-top > span { color: #fff; background: #087f53; }
+  .comparison-outcome-top small { color: #66756d; font-size: 10px; font-weight: 750; }
   .comparison-outcome strong { display: block; margin: 25px 0 8px; font-size: 18px; letter-spacing: -.025em; }
-  .comparison-outcome p { margin: 0; color: #6f7a74; font-size: 13px; line-height: 1.55; }
+  .comparison-outcome p { margin: 0; color: #66756d; font-size: 13px; line-height: 1.55; }
   .comparison-mobile-hint { display: none; }
-  .comparison-table-wrap { overflow-x: auto; border: 1px solid #dfe8e3; border-radius: 22px; background: #fff; box-shadow: 0 14px 38px rgba(30,74,53,.05); }
+  .comparison-table-wrap { overflow-x: auto; border: 1px solid #dfe8e3; border-radius: 22px; background: #fff; box-shadow: 0 14px 38px rgba(30,74,53,.05); scrollbar-width: thin; scrollbar-color: #9acdb5 #f3f7f5; }
   .comparison-table { width: 100%; min-width: 880px; border-collapse: collapse; font-size: 13px; }
   .comparison-table th, .comparison-table td { padding: 16px 18px; border-bottom: 1px solid #e7eeea; text-align: center; vertical-align: middle; }
   .comparison-table thead th:first-child, .comparison-table tbody th[scope='row'] { width: 43%; text-align: left; }
   .comparison-table tbody th[scope='row'] { color: #26372f; background: #fff; font-weight: 630; }
   .comparison-table thead th { position: sticky; top: 82px; z-index: 2; color: #15231c; background: #f8fbf9; font-size: 12px; font-weight: 850; letter-spacing: .02em; }
-  .comparison-table thead th span { display: inline-block; margin-top: 5px; color: #7c8982; font-size: 10px; font-weight: 650; letter-spacing: 0; }
+  .comparison-table thead th span { display: inline-block; margin-top: 5px; color: #66756d; font-size: 10px; font-weight: 650; letter-spacing: 0; }
   .comparison-table .team-col { background: rgba(240,250,245,.65); }
   .comparison-table .business-col { background: rgba(227,247,237,.7); }
-  .comparison-category th { padding: 22px 18px 11px; color: #078a59; background: #fff !important; text-align: left; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
-  .comparison-note { margin: 16px 0 0; color: #7c8982; font-size: 11px; line-height: 1.5; }
+  .comparison-category th { padding: 22px 18px 11px; color: #087f53; background: #fff !important; text-align: left; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+  .comparison-note { margin: 16px 0 0; color: #66756d; font-size: 11px; line-height: 1.5; }
 
   .trust-section { padding: 108px 0; background: #f6faf8; }
   .trust-head { max-width: 900px; }
   .trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .trust-card { min-height: 190px; padding: 28px; border: 1px solid #dfe9e3; border-radius: 21px; background: #fff; }
-  .trust-card > span { display: inline-flex; padding: 6px 8px; border-radius: 999px; color: #078a59; background: #eaf8f2; font-size: 10px; font-weight: 900; }
+  .trust-card > span { display: inline-flex; padding: 6px 8px; border-radius: 999px; color: #087f53; background: #eaf8f2; font-size: 10px; font-weight: 900; }
   .trust-card h3 { margin: 22px 0 8px; font-size: 20px; letter-spacing: -.025em; }
-  .trust-card p { margin: 0; color: #6f7a74; font-size: 14px; line-height: 1.58; }
+  .trust-card p { margin: 0; color: #66756d; font-size: 14px; line-height: 1.58; }
 
   .onboarding-section { padding: 94px 0; background: #fff; }
   .onboarding-box { padding: 42px; border-radius: 28px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 54px; align-items: center; color: #f7fbf8; background: linear-gradient(135deg, #101914, #173427); }
-  .onboarding-copy .eyebrow-text { color: #69dfaa; }
+  .onboarding-copy .eyebrow-text { color: #83e9ba; }
   .onboarding-copy h2 { margin-bottom: 18px; font-size: clamp(34px, 3.6vw, 48px); line-height: 1.03; letter-spacing: -.045em; }
-  .onboarding-copy p { margin: 0; color: #aab9b0; line-height: 1.58; }
+  .onboarding-copy p { margin: 0; color: #c0cec6; line-height: 1.58; }
   .onboarding-steps { display: grid; gap: 10px; }
-  .onboarding-steps article { padding: 17px 18px; border: 1px solid rgba(114,220,170,.16); border-radius: 16px; display: grid; grid-template-columns: 38px 1fr; gap: 13px; background: rgba(255,255,255,.045); }
-  .onboarding-steps article > span { color: #65dfa7; font-size: 11px; font-weight: 900; }
+  .onboarding-steps article { padding: 17px 18px; border: 1px solid rgba(114,220,170,.2); border-radius: 16px; display: grid; grid-template-columns: 38px 1fr; gap: 13px; background: rgba(255,255,255,.055); }
+  .onboarding-steps article > span { color: #83e9ba; font-size: 11px; font-weight: 900; }
   .onboarding-steps strong { display: block; margin-bottom: 4px; font-size: 14px; }
-  .onboarding-steps p { margin: 0; color: #9fb0a6; font-size: 12px; line-height: 1.45; }
+  .onboarding-steps p { margin: 0; color: #b5c6bd; font-size: 12px; line-height: 1.45; }
 
   .faq-section { padding: 108px 0; background: #f7faf8; }
   .faq-shell { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: start; }
@@ -366,31 +366,32 @@ const faq = [
   .faq-item { border: 1px solid #dfe8e3; border-radius: 16px; background: #fff; overflow: hidden; }
   .faq-item summary { cursor: pointer; list-style: none; padding: 20px 21px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 14px; font-weight: 780; }
   .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item summary span { width: 28px; height: 28px; flex: 0 0 28px; display: grid; place-items: center; border-radius: 9px; color: #078a59; background: #eaf8f2; font-size: 18px; transition: transform .2s ease; }
+  .faq-item summary span { width: 28px; height: 28px; flex: 0 0 28px; display: grid; place-items: center; border-radius: 9px; color: #087f53; background: #eaf8f2; font-size: 18px; transition: transform .2s ease; }
   .faq-item[open] summary span { transform: rotate(45deg); }
-  .faq-item p { margin: 0; padding: 0 21px 20px; color: #6f7a74; font-size: 13px; line-height: 1.62; }
+  .faq-item p { margin: 0; padding: 0 21px 20px; color: #66756d; font-size: 13px; line-height: 1.62; }
 
   .final-cta-section { padding: 96px 0; background: #fff; }
-  .final-cta-box { padding: 54px; border-radius: 30px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 50px; align-items: center; color: #f8fbf9; background: linear-gradient(135deg, #0c8254, #12ad70); box-shadow: 0 24px 60px rgba(18,173,112,.18); }
+  .final-cta-box { padding: 54px; border-radius: 30px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 50px; align-items: center; color: #f8fbf9; background: linear-gradient(135deg, #056b45, #087f53); box-shadow: 0 24px 60px rgba(8,127,83,.2); }
   .final-kicker { display: inline-block; margin-bottom: 16px; color: #d9f7e8; font-size: 12px; font-weight: 850; }
   .final-cta-box h2 { max-width: 760px; margin-bottom: 16px; font-size: clamp(38px, 4vw, 56px); line-height: 1.01; letter-spacing: -.05em; }
-  .final-cta-box p { max-width: 720px; margin: 0; color: #ddf5e9; font-size: 15px; line-height: 1.6; }
+  .final-cta-box p { max-width: 720px; margin: 0; color: #e8f7ef; font-size: 15px; line-height: 1.6; }
   .final-actions { display: grid; gap: 10px; }
-  .final-primary { background: #fff; color: #087f53; box-shadow: none; }
-  .final-secondary { color: #fff; border: 1px solid rgba(255,255,255,.38); background: rgba(255,255,255,.08); }
-  .final-actions small { margin-top: 3px; color: #d8f3e6; font-size: 10px; line-height: 1.45; text-align: center; }
+  .final-primary { background: #fff; color: #056b45; box-shadow: none; }
+  .final-primary:hover { background: #f4fbf7; }
+  .final-secondary { color: #fff; border: 1px solid rgba(255,255,255,.48); background: rgba(255,255,255,.08); }
+  .final-actions small { margin-top: 3px; color: #e1f2e8; font-size: 10px; line-height: 1.45; text-align: center; }
 
-  .site-footer { padding: 48px 0 26px; color: #b7c5bd; background: #101914; }
+  .site-footer { padding: 48px 0 26px; color: #c0cec6; background: #101914; }
   .footer-main { padding-bottom: 38px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
   .footer-brand { display: flex; align-items: center; gap: 11px; color: #fff; }
   .footer-mark { width: 31px; height: 31px; border-radius: 9px; overflow: hidden; display: grid; place-items: center; }
   .footer-mark img { width: 31px; height: 31px; display: block; }
   .footer-brand > span:last-child { display: grid; gap: 3px; }
   .footer-brand strong { font-size: 18px; }
-  .footer-brand small { color: #84968c; font-size: 9px; }
+  .footer-brand small { color: #a9b8af; font-size: 9px; }
   .footer-main nav { display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; font-weight: 700; }
-  .footer-main nav a:hover { color: #6fe0ad; }
-  .footer-bottom { padding-top: 22px; border-top: 1px solid #26352d; display: flex; justify-content: space-between; gap: 24px; color: #71837a; font-size: 10px; }
+  .footer-main nav a:hover { color: #8ee8be; }
+  .footer-bottom { padding-top: 22px; border-top: 1px solid #26352d; display: flex; justify-content: space-between; gap: 24px; color: #a9b8af; font-size: 10px; }
 
   @media (max-width: 900px) {
     .comparison-outcomes { grid-template-columns: 1fr; }
@@ -403,10 +404,11 @@ const faq = [
   @media (max-width: 640px) {
     .comparison-section, .trust-section, .faq-section { padding: 76px 0; }
     .onboarding-section, .final-cta-section { padding: 70px 0; }
-    .comparison-mobile-hint { margin-bottom: 10px; display: block; color: #77857e; font-size: 10px; text-align: center; }
-    .comparison-table thead th { position: static; }
+    .comparison-mobile-hint { margin-bottom: 10px; display: block; color: #66756d; font-size: 10px; text-align: center; }
+    .comparison-table-wrap { max-height: 620px; overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+    .comparison-table thead th { position: sticky; top: 0; }
     .onboarding-box, .final-cta-box { padding: 27px; }
-    .final-cta-box h2 { font-size: 38px; }
+    .final-cta-box h2 { font-size: 36px; }
     .final-actions .button { width: 100%; }
     .footer-bottom { flex-direction: column; }
   }

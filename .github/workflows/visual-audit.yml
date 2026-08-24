@@ -1,0 +1,49 @@
+name: Visual Audit
+
+on:
+  workflow_dispatch:
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build site
+        run: npm run build
+
+      - name: Install Chromium for Playwright
+        run: npx --yes playwright@1.55.0 install --with-deps chromium
+
+      - name: Serve static build
+        run: |
+          npx --yes http-server dist -p 4173 -c-1 > /tmp/http-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/http-server.log
+          exit 1
+
+      - name: Capture desktop and mobile
+        run: |
+          mkdir -p visual-audit
+          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1440,1100" --full-page http://127.0.0.1:4173/ visual-audit/desktop-1440.png
+          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "390,844" --full-page http://127.0.0.1:4173/ visual-audit/mobile-390.png
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-audit
+          path: visual-audit/*.png
+          if-no-files-found: error
+          retention-days: 7
