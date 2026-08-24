@@ -73,15 +73,15 @@ const plans = [
 ];
 ---
 
-<section class="packages-section" id="cennik" data-billing="monthly">
+<section class="packages-section" id="wartosc" data-billing="monthly">
   <div class="shell packages-shell">
     <div class="value-intro">
       <div class="value-intro-copy">
-        <span class="eyebrow-text">Najpierw wartość, potem cena</span>
+        <span class="eyebrow-text">Każda stała opłata ma się bronić wynikiem</span>
         <h2>Program kosztuje. Chaos też.</h2>
         <p>
-          Nie próbujemy udowadniać, że 149 zł to „nic”. W małej firmie każda stała opłata musi się bronić.
-          Dlatego Przydaś ma przede wszystkim oddawać czas, ograniczać pomyłki, porządkować firmę i pomagać wykorzystywać dane o klientach po realizacji.
+          Cenę Przydasia warto porównać nie z „darmowym Excelem”, ale z czasem właściciela, pomyłkami, zakupami na ostatnią chwilę
+          i okazjami sprzedażowymi, które przepadają, gdy dane o kliencie znikają po realizacji.
         </p>
       </div>
 
@@ -112,28 +112,29 @@ const plans = [
     <div class="roi-calculator" data-roi-calculator>
       <div class="roi-copy">
         <span class="roi-kicker">Nie wierz nam na słowo — policz</span>
-        <h3>Ile znaczy dodatkowe zlecenie od byłego klienta?</h3>
+        <h3>Ile znaczy jedno dodatkowe zlecenie od klienta, który już Cię zna?</h3>
         <p>
           Wpisz swoją średnią wartość zlecenia i załóż dowolną liczbę dodatkowych powrotów klientów w ciągu roku.
-          Kalkulator tylko porównuje wartość sprzedaży z rocznym abonamentem — niczego nie obiecuje.
+          Kalkulator porównuje wyłącznie wartość sprzedaży z rocznym abonamentem — niczego nie obiecuje.
         </p>
+        <span class="roi-plan-note">Przypomnienia o ponownym kontakcie z byłymi klientami są funkcją pakietu BIZNES.</span>
       </div>
 
       <div class="roi-fields">
         <label>
           <span>Średnia wartość zlecenia</span>
-          <div class="roi-input-wrap"><input type="number" min="0" step="100" value="1000" inputmode="numeric" data-roi-order /><b>zł</b></div>
+          <div class="roi-input-wrap"><input type="number" min="0" step="100" value="1000" inputmode="numeric" data-roi-order aria-label="Średnia wartość zlecenia" /><b>zł</b></div>
         </label>
         <label>
           <span>Dodatkowe zlecenia / rok</span>
-          <div class="roi-input-wrap"><input type="number" min="0" step="1" value="1" inputmode="numeric" data-roi-clients /><b>szt.</b></div>
+          <div class="roi-input-wrap"><input type="number" min="0" step="1" value="1" inputmode="numeric" data-roi-clients aria-label="Liczba dodatkowych zleceń rocznie" /><b>szt.</b></div>
         </label>
         <label>
           <span>Porównaj z pakietem</span>
-          <select data-roi-plan>
+          <select data-roi-plan aria-label="Pakiet do porównania">
             <option value="590" data-name="START">START · 590 zł / rok</option>
-            <option value="1490" data-name="ZESPÓŁ" selected>ZESPÓŁ · 1 490 zł / rok</option>
-            <option value="1990" data-name="BIZNES">BIZNES · 1 990 zł / rok</option>
+            <option value="1490" data-name="ZESPÓŁ">ZESPÓŁ · 1 490 zł / rok</option>
+            <option value="1990" data-name="BIZNES" selected>BIZNES · 1 990 zł / rok</option>
           </select>
         </label>
       </div>
@@ -145,16 +146,16 @@ const plans = [
         </div>
         <div class="roi-result-highlight">
           <span>W odniesieniu do rocznej ceny</span>
-          <strong data-roi-ratio>67%</strong>
-          <em data-roi-message>To równowartość ok. 67% rocznej ceny pakietu ZESPÓŁ.</em>
+          <strong data-roi-ratio>50%</strong>
+          <em data-roi-message>To równowartość ok. 50% rocznej ceny pakietu BIZNES.</em>
         </div>
       </div>
       <small class="roi-disclaimer">To kalkulator wartości sprzedaży, nie zysku ani prognozy wyniku. Rzeczywisty efekt zależy m.in. od marży, liczby klientów i sposobu pracy firmy.</small>
     </div>
 
-    <div class="section-head packages-head">
+    <div class="section-head packages-head" id="cennik">
       <span class="eyebrow-text">3 poziomy zamiast systemu na wyrost</span>
-      <h2>Wybierz to, co ma zniknąć z Twojego dnia.</h2>
+      <h2>Wybierz zakres dopasowany do etapu firmy.</h2>
       <p>
         START porządkuje podstawy. ZESPÓŁ zdejmuje więcej ręcznej koordynacji ludzi. BIZNES dokłada kontrolę finansową,
         materiały, zaawansowane dane i narzędzia do pracy z klientem po realizacji.
@@ -209,15 +210,18 @@ const plans = [
           <div class="package-value"><span>Najważniejszy efekt</span><strong>{plan.value}</strong></div>
 
           <div class="package-divider"></div>
-          <ul class="package-list">
-            {plan.bullets.map((bullet) => (
-              <li><span>✓</span><b>{bullet}</b></li>
-            ))}
-          </ul>
+          <details class="package-feature-details" open>
+            <summary>Pełny zakres pakietu <span aria-hidden="true">+</span></summary>
+            <ul class="package-list">
+              {plan.bullets.map((bullet) => (
+                <li><span>✓</span><b>{bullet}</b></li>
+              ))}
+            </ul>
+            <div class="package-note">{plan.note}</div>
+          </details>
 
-          <div class="package-note">{plan.note}</div>
           <a class:list={['button', plan.recommended || plan.business ? 'button-primary' : 'button-secondary', 'package-button']} href="#start" data-plan={plan.name}>
-            Wybieram {plan.name} <span>→</span>
+            Interesuje mnie {plan.name} <span>→</span>
           </a>
         </article>
       ))}
@@ -250,6 +254,25 @@ const plans = [
       section.querySelectorAll('.annual-only').forEach((el) => el.setAttribute('aria-hidden', String(value !== 'annual')));
     };
     billingButtons.forEach((button) => button.addEventListener('click', () => setBilling(button.getAttribute('data-billing-value') || 'monthly')));
+
+    const featureDetails = section.querySelectorAll('.package-feature-details');
+    const mobilePackages = window.matchMedia('(max-width: 640px)');
+    const syncPackageDetails = () => {
+      featureDetails.forEach((details) => {
+        if (mobilePackages.matches) details.removeAttribute('open');
+        else details.setAttribute('open', '');
+      });
+    };
+    syncPackageDetails();
+    mobilePackages.addEventListener?.('change', syncPackageDetails);
+
+    section.querySelectorAll('[data-plan]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const plan = button.getAttribute('data-plan') || '';
+        const label = document.querySelector('[data-selected-plan-label]');
+        if (label && plan) label.textContent = `Interesuje Cię pakiet ${plan}`;
+      });
+    });
 
     const calculator = section.querySelector('[data-roi-calculator]');
     if (!calculator) return;
@@ -298,56 +321,57 @@ const plans = [
   .value-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .value-card { min-height: 222px; padding: 24px; border: 1px solid #dce8e1; border-radius: 20px; background: #fff; box-shadow: 0 12px 34px rgba(28,74,52,.04); }
   .value-card-accent { border-color: #8edbb7; background: linear-gradient(155deg, #f1fbf6, #e4f7ed); }
-  .value-icon { width: 34px; height: 34px; margin-bottom: 28px; display: grid; place-items: center; border-radius: 11px; color: #078a59; background: #eaf8f2; font-size: 10px; font-weight: 900; }
-  .value-card-accent .value-icon { color: #fff; background: #078a59; }
+  .value-icon { width: 34px; height: 34px; margin-bottom: 28px; display: grid; place-items: center; border-radius: 11px; color: #087f53; background: #eaf8f2; font-size: 10px; font-weight: 900; }
+  .value-card-accent .value-icon { color: #fff; background: #087f53; }
   .value-card strong { display: block; margin-bottom: 9px; font-size: 17px; letter-spacing: -.02em; }
-  .value-card p { margin: 0; color: #6f7a74; font-size: 13px; line-height: 1.58; }
+  .value-card p { margin: 0; color: #66756d; font-size: 13px; line-height: 1.58; }
 
   .roi-calculator { margin: 28px 0 82px; padding: 34px; border: 1px solid #b7dfca; border-radius: 26px; color: #f7fbf8; background: linear-gradient(135deg, #10251b, #123b29); box-shadow: 0 22px 54px rgba(16,57,38,.12); }
   .roi-copy { max-width: 850px; }
-  .roi-kicker { display: inline-block; margin-bottom: 12px; color: #6fe0ad; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+  .roi-kicker { display: inline-block; margin-bottom: 12px; color: #83e9ba; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
   .roi-copy h3 { margin: 0 0 12px; font-size: clamp(30px, 3vw, 43px); line-height: 1.04; letter-spacing: -.04em; }
-  .roi-copy p { max-width: 800px; margin: 0; color: #aec0b6; font-size: 14px; line-height: 1.58; }
+  .roi-copy p { max-width: 800px; margin: 0; color: #c0cec6; font-size: 14px; line-height: 1.58; }
+  .roi-plan-note { display: inline-flex; margin-top: 14px; padding: 7px 10px; border: 1px solid rgba(131,233,186,.22); border-radius: 999px; color: #d9eee3; background: rgba(255,255,255,.06); font-size: 10px; font-weight: 750; }
   .roi-fields { margin-top: 27px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .roi-fields label { display: grid; gap: 8px; }
-  .roi-fields label > span { color: #b9c9c0; font-size: 11px; font-weight: 750; }
+  .roi-fields label > span { color: #c7d5cd; font-size: 11px; font-weight: 750; }
   .roi-input-wrap, .roi-fields select { min-height: 52px; border: 1px solid rgba(151,220,187,.2); border-radius: 13px; background: rgba(255,255,255,.08); color: #fff; }
   .roi-input-wrap { padding: 0 14px; display: flex; align-items: center; gap: 8px; }
   .roi-input-wrap input { min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; color: #fff; font: inherit; font-size: 16px; font-weight: 800; }
-  .roi-input-wrap b { color: #7ee2b4; font-size: 12px; }
+  .roi-input-wrap b { color: #93edc3; font-size: 12px; }
   .roi-fields select { width: 100%; padding: 0 14px; outline: 0; font: inherit; font-size: 13px; font-weight: 750; }
   .roi-fields select option { color: #15231c; background: #fff; }
   .roi-result { margin-top: 16px; display: grid; grid-template-columns: .8fr 1.2fr; gap: 12px; }
   .roi-result > div { min-height: 120px; padding: 20px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; background: rgba(255,255,255,.06); }
-  .roi-result span { color: #9eb2a7; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+  .roi-result span { color: #b4c5bc; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
   .roi-result strong { margin-top: 7px; font-size: 30px; letter-spacing: -.04em; }
   .roi-result-highlight { border: 1px solid rgba(111,224,173,.22); background: rgba(18,173,112,.14) !important; }
-  .roi-result-highlight strong { color: #7be3b4; }
-  .roi-result em { margin-top: 5px; color: #c3d5cb; font-size: 12px; font-style: normal; line-height: 1.45; }
-  .roi-disclaimer { display: block; margin-top: 14px; color: #82988c; font-size: 9px; line-height: 1.5; }
+  .roi-result-highlight strong { color: #91ebc3; }
+  .roi-result em { margin-top: 5px; color: #d0ded6; font-size: 12px; font-style: normal; line-height: 1.45; }
+  .roi-disclaimer { display: block; margin-top: 14px; color: #9eb0a6; font-size: 9px; line-height: 1.5; }
 
-  .packages-head { max-width: 920px; }
+  .packages-head { max-width: 920px; scroll-margin-top: 105px; }
   .pricing-controls { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
   .billing-toggle { display: inline-flex; padding: 4px; border: 1px solid #d5e5dc; border-radius: 14px; background: #fff; box-shadow: 0 8px 24px rgba(28,74,52,.05); }
   .billing-toggle button { min-height: 42px; padding: 0 15px; border: 0; border-radius: 10px; background: transparent; color: #68766f; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
-  .billing-toggle button span { margin-left: 5px; color: #078a59; font-size: 9px; font-weight: 900; }
-  .billing-toggle button.active { background: #078a59; color: #fff; box-shadow: 0 7px 16px rgba(7,138,89,.18); }
-  .billing-toggle button.active span { color: #c9f3df; }
+  .billing-toggle button span { margin-left: 5px; color: #087f53; font-size: 9px; font-weight: 900; }
+  .billing-toggle button.active { background: #087f53; color: #fff; box-shadow: 0 7px 16px rgba(8,127,83,.18); }
+  .billing-toggle button.active span { color: #d8f5e7; }
   .annual-banner { width: fit-content; padding: 10px 14px; border: 1px solid #bde7d2; border-radius: 14px; display: flex; align-items: center; gap: 10px; background: #edf9f3; color: #426254; font-size: 13px; font-weight: 650; }
-  .annual-banner-badge { padding: 6px 9px; border-radius: 999px; background: #078a59; color: #fff; font-size: 9px; font-weight: 900; letter-spacing: .07em; }
+  .annual-banner-badge { padding: 6px 9px; border-radius: 999px; background: #087f53; color: #fff; font-size: 9px; font-weight: 900; letter-spacing: .07em; }
 
   .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
   .package-card { position: relative; min-height: 860px; padding: 30px; border: 1px solid #dce7e1; border-radius: 24px; display: flex; flex-direction: column; background: #fff; box-shadow: 0 16px 42px rgba(28,74,52,.05); }
   .package-card-featured { transform: translateY(-10px); border-color: #88dbb4; box-shadow: 0 24px 52px rgba(18,173,112,.12); }
   .package-card-business { border-color: #73cfa4; background: linear-gradient(160deg, #f1fbf6, #e5f7ee); }
-  .package-recommended { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); padding: 7px 12px; border-radius: 999px; white-space: nowrap; color: #fff; background: #078a59; font-size: 8px; font-weight: 850; letter-spacing: .06em; }
+  .package-recommended { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); padding: 7px 12px; border-radius: 999px; white-space: nowrap; color: #fff; background: #087f53; font-size: 8px; font-weight: 850; letter-spacing: .06em; }
   .package-top { min-height: 70px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
   .package-name { display: inline-flex; padding: 8px 11px; border-radius: 999px; color: #087f53; background: #eaf8f2; font-size: 11px; font-weight: 900; letter-spacing: .08em; }
-  .package-card-business .package-name { color: #fff; background: #078a59; }
-  .package-kicker { color: #86938c; font-size: 12px; font-weight: 700; }
+  .package-card-business .package-name { color: #fff; background: #087f53; }
+  .package-kicker { color: #66756d; font-size: 12px; font-weight: 700; }
   .package-price-row { margin: 12px 0 4px; display: flex; align-items: baseline; gap: 7px; }
   .package-price { font-size: 42px; line-height: 1; letter-spacing: -.05em; }
-  .package-period { color: #7d8a83; font-size: 13px; font-weight: 650; }
+  .package-period { color: #66756d; font-size: 13px; font-weight: 650; }
   .package-daily { display: block; margin-bottom: 12px; color: #087f53; font-size: 11px; font-weight: 800; }
   .annual-only { display: none !important; }
   .packages-section[data-billing='annual'] .monthly-only { display: none !important; }
@@ -355,26 +379,28 @@ const plans = [
   .packages-section[data-billing='annual'] .annual-offer .annual-only { display: grid !important; }
   .annual-offer { margin-bottom: 20px; padding: 13px 14px; border: 1px solid #d9ebe2; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(234,248,242,.7); }
   .annual-offer > div { display: grid; gap: 3px; }
-  .annual-label { color: #74847b; font-size: 10px; font-weight: 750; text-transform: uppercase; letter-spacing: .06em; }
+  .annual-label { color: #66756d; font-size: 10px; font-weight: 750; text-transform: uppercase; letter-spacing: .06em; }
   .annual-offer strong { font-size: 13px; letter-spacing: -.01em; }
-  .annual-saving { flex: 0 0 auto; padding: 6px 8px; border-radius: 999px; color: #078a59; background: #fff; font-size: 10px; font-weight: 850; }
+  .annual-saving { flex: 0 0 auto; padding: 6px 8px; border-radius: 999px; color: #087f53; background: #fff; font-size: 10px; font-weight: 850; }
   .package-card h3 { margin: 0 0 14px; font-size: 27px; line-height: 1.08; letter-spacing: -.04em; }
-  .package-description { min-height: 112px; margin: 0; color: #6f7a74; font-size: 14px; line-height: 1.55; }
+  .package-description { min-height: 112px; margin: 0; color: #66756d; font-size: 14px; line-height: 1.55; }
   .package-value { min-height: 118px; margin-top: 16px; padding: 14px; border: 1px solid #dcebe4; border-radius: 14px; display: grid; gap: 6px; background: rgba(247,251,249,.86); }
-  .package-value span { color: #078a59; font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: .07em; }
+  .package-value span { color: #087f53; font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: .07em; }
   .package-value strong { font-size: 12px; line-height: 1.5; }
   .package-divider { height: 1px; margin: 24px 0; background: #e4ece8; }
+  .package-feature-details { margin: 0; }
+  .package-feature-details summary { display: none; }
   .package-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
   .package-list li { display: grid; grid-template-columns: 23px 1fr; gap: 10px; align-items: start; font-size: 13px; line-height: 1.42; }
-  .package-list li span { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 8px; color: #078a59; background: #eaf8f2; font-size: 11px; font-weight: 900; }
+  .package-list li span { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 8px; color: #087f53; background: #eaf8f2; font-size: 11px; font-weight: 900; }
   .package-list li b { font-weight: 680; }
-  .package-note { margin-top: auto; padding-top: 26px; color: #7f8c85; font-size: 11px; line-height: 1.45; }
-  .package-button { width: 100%; margin-top: 18px; }
-  .package-comparison { margin-top: 28px; padding: 26px 28px; border: 1px solid #dfe8e3; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; gap: 28px; background: #fff; }
+  .package-note { padding-top: 26px; color: #66756d; font-size: 11px; line-height: 1.45; }
+  .package-button { width: 100%; margin-top: auto; transform: translateY(18px); }
+  .package-comparison { margin-top: 46px; padding: 26px 28px; border: 1px solid #dfe8e3; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; gap: 28px; background: #fff; }
   .package-comparison div { display: grid; gap: 5px; }
   .package-comparison strong { font-size: 15px; }
-  .package-comparison span { max-width: 720px; color: #6f7a74; font-size: 12px; line-height: 1.45; }
-  .package-comparison > a { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; color: #078a59; font-size: 13px; font-weight: 800; }
+  .package-comparison span { max-width: 720px; color: #66756d; font-size: 12px; line-height: 1.45; }
+  .package-comparison > a { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; color: #087f53; font-size: 13px; font-weight: 800; }
 
   @media (max-width: 1000px) {
     .value-grid { grid-template-columns: repeat(2, 1fr); }
@@ -386,6 +412,7 @@ const plans = [
     .package-card { min-height: auto; }
     .package-card-featured { transform: none; }
     .package-description, .package-value { min-height: auto; }
+    .package-button { transform: none; margin-top: 18px; }
   }
 
   @media (max-width: 640px) {
@@ -393,7 +420,9 @@ const plans = [
     .value-grid { grid-template-columns: 1fr; }
     .value-card { min-height: auto; }
     .roi-calculator { margin-bottom: 68px; padding: 24px; }
+    .roi-plan-note { border-radius: 12px; line-height: 1.45; }
     .roi-result strong { font-size: 27px; }
+    .packages-head { scroll-margin-top: 20px; }
     .pricing-controls { align-items: stretch; flex-direction: column; }
     .billing-toggle { width: 100%; }
     .billing-toggle button { flex: 1; padding-inline: 10px; }
@@ -403,6 +432,14 @@ const plans = [
     .package-price { font-size: 38px; }
     .annual-offer { align-items: flex-start; flex-direction: column; }
     .package-card h3 { font-size: 24px; }
+    .package-divider { margin-bottom: 14px; }
+    .package-feature-details { border-top: 0; }
+    .package-feature-details summary { cursor: pointer; list-style: none; min-height: 44px; padding: 0 2px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #087f53; font-size: 12px; font-weight: 820; }
+    .package-feature-details summary::-webkit-details-marker { display: none; }
+    .package-feature-details summary span { width: 26px; height: 26px; flex: 0 0 26px; border-radius: 9px; display: grid; place-items: center; background: #eaf8f2; font-size: 16px; transition: transform .18s ease; }
+    .package-feature-details[open] summary span { transform: rotate(45deg); }
+    .package-feature-details[open] .package-list { margin-top: 14px; }
+    .package-note { padding-top: 18px; }
     .package-comparison { align-items: flex-start; flex-direction: column; }
   }
 </style>
