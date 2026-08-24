@@ -171,7 +171,7 @@ const faq = [
       ))}
     </div>
 
-    <div class="comparison-mobile-hint">← Przesuń tabelę w bok, żeby zobaczyć wszystkie pakiety →</div>
+    <div class="comparison-mobile-hint">← Tabela przewija się w pionie i poziomie →</div>
     <div class="comparison-table-wrap" role="region" aria-label="Pełne porównanie pakietów Przydasia" tabindex="0">
       <table class="comparison-table">
         <caption class="sr-only">Porównanie funkcji pakietów START, ZESPÓŁ i BIZNES</caption>
@@ -266,11 +266,11 @@ const faq = [
 <section class="final-cta-section" id="start">
   <div class="shell final-cta-box">
     <div>
-      <span class="final-kicker" data-selected-plan-label>Przydaś jest obecnie uruchamiany dla zaproszonych firm.</span>
-      <h2>Nie wyślemy nowego klienta do pustego ekranu logowania.</h2>
+      <span class="final-kicker" data-selected-plan-label>Obecnie: dostęp dla zaproszonych firm.</span>
+      <h2>Publiczny start dla nowych firm jest kolejnym krokiem.</h2>
       <p>
-        Publiczny proces zakładania nowej firmy nie jest jeszcze uruchomiony. Do czasu startu sprzedaży pokazujemy ceny i zakres uczciwie,
-        ale przycisk logowania zostawiamy wyłącznie osobom, które mają już konto. Docelowy start dla nowych klientów pojawi się tutaj.
+        Cennik i zakres są już gotowe, ale nowych kont nie zakładamy jeszcze samodzielnie z tej strony.
+        Na etapie testów dostęp uruchamiamy zaproszonym firmom. Gdy sprzedaż wystartuje, tutaj pojawi się bezpośredni start dla nowego klienta.
       </p>
     </div>
     <div class="final-actions">
@@ -405,7 +405,8 @@ const faq = [
     .comparison-section, .trust-section, .faq-section { padding: 76px 0; }
     .onboarding-section, .final-cta-section { padding: 70px 0; }
     .comparison-mobile-hint { margin-bottom: 10px; display: block; color: #66756d; font-size: 10px; text-align: center; }
-    .comparison-table thead th { position: static; }
+    .comparison-table-wrap { max-height: 620px; overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+    .comparison-table thead th { position: sticky; top: 0; }
     .onboarding-box, .final-cta-box { padding: 27px; }
     .final-cta-box h2 { font-size: 36px; }
     .final-actions .button { width: 100%; }
