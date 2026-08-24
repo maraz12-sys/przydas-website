@@ -33,6 +33,7 @@ jobs:
           test -s dist/404.html
           test -s dist/robots.txt
           test -s dist/sitemap.xml
+          test -s dist/_headers
 
           grep -q 'Mniej pilnowania' dist/index.html
           grep -q 'Program kosztuje' dist/index.html
@@ -46,6 +47,8 @@ jobs:
           grep -q 'SoftwareApplication' dist/index.html
           grep -q 'xn--przyda-8ib.pl/sitemap.xml' dist/robots.txt
           grep -q 'xn--przyda-8ib.pl' dist/sitemap.xml
+          grep -q 'Content-Security-Policy' dist/_headers
+          grep -q 'X-Robots-Tag: noindex' dist/_headers
 
 # CI validates the assembled production landing page, conversion-critical copy,
-# structured data, SEO files and custom error routing.
+# structured data, SEO files, security headers and custom error routing.
