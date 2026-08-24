@@ -1,10 +1,7 @@
 name: Visual Audit
 
 on:
-  push:
-    branches: ['qa/visual-audit-2']
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   screenshots:
@@ -16,7 +13,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22.12.0'
+          node-version: '22.x'
 
       - name: Install dependencies
         run: npm install
