@@ -24,14 +24,28 @@ jobs:
       - name: Build landing page
         run: npm run build
 
-      - name: Validate generated page
+      - name: Validate generated site
         shell: bash
         run: |
+          set -euo pipefail
+
           test -s dist/index.html
+          test -s dist/404.html
+          test -s dist/robots.txt
+          test -s dist/sitemap.xml
+
+          grep -q 'Mniej pilnowania' dist/index.html
+          grep -q 'Program kosztuje' dist/index.html
           grep -q 'START' dist/index.html
           grep -q 'ZESPÓŁ' dist/index.html
           grep -q 'BIZNES' dist/index.html
-          grep -q 'Najczęstsze pytania o Przydasia' dist/index.html
+          grep -q 'Przypomnienia o ponownym kontakcie' dist/index.html
+          grep -q 'FAQPage' dist/index.html
           grep -q 'app.xn--przyda-8ib.pl' dist/index.html
+          grep -q 'canonical' dist/index.html
+          grep -q 'SoftwareApplication' dist/index.html
+          grep -q 'xn--przyda-8ib.pl/sitemap.xml' dist/robots.txt
+          grep -q 'xn--przyda-8ib.pl' dist/sitemap.xml
 
-# CI validates the assembled production landing page, not only source fragments.
+# CI validates the assembled production landing page, conversion-critical copy,
+# structured data, SEO files and custom error routing.
