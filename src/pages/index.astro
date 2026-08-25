@@ -3,6 +3,7 @@ import LandingTop from '../components/LandingTop.astro';
 import ProductShowcase from '../components/ProductShowcase.astro';
 import PackagesSection from '../components/PackagesSection.astro';
 import FinalSections from '../components/FinalSections.astro';
+import LegalFooter from '../components/LegalFooter.astro';
 ---
 
 <!doctype html>
@@ -73,11 +74,16 @@ import FinalSections from '../components/FinalSections.astro';
       <ProductShowcase />
       <PackagesSection />
       <FinalSections />
+      <LegalFooter />
     </main>
   </body>
 </html>
 
 <style is:global>
+  /* FinalSections has the original lightweight footer. The complete legal/contact
+     footer below replaces it without touching the stable sales component. */
+  .site-footer { display: none !important; }
+
   @media (max-width: 640px) {
     body { padding-bottom: 0 !important; }
 
