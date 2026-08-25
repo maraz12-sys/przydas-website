@@ -1,6 +1,8 @@
 name: Visual Audit
 
 on:
+  push:
+    branches: ['fix/landing-visual-audit-20260825']
   workflow_dispatch:
 
 jobs:
@@ -34,10 +36,11 @@ jobs:
           cat /tmp/http-server.log
           exit 1
 
-      - name: Capture desktop and mobile
+      - name: Capture desktop tablet and mobile
         run: |
           mkdir -p visual-audit
           npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1440,1100" --full-page http://127.0.0.1:4173/ visual-audit/desktop-1440.png
+          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1024,900" --full-page http://127.0.0.1:4173/ visual-audit/tablet-1024.png
           npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "390,844" --full-page http://127.0.0.1:4173/ visual-audit/mobile-390.png
 
       - name: Upload screenshots
