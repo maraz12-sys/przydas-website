@@ -1,0 +1,73 @@
+name: Patch mobile comparison
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-mobile-comparison.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Collapse full comparison on mobile
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('src/components/FinalSections.astro')
+          text = path.read_text(encoding='utf-8')
+
+          marker = '    <div class="comparison-mobile-hint">← Tabela przewija się w pionie i poziomie →</div>'
+          if marker not in text:
+              raise SystemExit('comparison marker not found')
+          text = text.replace(
+              marker,
+              '    <details class="comparison-details" open>\n'
+              '      <summary class="comparison-mobile-toggle">\n'
+              '        <span><strong>Pokaż pełne porównanie funkcji</strong><small>Rozwiń tabelę START / ZESPÓŁ / BIZNES</small></span>\n'
+              '        <b aria-hidden="true">+</b>\n'
+              '      </summary>\n'
+              '      <div class="comparison-mobile-hint">← Tabela przewija się w pionie i poziomie →</div>',
+              1,
+          )
+
+          note = '    <p class="comparison-note">Wyższy pakiet zawiera funkcje pakietów niższych. Zakres Przydasia będzie rozwijany wraz z produktem.</p>'
+          if note not in text:
+              raise SystemExit('comparison note not found')
+          text = text.replace(note, note + '\n    </details>', 1)
+
+          trust = '<section class="trust-section">'
+          if trust not in text:
+              raise SystemExit('trust section not found')
+          script = '''<script is:inline>\n  (() => {\n    const details = document.querySelector('.comparison-details');\n    if (!details) return;\n    const mobile = window.matchMedia('(max-width: 640px)');\n    const sync = () => {\n      if (mobile.matches) details.removeAttribute('open');\n      else details.setAttribute('open', '');\n    };\n    sync();\n    mobile.addEventListener?.('change', sync);\n  })();\n</script>\n\n'''
+          text = text.replace(trust, script + trust, 1)
+
+          style_marker = '</style>'
+          css = '''\n  .comparison-details { margin: 0; }\n  .comparison-mobile-toggle { display: none; }\n\n  @media (max-width: 640px) {\n    .comparison-details { margin-top: 18px; }\n    .comparison-mobile-toggle {\n      min-height: 64px;\n      padding: 14px 15px;\n      border: 1px solid #cfe4d8;\n      border-radius: 15px;\n      display: flex;\n      align-items: center;\n      justify-content: space-between;\n      gap: 14px;\n      list-style: none;\n      cursor: pointer;\n      background: linear-gradient(145deg, #ffffff, #f1faf5);\n      box-shadow: 0 8px 24px rgba(28, 74, 52, .05);\n    }\n    .comparison-mobile-toggle::-webkit-details-marker { display: none; }\n    .comparison-mobile-toggle span { display: grid; gap: 3px; }\n    .comparison-mobile-toggle strong { color: #10251d; font-size: 13px; line-height: 1.25; }\n    .comparison-mobile-toggle small { color: #68766f; font-size: 10px; line-height: 1.35; }\n    .comparison-mobile-toggle b {\n      width: 30px;\n      height: 30px;\n      flex: 0 0 30px;\n      border-radius: 10px;\n      display: grid;\n      place-items: center;\n      color: #087f53;\n      background: #e5f5ed;\n      font-size: 20px;\n      line-height: 1;\n      transition: transform .18s ease;\n    }\n    .comparison-details[open] .comparison-mobile-toggle b { transform: rotate(45deg); }\n    .comparison-details[open] .comparison-mobile-toggle { margin-bottom: 10px; }\n  }\n'''
+          idx = text.rfind(style_marker)
+          if idx < 0:
+              raise SystemExit('style end not found')
+          text = text[:idx] + css + text[idx:]
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Commit patch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/components/FinalSections.astro
+          git commit -m 'Improve mobile package comparison UX'
+          git push origin main
