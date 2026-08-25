@@ -1,0 +1,276 @@
+<section class="showcase-section" id="jak-wyglada">
+  <div class="shell showcase-shell">
+    <div class="showcase-head">
+      <span class="showcase-eyebrow">Prawdziwy system. Prawdziwy interfejs.</span>
+      <h2>Zobacz, jak Przydaś wygląda w codziennej pracy.</h2>
+      <p>
+        Bez makiet i marketingowych atrap. Poniżej są prawdziwe ekrany aplikacji na danych testowych —
+        od kalendarza i rezerwacji aż po rozliczenia, statystyki i powroty klientów.
+      </p>
+    </div>
+
+    <article class="showcase-row showcase-row-operations">
+      <div class="showcase-copy">
+        <span class="showcase-step">01 · PRZED I W TRAKCIE EVENTU</span>
+        <h3>Widzisz termin. Otwierasz event. Masz wszystko pod ręką.</h3>
+        <p>
+          Kalendarz pokazuje realizacje i braki, a szczegóły rezerwacji trzymają w jednym miejscu klienta,
+          termin, pakiet, ustalenia i zespół. Bez szukania po wiadomościach i notatkach.
+        </p>
+        <ul>
+          <li><span>✓</span> kalendarz z wydarzeniami i dniami wymagającymi uwagi</li>
+          <li><span>✓</span> dane klienta i ustalenia przy konkretnej rezerwacji</li>
+          <li><span>✓</span> obsada, statusy i przygotowanie wydarzenia w jednym widoku</li>
+        </ul>
+      </div>
+      <figure class="showcase-figure showcase-figure-wide">
+        <img
+          src="/showcase-operations.webp"
+          alt="Prawdziwy ekran Przydasia: kalendarz oraz szczegóły rezerwacji Piknik firmowy GreenTech"
+          width="1400"
+          height="850"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Prawdziwy ekran aplikacji · dane testowe</figcaption>
+      </figure>
+    </article>
+
+    <article class="showcase-row showcase-row-business">
+      <figure class="showcase-figure showcase-figure-wide">
+        <img
+          src="/showcase-business.webp"
+          alt="Prawdziwe ekrany Przydasia: rozliczenia, statystyki i klienci do ponownego kontaktu"
+          width="1400"
+          height="900"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Prawdziwe moduły Rozliczenie i Statystyki · dane testowe</figcaption>
+      </figure>
+      <div class="showcase-copy">
+        <span class="showcase-step">02 · PO REALIZACJI</span>
+        <h3>Event się kończy. Dane, pieniądze i klient zostają.</h3>
+        <p>
+          Przydaś nie kończy pracy w dniu imprezy. Pomaga domknąć płatności i faktury, pokazuje wyniki
+          oraz wyciąga na wierzch klientów, do których warto wrócić z kolejną ofertą.
+        </p>
+        <ul>
+          <li><span>✓</span> rozliczenia i kwoty do zapłaty bez osobnego arkusza</li>
+          <li><span>✓</span> statystyki wartości, sezonowości i źródeł zleceń</li>
+          <li><span>✓</span> lista klientów, o których firma nie powinna zapomnieć</li>
+        </ul>
+        <a class="showcase-link" href="#cennik">Zobacz, od którego pakietu zacząć <span>→</span></a>
+      </div>
+    </article>
+
+    <div class="showcase-proof">
+      <span class="showcase-proof-icon">P</span>
+      <div>
+        <strong>To nie wizualizacja przyszłego produktu.</strong>
+        <span>To aktualny interfejs Przydasia, pokazany na bezpiecznych danych demonstracyjnych.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .showcase-section {
+    padding: 112px 0 118px;
+    background:
+      radial-gradient(circle at 8% 18%, rgba(8, 127, 83, .07), transparent 31%),
+      radial-gradient(circle at 92% 82%, rgba(8, 127, 83, .06), transparent 29%),
+      #f8fbf9;
+    border-top: 1px solid #e6eee9;
+    border-bottom: 1px solid #e6eee9;
+  }
+
+  .showcase-shell { max-width: 1240px; }
+
+  .showcase-head {
+    max-width: 820px;
+    margin: 0 auto 72px;
+    text-align: center;
+  }
+
+  .showcase-eyebrow,
+  .showcase-step {
+    display: inline-block;
+    color: #087f53;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .showcase-head h2 {
+    margin: 14px 0 18px;
+    color: #10251d;
+    font-size: clamp(36px, 4.5vw, 60px);
+    line-height: .98;
+    letter-spacing: -.045em;
+  }
+
+  .showcase-head p {
+    margin: 0 auto;
+    max-width: 720px;
+    color: #617068;
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .showcase-row {
+    display: grid;
+    grid-template-columns: minmax(280px, .72fr) minmax(0, 1.55fr);
+    gap: 54px;
+    align-items: center;
+    margin-bottom: 96px;
+  }
+
+  .showcase-row-business {
+    grid-template-columns: minmax(0, 1.55fr) minmax(280px, .72fr);
+  }
+
+  .showcase-copy h3 {
+    margin: 13px 0 17px;
+    color: #10251d;
+    font-size: clamp(28px, 3vw, 42px);
+    line-height: 1.05;
+    letter-spacing: -.035em;
+  }
+
+  .showcase-copy > p {
+    margin: 0 0 24px;
+    color: #617068;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .showcase-copy ul {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .showcase-copy li {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 9px;
+    align-items: start;
+    color: #27382f;
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1.45;
+  }
+
+  .showcase-copy li span {
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #e5f5ed;
+    color: #087f53;
+    font-size: 12px;
+  }
+
+  .showcase-figure {
+    position: relative;
+    margin: 0;
+  }
+
+  .showcase-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #dfe9e3;
+    border-radius: 24px;
+    box-shadow: 0 24px 70px rgba(24, 56, 42, .13);
+  }
+
+  .showcase-figure figcaption {
+    margin-top: 12px;
+    color: #829089;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .showcase-link {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 28px;
+    color: #087f53;
+    font-size: 14px;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  .showcase-link:hover { text-decoration: underline; }
+
+  .showcase-proof {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    max-width: 780px;
+    margin: -16px auto 0;
+    padding: 18px 22px;
+    border: 1px solid #d8e8df;
+    border-radius: 18px;
+    background: rgba(255,255,255,.82);
+    box-shadow: 0 12px 38px rgba(20, 59, 42, .07);
+  }
+
+  .showcase-proof-icon {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #087f53;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 950;
+  }
+
+  .showcase-proof div { display: grid; gap: 3px; }
+  .showcase-proof strong { color: #13281f; font-size: 14px; }
+  .showcase-proof div span { color: #6d7b74; font-size: 12px; line-height: 1.45; }
+
+  @media (max-width: 900px) {
+    .showcase-section { padding: 84px 0 90px; }
+    .showcase-head { margin-bottom: 52px; }
+    .showcase-row,
+    .showcase-row-business {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-bottom: 70px;
+    }
+    .showcase-row-business .showcase-figure { order: 2; }
+    .showcase-row-business .showcase-copy { order: 1; }
+    .showcase-copy { max-width: 700px; }
+  }
+
+  @media (max-width: 640px) {
+    .showcase-section { padding: 66px 0 72px; }
+    .showcase-head { margin-bottom: 40px; text-align: left; }
+    .showcase-head h2 { font-size: 36px; }
+    .showcase-head p { font-size: 15px; }
+    .showcase-row,
+    .showcase-row-business { gap: 23px; margin-bottom: 56px; }
+    .showcase-copy h3 { font-size: 29px; }
+    .showcase-copy > p { font-size: 14px; }
+    .showcase-copy li { font-size: 13px; }
+    .showcase-figure {
+      margin-left: -12px;
+      margin-right: -12px;
+    }
+    .showcase-figure img { border-radius: 16px; }
+    .showcase-figure figcaption { padding-right: 12px; font-size: 9px; }
+    .showcase-proof { align-items: flex-start; padding: 15px; }
+  }
+</style>
