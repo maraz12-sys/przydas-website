@@ -1,9 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
   <title id="title">Przydaś</title>
-  <desc id="desc">Znak Przydasia z literą P i zielonymi akcentami.</desc>
-  <rect width="64" height="64" rx="18" fill="#eef9f4"/>
-  <circle cx="32" cy="32" r="23" fill="none" stroke="#16b36f" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 7" opacity=".9"/>
-  <path d="M23 17h11.8c8 0 13.2 4.5 13.2 11.4 0 7-5.2 11.6-13.2 11.6H30v8.5c0 3-1.6 4.5-4.8 4.5H23V17Zm7 7.2v8.7h4.1c4.3 0 6.6-1.4 6.6-4.4 0-2.9-2.3-4.3-6.6-4.3H30Z" fill="#173047"/>
-  <circle cx="50" cy="18" r="3.5" fill="#16b36f"/>
-  <path d="M12.5 38.5 16 42l6.5-7" fill="none" stroke="#16b36f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <desc id="desc">Logo Przydasia z literą P oraz symbolami klientów, dokumentów, kalendarza, plików i finansów.</desc>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f513d"/>
+      <stop offset="1" stop-color="#087f53"/>
+    </linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b5d43" flood-opacity=".12"/></filter>
+  </defs>
+  <rect x="10" y="10" width="492" height="492" rx="86" fill="#fff" stroke="#d7efe3" stroke-width="3" filter="url(#s)"/>
+  <ellipse cx="256" cy="256" rx="190" ry="154" fill="none" stroke="#0e4d43" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 18"/>
+  <path d="M185 150h75c62 0 101 36 101 91 0 56-39 92-101 92h-28v72c0 17-10 27-28 27h-19V150Zm47 47v91h27c34 0 53-16 53-46 0-29-19-45-53-45h-27Z" fill="url(#g)"/>
+
+  <g fill="none" stroke="#0f513d" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="151" cy="115" r="31"/>
+    <path d="M102 177c10-34 31-51 49-51s39 17 49 51"/>
+    <path d="M322 84h56l34 34v70h-90z"/>
+    <path d="M378 84v34h34"/>
+    <path d="M344 145h43M344 166h43" stroke="#14c77c"/>
+    <rect x="338" y="251" width="90" height="77" rx="14"/>
+    <path d="M338 279h90M357 240v23M408 240v23"/>
+    <rect x="87" y="311" width="98" height="65" rx="12"/>
+    <path d="M87 326h38l14 14h46"/>
+    <circle cx="366" cy="391" r="45"/>
+  </g>
+  <path d="M109 259l18 18 35-39" fill="none" stroke="#15c77d" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="122" cy="257" r="39" fill="none" stroke="#0f513d" stroke-width="8"/>
+  <text x="366" y="407" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="39" font-weight="800" fill="#14c77c">zł</text>
 </svg>
