@@ -1,8 +1,6 @@
 name: Visual Audit
 
 on:
-  push:
-    branches: ['fix/landing-visual-audit-20260825']
   workflow_dispatch:
 
 jobs:
