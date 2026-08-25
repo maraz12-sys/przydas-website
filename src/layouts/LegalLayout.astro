@@ -1,0 +1,135 @@
+---
+const {
+  title,
+  description,
+  eyebrow = 'Dokumenty Przydasia',
+  updated = '25.08.2026',
+  draft = false,
+} = Astro.props;
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#087f53" />
+    <title>{title} | Przydaś</title>
+    <link rel="icon" href="/przydas-mark.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="legal-header">
+      <div class="legal-shell nav">
+        <a class="brand" href="/" aria-label="Wróć na stronę Przydasia">
+          <img src="/przydas-mark.svg" alt="" />
+          <strong>Przydaś</strong>
+        </a>
+        <nav aria-label="Dokumenty i kontakt">
+          <a href="/kontakt">Kontakt</a>
+          <a href="/bezpieczenstwo">Bezpieczeństwo</a>
+          <a href="/polityka-prywatnosci">Prywatność</a>
+          <a class="back" href="/">← Strona główna</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="legal-shell legal-main">
+      <div class="legal-hero">
+        <span>{eyebrow}</span>
+        <h1>{title}</h1>
+        <p>{description}</p>
+        <div class="meta">
+          <span>Wersja 1.0</span>
+          <span>Aktualizacja: {updated}</span>
+        </div>
+        {draft && (
+          <div class="draft-note">
+            <strong>Dokument przed uruchomieniem komercyjnym</strong>
+            <p>Dane identyfikacyjne operatora i elementy zależne od finalnego modelu sprzedaży zostaną uzupełnione przed zawarciem pierwszej płatnej umowy. Nie publikujemy fikcyjnych danych.</p>
+          </div>
+        )}
+      </div>
+
+      <article class="legal-card">
+        <slot />
+      </article>
+    </main>
+
+    <footer class="legal-footer">
+      <div class="legal-shell footer-inner">
+        <div>
+          <strong>Przydaś</strong>
+          <span>System dla branży animacyjnej i eventowej</span>
+        </div>
+        <nav aria-label="Stopka dokumentów">
+          <a href="/regulamin">Regulamin</a>
+          <a href="/polityka-prywatnosci">Polityka prywatności</a>
+          <a href="/cookies">Cookies i storage</a>
+          <a href="/bezpieczenstwo">Bezpieczeństwo</a>
+          <a href="/kontakt">Kontakt</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root { --green:#087f53; --dark:#10201a; --muted:#66756e; --line:#dfe8e3; --soft:#f4f8f6; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; color:var(--dark); background:#f8faf9; font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height:1.65; }
+  a { color:inherit; }
+  .legal-shell { width:min(1080px,calc(100% - 40px)); margin:0 auto; }
+  .legal-header { position:sticky; top:0; z-index:10; border-bottom:1px solid var(--line); background:rgba(255,255,255,.95); backdrop-filter:blur(14px); }
+  .nav { min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
+  .brand { display:flex; align-items:center; gap:10px; text-decoration:none; font-size:19px; }
+  .brand img { width:34px; height:34px; }
+  .nav nav { display:flex; align-items:center; gap:22px; font-size:13px; font-weight:750; }
+  .nav nav a { text-decoration:none; }
+  .nav nav a:hover { color:var(--green); }
+  .back { padding:9px 13px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+  .legal-main { padding:72px 0 96px; }
+  .legal-hero { max-width:780px; margin-bottom:32px; }
+  .legal-hero > span { display:block; margin-bottom:10px; color:var(--green); font-size:12px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; }
+  .legal-hero h1 { margin:0; font-size:clamp(38px,6vw,66px); line-height:1.03; letter-spacing:-.045em; }
+  .legal-hero > p { margin:22px 0 16px; color:var(--muted); font-size:18px; max-width:720px; }
+  .meta { display:flex; gap:16px; color:#819087; font-size:12px; font-weight:700; }
+  .draft-note { margin-top:24px; padding:18px 20px; border:1px solid #ecd8a6; border-radius:14px; background:#fffaf0; }
+  .draft-note strong { color:#75520b; }
+  .draft-note p { margin:5px 0 0; color:#6d6249; font-size:13px; }
+  .legal-card { padding:clamp(26px,5vw,58px); border:1px solid var(--line); border-radius:22px; background:#fff; box-shadow:0 24px 60px rgba(25,55,42,.06); }
+  .legal-card h2 { margin:42px 0 12px; font-size:26px; line-height:1.18; letter-spacing:-.025em; }
+  .legal-card h2:first-child { margin-top:0; }
+  .legal-card h3 { margin:28px 0 8px; font-size:18px; }
+  .legal-card p { margin:0 0 14px; color:#435149; }
+  .legal-card ul { margin:8px 0 20px; padding-left:22px; color:#435149; }
+  .legal-card li { margin:7px 0; }
+  .legal-card a { color:var(--green); font-weight:750; text-underline-offset:3px; }
+  .legal-card .callout { margin:22px 0; padding:18px 20px; border-left:4px solid var(--green); border-radius:0 14px 14px 0; background:var(--soft); }
+  .legal-card .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:20px 0; }
+  .legal-card .mini { padding:18px; border:1px solid var(--line); border-radius:14px; background:#fbfdfc; }
+  .legal-card .mini strong { display:block; margin-bottom:6px; }
+  .legal-card table { width:100%; border-collapse:collapse; margin:18px 0 28px; font-size:14px; }
+  .legal-card th,.legal-card td { padding:12px 14px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+  .legal-card th { background:var(--soft); }
+  .legal-footer { border-top:1px solid var(--line); background:#10201a; color:#eaf2ee; }
+  .footer-inner { min-height:150px; display:flex; align-items:center; justify-content:space-between; gap:30px; }
+  .footer-inner > div { display:flex; flex-direction:column; gap:4px; }
+  .footer-inner span { color:#9fb1a8; font-size:12px; }
+  .footer-inner nav { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:16px 22px; }
+  .footer-inner a { color:#cbd8d2; text-decoration:none; font-size:12px; font-weight:700; }
+  .footer-inner a:hover { color:#fff; }
+  @media (max-width:760px) {
+    .legal-shell { width:min(100% - 24px,1080px); }
+    .nav { min-height:62px; }
+    .nav nav a:not(.back) { display:none; }
+    .legal-main { padding:48px 0 70px; }
+    .legal-hero > p { font-size:16px; }
+    .legal-card { padding:22px 18px; border-radius:16px; }
+    .legal-card .grid { grid-template-columns:1fr; }
+    .legal-card table { display:block; overflow-x:auto; }
+    .footer-inner { padding:34px 0; align-items:flex-start; flex-direction:column; }
+    .footer-inner nav { justify-content:flex-start; }
+  }
+</style>
