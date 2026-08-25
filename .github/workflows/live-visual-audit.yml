@@ -40,6 +40,22 @@ jobs:
               }
               if (!ok) throw new Error('Production site not reachable');
               await page.waitForTimeout(2500);
+              if (name === 'desktop-1440') {
+                const diagnostics = await page.evaluate(async () => {
+                  const imgs = [...document.images].map(img => ({ src: img.getAttribute('src'), currentSrc: img.currentSrc, complete: img.complete, naturalWidth: img.naturalWidth, naturalHeight: img.naturalHeight }));
+                  const fetches = {};
+                  for (const path of ['/showcase-operations.webp','/showcase-business.webp']) {
+                    try {
+                      const res = await fetch(path, { cache: 'no-store' });
+                      fetches[path] = { status: res.status, ok: res.ok, contentType: res.headers.get('content-type'), length: res.headers.get('content-length') };
+                    } catch (e) {
+                      fetches[path] = { error: String(e) };
+                    }
+                  }
+                  return { href: location.href, imgs, fetches };
+                });
+                fs.writeFileSync('live-audit/diagnostics.json', JSON.stringify(diagnostics, null, 2));
+              }
               await page.screenshot({ path: `live-audit/${name}.png`, fullPage: true });
               fs.writeFileSync(`live-audit/${name}-body.txt`, (await page.locator('body').innerText()).slice(0,50000));
               await context.close();
