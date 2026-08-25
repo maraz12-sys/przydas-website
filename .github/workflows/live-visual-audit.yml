@@ -1,0 +1,59 @@
+name: Live Visual Audit
+
+on:
+  push:
+    paths:
+      - '.github/workflows/live-visual-audit.yml'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-save >/dev/null 2>&1
+          npx playwright install --with-deps chromium
+
+      - name: Wait for production and capture
+        shell: bash
+        run: |
+          cat > capture-live.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          const url = 'https://xn--przyda-8ib.pl/';
+          fs.mkdirSync('live-audit', { recursive: true });
+          const browser = await chromium.launch({ headless: true });
+          try {
+            for (const [name,width,height] of [['desktop-1440',1440,1100],['tablet-1024',1024,900],['mobile-390',390,844]]) {
+              const context = await browser.newContext({ viewport: { width, height }, locale: 'pl-PL' });
+              const page = await context.newPage();
+              page.setDefaultTimeout(30000);
+              let ok = false;
+              for (let i=0;i<12;i++) {
+                try {
+                  const response = await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+                  if (response && response.ok()) { ok = true; break; }
+                } catch {}
+                await page.waitForTimeout(5000);
+              }
+              if (!ok) throw new Error('Production site not reachable');
+              await page.waitForTimeout(2500);
+              await page.screenshot({ path: `live-audit/${name}.png`, fullPage: true });
+              fs.writeFileSync(`live-audit/${name}-body.txt`, (await page.locator('body').innerText()).slice(0,50000));
+              await context.close();
+            }
+          } finally {
+            await browser.close();
+          }
+          EOF
+          node capture-live.mjs
+
+      - name: Upload live audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-visual-audit
+          path: live-audit/
+          retention-days: 3
+          if-no-files-found: error
