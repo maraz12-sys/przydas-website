@@ -171,7 +171,12 @@ const faq = [
       ))}
     </div>
 
-    <div class="comparison-mobile-hint">← Tabela przewija się w pionie i poziomie →</div>
+    <details class="comparison-details" open>
+      <summary class="comparison-mobile-toggle">
+        <span><strong>Pokaż pełne porównanie funkcji</strong><small>Rozwiń tabelę START / ZESPÓŁ / BIZNES</small></span>
+        <b aria-hidden="true">+</b>
+      </summary>
+      <div class="comparison-mobile-hint">← Tabela przewija się w pionie i poziomie →</div>
     <div class="comparison-table-wrap" role="region" aria-label="Pełne porównanie pakietów Przydasia" tabindex="0">
       <table class="comparison-table">
         <caption class="sr-only">Porównanie funkcji pakietów START, ZESPÓŁ i BIZNES</caption>
@@ -203,8 +208,23 @@ const faq = [
       </table>
     </div>
     <p class="comparison-note">Wyższy pakiet zawiera funkcje pakietów niższych. Zakres Przydasia będzie rozwijany wraz z produktem.</p>
+    </details>
   </div>
 </section>
+
+<script is:inline>
+  (() => {
+    const details = document.querySelector('.comparison-details');
+    if (!details) return;
+    const mobile = window.matchMedia('(max-width: 640px)');
+    const sync = () => {
+      if (mobile.matches) details.removeAttribute('open');
+      else details.setAttribute('open', '');
+    };
+    sync();
+    mobile.addEventListener?.('change', sync);
+  })();
+</script>
 
 <section class="trust-section">
   <div class="shell">
@@ -411,5 +431,45 @@ const faq = [
     .final-cta-box h2 { font-size: 36px; }
     .final-actions .button { width: 100%; }
     .footer-bottom { flex-direction: column; }
+  }
+
+  .comparison-details { margin: 0; }
+  .comparison-mobile-toggle { display: none; }
+
+  @media (max-width: 640px) {
+    .comparison-details { margin-top: 18px; }
+    .comparison-mobile-toggle {
+      min-height: 64px;
+      padding: 14px 15px;
+      border: 1px solid #cfe4d8;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      list-style: none;
+      cursor: pointer;
+      background: linear-gradient(145deg, #ffffff, #f1faf5);
+      box-shadow: 0 8px 24px rgba(28, 74, 52, .05);
+    }
+    .comparison-mobile-toggle::-webkit-details-marker { display: none; }
+    .comparison-mobile-toggle span { display: grid; gap: 3px; }
+    .comparison-mobile-toggle strong { color: #10251d; font-size: 13px; line-height: 1.25; }
+    .comparison-mobile-toggle small { color: #68766f; font-size: 10px; line-height: 1.35; }
+    .comparison-mobile-toggle b {
+      width: 30px;
+      height: 30px;
+      flex: 0 0 30px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: #087f53;
+      background: #e5f5ed;
+      font-size: 20px;
+      line-height: 1;
+      transition: transform .18s ease;
+    }
+    .comparison-details[open] .comparison-mobile-toggle b { transform: rotate(45deg); }
+    .comparison-details[open] .comparison-mobile-toggle { margin-bottom: 10px; }
   }
 </style>
