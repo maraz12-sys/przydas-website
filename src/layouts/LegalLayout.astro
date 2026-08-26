@@ -3,8 +3,7 @@ const {
   title,
   description,
   eyebrow = 'Dokumenty Przydasia',
-  updated = '25.08.2026',
-  draft = false,
+  updated = '26.08.2026',
 } = Astro.props;
 ---
 <!doctype html>
@@ -43,12 +42,6 @@ const {
           <span>Wersja 1.0</span>
           <span>Aktualizacja: {updated}</span>
         </div>
-        {draft && (
-          <div class="draft-note">
-            <strong>Dokument przed uruchomieniem komercyjnym</strong>
-            <p>Dane identyfikacyjne operatora i elementy zależne od finalnego modelu sprzedaży zostaną uzupełnione przed zawarciem pierwszej płatnej umowy. Nie publikujemy fikcyjnych danych.</p>
-          </div>
-        )}
       </div>
 
       <article class="legal-card">
@@ -95,9 +88,6 @@ const {
   .legal-hero h1 { margin:0; font-size:clamp(38px,6vw,66px); line-height:1.03; letter-spacing:-.045em; }
   .legal-hero > p { margin:22px 0 16px; color:var(--muted); font-size:18px; max-width:720px; }
   .meta { display:flex; gap:16px; color:#819087; font-size:12px; font-weight:700; }
-  .draft-note { margin-top:24px; padding:18px 20px; border:1px solid #ecd8a6; border-radius:14px; background:#fffaf0; }
-  .draft-note strong { color:#75520b; }
-  .draft-note p { margin:5px 0 0; color:#6d6249; font-size:13px; }
   .legal-card { padding:clamp(26px,5vw,58px); border:1px solid var(--line); border-radius:22px; background:#fff; box-shadow:0 24px 60px rgba(25,55,42,.06); }
   .legal-card h2 { margin:42px 0 12px; font-size:26px; line-height:1.18; letter-spacing:-.025em; }
   .legal-card h2:first-child { margin-top:0; }
