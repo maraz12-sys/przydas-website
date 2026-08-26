@@ -31,6 +31,7 @@ jobs:
 
           test -s dist/index.html
           test -s dist/404.html
+          test -s dist/formularz/index.html
           test -s dist/robots.txt
           test -s dist/sitemap.xml
           test -s dist/_headers
@@ -48,7 +49,9 @@ jobs:
           grep -q 'xn--przyda-8ib.pl/sitemap.xml' dist/robots.txt
           grep -q 'xn--przyda-8ib.pl' dist/sitemap.xml
           grep -q 'Content-Security-Policy' dist/_headers
+          grep -q "connect-src 'self' https://jyzajgbgkqlczjpoxxzt.supabase.co" dist/_headers
+          grep -q 'formularz-rezerwacyjny-publiczny' dist/formularz/index.html
           grep -q 'X-Robots-Tag: noindex' dist/_headers
 
 # CI validates the assembled production landing page, conversion-critical copy,
-# structured data, SEO files, security headers and custom error routing.
+# structured data, SEO files, public form API access, security headers and custom error routing.
