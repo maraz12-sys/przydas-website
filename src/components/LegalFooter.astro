@@ -23,7 +23,7 @@ const legalCards = [
   {
     eyebrow: 'Bezpieczeństwo',
     title: 'Bez obietnic „zera ryzyka”.',
-    text: 'Pokazujemy faktyczny model: izolację organizacji, szyfrowanie transmisji, kontrolę dostępu i plan produkcyjnych backupów.',
+    text: 'Pokazujemy faktyczny model: izolację organizacji, szyfrowanie transmisji, kontrolę dostępu, ochronę kont i prywatne Storage.',
     links: [
       ['Jak chronimy dane', '/bezpieczenstwo'],
       ['Zgłoś incydent', 'mailto:bezpieczenstwo@xn--przyda-8ib.pl'],
@@ -42,9 +42,9 @@ const legalCards = [
 
 const securityFaq = [
   ['Czy dane różnych firm są od siebie oddzielone?', 'Tak. Przydaś wykorzystuje organizacje, role i reguły dostępu po stronie bazy. Nie polegamy wyłącznie na tym, co jest ukryte w interfejsie.'],
-  ['Gdzie znajdują się podstawowe dane?', 'Główny projekt Supabase działa w regionie West EU — Irlandia, czyli na terenie Unii Europejskiej.'],
-  ['Co w przypadku utraty hasła lub podejrzanego logowania?', 'System rozwija kontrolę nowych urządzeń oraz dodatkową weryfikację. Incydenty można zgłaszać bezpośrednio na dedykowany adres bezpieczeństwa.'],
-  ['Czy Przydaś ma już produkcyjny backup?', 'Przed płatnym startem wymagamy automatycznych kopii na planie produkcyjnym, niezależnej kopii danych i plików oraz testów odtworzenia. Nie opisujemy planu jako wdrożonego, dopóki nie zostanie faktycznie uruchomiony i sprawdzony.'],
+  ['Gdzie znajdują się podstawowe dane?', 'Główny projekt Supabase działa w europejskim regionie eu-central-1.'],
+  ['Co w przypadku utraty hasła lub podejrzanego logowania?', 'System korzysta z kontroli nowych urządzeń i dodatkowej weryfikacji kodem. Incydenty można zgłaszać bezpośrednio na dedykowany adres bezpieczeństwa.'],
+  ['Jak podchodzimy do kopii zapasowych?', 'Backup bazy i kopie plików traktujemy jako odrębne obszary. Zakres retencji i odtwarzania wynika z konfiguracji środowiska produkcyjnego oraz dokumentacji operacyjnej.'],
 ];
 ---
 
@@ -73,7 +73,7 @@ const securityFaq = [
       <div class="security-faq-copy">
         <span>Najczęstsze pytania o dane</span>
         <h3>Nie chowamy bezpieczeństwa w przypisie.</h3>
-        <p>Krótko i konkretnie: co działa dziś, co jest częścią architektury i co musi zostać domknięte przed sprzedażą komercyjną.</p>
+        <p>Krótko i konkretnie: jak rozdzielamy dane organizacji, chronimy konta, pliki i dostęp do systemu.</p>
         <a href="/bezpieczenstwo">Pełna informacja o bezpieczeństwie →</a>
       </div>
       <div class="security-faq-list">
@@ -134,7 +134,7 @@ const securityFaq = [
 
   <div class="complete-footer-shell footer-bottom-new">
     <span>© 2026 Przydaś</span>
-    <span>Dokumentacja prawna v1.0 · 25.08.2026</span>
+    <span>Dokumentacja prawna v1.0 · 26.08.2026</span>
   </div>
 </footer>
 
