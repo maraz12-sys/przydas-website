@@ -97,6 +97,15 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       .check input:checked{border-color:var(--green);background:var(--green)}
       .check input:checked::after{content:"✓";color:#fff;font-size:13px;font-weight:900;line-height:1}
       .check span{font-size:13px!important;font-weight:750!important;color:#34453c}
+      .choice-field{grid-column:1/-1}
+      .choice-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+      .choice-option{min-height:52px;padding:13px 14px;display:flex;align-items:center;gap:11px;border:1px solid #dce8e1;border-radius:13px;background:#f8fbf9;cursor:pointer}
+      .choice-option:hover{border-color:#b8d4c5;background:#f4faf6}
+      .choice-option input{appearance:none!important;width:22px!important;height:22px!important;min-width:22px!important;flex:0 0 22px!important;margin:0!important;padding:0!important;border:1.5px solid #aebeb5!important;border-radius:6px!important;background:#fff!important;display:grid!important;place-items:center!important;cursor:pointer!important;box-shadow:none!important}
+      .choice-option input:checked{border-color:var(--green)!important;background:var(--green)!important}
+      .choice-option input:checked::after{content:"✓";color:#fff;font-size:13px;font-weight:900;line-height:1}
+      .choice-option span{color:#34453c;font-size:13px;font-weight:750}
+      @media(max-width:520px){.choice-options{grid-template-columns:1fr}}
       .error-wrap{grid-column:1/-1}
       .error{padding:12px 14px;border:1px solid #f0c7c1;border-radius:12px;background:var(--danger-soft);color:var(--danger);font-size:12px;line-height:1.55}
       .actions{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:4px;padding-top:22px;border-top:1px solid #edf2ef}
@@ -188,6 +197,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       const wideKeys = new Set(['adres','atrakcje','faktura_dane','uwagi']);
       const timeSlotKeys = new Set(['godzina_start','godzina_end']);
       const timeOptions = Array.from({length:48},(_,index)=>{const total=index*30;const h=String(Math.floor(total/60)).padStart(2,'0');const m=String(total%60).padStart(2,'0');return `${h}:${m}`;});
+      const paymentOptions = [{value:'gotowka',label:'Gotówka'},{value:'przelew',label:'Przelew'}];
       const plusTwoHours = value => { const match=/^(\d{2}):(\d{2})$/.exec(String(value||'')); if(!match)return ''; const total=(Number(match[1])*60+Number(match[2])+120)%(24*60); return `${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`; };
       const invoiceDependentKeys = new Set(['faktura_nip','faktura_dane']);
       const fieldOrder = [
@@ -248,6 +258,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         const dependentAttrs=invoiceDependent?' data-invoice-dependent="true" hidden':'';
         const placeholder=placeholders[field.key]?` placeholder="${esc(placeholders[field.key])}"`:'';
         const hint=fieldHints[field.key]?`<small class="field-hint">${esc(fieldHints[field.key])}</small>`:'';
+        if(field.key==='sposob_platnosci') return `<div class="field field-wide choice-field"><span>${label}${mark}</span><div class="choice-options" role="radiogroup" aria-label="${label}">${paymentOptions.map((option,index)=>`<label class="choice-option"><input type="radio" name="${key}" value="${option.value}"${field.required===true&&index===0?' required':''}><span>${option.label}</span></label>`).join('')}</div><small class="field-hint">Wybierz jedną opcję.</small></div>`;
         if(field.type==='checkbox') return `<label class="field check${dependentClass}"${dependentAttrs}><input type="checkbox" name="${key}"><span>${label}${mark}</span></label>`;
         if(field.type==='textarea') return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><textarea name="${key}"${required}${placeholder}></textarea>${hint}</label>`;
         if(timeSlotKeys.has(field.key)) return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><select name="${key}"${required}><option value="">Wybierz godzinę</option>${timeOptions.map(value=>`<option value="${value}">${value}</option>`).join('')}</select>${hint}</label>`;
