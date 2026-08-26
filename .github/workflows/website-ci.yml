@@ -51,7 +51,16 @@ jobs:
           grep -q 'Content-Security-Policy' dist/_headers
           grep -q "connect-src 'self' https://jyzajgbgkqlczjpoxxzt.supabase.co" dist/_headers
           grep -q 'formularz-rezerwacyjny-publiczny' dist/formularz/index.html
+          grep -q 'form-card' dist/formularz/index.html
+          grep -q 'form-intro' dist/formularz/index.html
           grep -q 'X-Robots-Tag: noindex' dist/_headers
 
+          ! grep -Rqi 'Dokument przed uruchomieniem' dist
+          ! grep -Rqi 'dane identyfikacyjne operatora.*zostaną uzupełnione' dist
+          ! grep -Rqi 'przed komercyjnym startem' dist
+          ! grep -Rqi 'przed sprzedażą komercyjną' dist
+          ! grep -Rqi 'przed płatnym startem' dist
+
 # CI validates the assembled production landing page, conversion-critical copy,
-# structured data, SEO files, public form API access, security headers and custom error routing.
+# structured data, SEO files, public form API access, tester-facing copy,
+# security headers and custom error routing.
