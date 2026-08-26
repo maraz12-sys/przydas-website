@@ -62,19 +62,33 @@ jobs:
             expires_at: '2026-09-02T12:00:00+02:00',
             completed: false,
             fields: [
+              { key: 'uwagi', label: 'Uwagi', type: 'textarea', required: false },
+              { key: 'godzina_zakonczenia', label: 'Godzina zakończenia', type: 'time', required: false },
+              { key: 'adres', label: 'Adres wydarzenia', type: 'text', required: true },
               { key: 'data_wydarzenia', label: 'Data wydarzenia', type: 'date', required: true },
               { key: 'godzina_rozpoczecia', label: 'Godzina rozpoczęcia', type: 'time', required: true },
-              { key: 'godzina_zakonczenia', label: 'Godzina zakończenia', type: 'time', required: false },
               { key: 'rodzaj_wydarzenia', label: 'Rodzaj wydarzenia', type: 'text', required: true },
               { key: 'title', label: 'Nazwa / temat wydarzenia', type: 'text', required: false },
-              { key: 'adres', label: 'Adres wydarzenia', type: 'text', required: true },
-              { key: 'osoba_do_kontaktu', label: 'Osoba do kontaktu', type: 'text', required: true },
               { key: 'telefon_kontaktowy', label: 'Telefon kontaktowy', type: 'tel', required: true },
+              { key: 'osoba_do_kontaktu', label: 'Osoba do kontaktu', type: 'text', required: true },
               { key: 'email_kontaktowy', label: 'E-mail kontaktowy', type: 'email', required: false },
-              { key: 'uwagi', label: 'Uwagi', type: 'textarea', required: false },
               { key: 'faktura', label: 'Czy potrzebna jest faktura?', type: 'checkbox', required: false }
             ]
           };
+
+          const expectedOrder = [
+            'Nazwa / temat wydarzenia',
+            'Rodzaj wydarzenia',
+            'Data wydarzenia',
+            'Godzina rozpoczęcia',
+            'Godzina zakończenia',
+            'Adres wydarzenia',
+            'Osoba do kontaktu',
+            'Telefon kontaktowy',
+            'E-mail kontaktowy',
+            'Czy potrzebna jest faktura?',
+            'Uwagi',
+          ];
 
           const browser = await chromium.launch({ headless: true });
 
@@ -89,13 +103,15 @@ jobs:
             await page.goto('http://127.0.0.1:4173/formularz/?t=PWYzYneFaA3YiafLu66v7Ualkc03Bm0PaA-PbmLB57k', { waitUntil: 'domcontentloaded' });
             await page.locator('#reservation-form').waitFor({ state: 'visible' });
 
-            const styles = await page.evaluate(() => {
+            const result = await page.evaluate(() => {
               const form = document.querySelector('#reservation-form');
               const input = document.querySelector('.field input');
               const submit = document.querySelector('.submit');
               const head = document.querySelector('.head');
               const field = document.querySelector('.field');
+              const labels = Array.from(document.querySelectorAll('#reservation-form .field > span')).map(el => el.textContent.replace('*','').trim());
               return {
+                labels,
                 formDisplay: getComputedStyle(form).display,
                 formColumns: getComputedStyle(form).gridTemplateColumns,
                 fieldDisplay: getComputedStyle(field).display,
@@ -107,13 +123,14 @@ jobs:
               };
             });
 
-            console.log(`${width}x${height}`, styles);
-            if (styles.formDisplay !== 'grid') throw new Error(`Formularz nie ma display:grid: ${JSON.stringify(styles)}`);
-            if (styles.fieldDisplay !== 'grid') throw new Error(`Dynamiczne pola nie dostały stylów: ${JSON.stringify(styles)}`);
-            if (styles.inputRadius < 10 || styles.inputHeight < 45) throw new Error(`Input wygląda jak domyślny element przeglądarki: ${JSON.stringify(styles)}`);
-            if (styles.submitRadius < 10 || styles.submitHeight < 45) throw new Error(`Przycisk nie dostał finalnych stylów: ${JSON.stringify(styles)}`);
-            if (styles.headPaddingTop < 20) throw new Error(`Nagłówek formularza nie dostał finalnych stylów: ${JSON.stringify(styles)}`);
-            if (width > 720 && styles.formColumns.split(' ').length < 2) throw new Error(`Desktop nie ma układu 2-kolumnowego: ${JSON.stringify(styles)}`);
+            console.log(`${width}x${height}`, result);
+            if (result.formDisplay !== 'grid') throw new Error(`Formularz nie ma display:grid: ${JSON.stringify(result)}`);
+            if (result.fieldDisplay !== 'grid') throw new Error(`Dynamiczne pola nie dostały stylów: ${JSON.stringify(result)}`);
+            if (result.inputRadius < 10 || result.inputHeight < 45) throw new Error(`Input wygląda jak domyślny element przeglądarki: ${JSON.stringify(result)}`);
+            if (result.submitRadius < 10 || result.submitHeight < 45) throw new Error(`Przycisk nie dostał finalnych stylów: ${JSON.stringify(result)}`);
+            if (result.headPaddingTop < 20) throw new Error(`Nagłówek formularza nie dostał finalnych stylów: ${JSON.stringify(result)}`);
+            if (width > 720 && result.formColumns.split(' ').length < 2) throw new Error(`Desktop nie ma układu 2-kolumnowego: ${JSON.stringify(result)}`);
+            if (JSON.stringify(result.labels) !== JSON.stringify(expectedOrder)) throw new Error(`Pola są w złej kolejności. Otrzymano: ${JSON.stringify(result.labels)}`);
 
             await page.screenshot({ path: output, fullPage: true });
             await context.close();
