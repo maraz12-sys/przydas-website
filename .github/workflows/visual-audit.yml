@@ -21,13 +21,15 @@ jobs:
           node-version: '22.x'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install playwright@1.55.0 --no-save
 
       - name: Build site
         run: npm run build
 
       - name: Install Chromium for Playwright
-        run: npx --yes playwright@1.55.0 install --with-deps chromium
+        run: npx playwright install --with-deps chromium
 
       - name: Serve static build
         run: |
@@ -42,14 +44,14 @@ jobs:
       - name: Capture landing page
         run: |
           mkdir -p visual-audit
-          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1440,1100" --full-page http://127.0.0.1:4173/ visual-audit/desktop-1440.png
-          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1024,900" --full-page http://127.0.0.1:4173/ visual-audit/tablet-1024.png
-          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "390,844" --full-page http://127.0.0.1:4173/ visual-audit/mobile-390.png
+          npx playwright screenshot --browser chromium --viewport-size "1440,1100" --full-page http://127.0.0.1:4173/ visual-audit/desktop-1440.png
+          npx playwright screenshot --browser chromium --viewport-size "1024,900" --full-page http://127.0.0.1:4173/ visual-audit/tablet-1024.png
+          npx playwright screenshot --browser chromium --viewport-size "390,844" --full-page http://127.0.0.1:4173/ visual-audit/mobile-390.png
 
       - name: Verify and capture public reservation form
         shell: bash
         run: |
-          cat > /tmp/form-audit.mjs <<'EOF'
+          cat > form-audit.mjs <<'EOF'
           import { chromium } from 'playwright';
 
           const mockResponse = {
@@ -121,12 +123,13 @@ jobs:
           await testViewport(390, 844, 'visual-audit/form-mobile-390.png');
           await browser.close();
           EOF
-          node /tmp/form-audit.mjs
+          node form-audit.mjs
 
       - name: Upload screenshots
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: visual-audit
           path: visual-audit/*.png
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 7
