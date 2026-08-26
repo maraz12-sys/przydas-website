@@ -65,8 +65,8 @@ const comparisonSections = [
     rows: [
       ['Liczba obsługiwanych firm', '1', 'Do 3', 'Bez limitu'],
       ['Konfiguracja formularza rezerwacji', 'Częściowa', 'Pełna', 'Pełna'],
-      ['Backup', '—', '✓', '✓'],
-      ['Zaawansowane uprawnienia i automatyzacje', '—', '—', '✓'],
+      ['Kopie zapasowe', '—', '✓', '✓'],
+      ['Własne poziomy dostępu i automatyczne działania', '—', '—', '✓'],
     ],
   },
 ];
@@ -93,10 +93,10 @@ const comparisonOutcomes = [
 ];
 
 const trustItems = [
-  ['Zbudowany pod branżę', 'Nie jest to uniwersalny CRM z podmienionymi nazwami. Funkcje wynikają z procesu firmy animacyjnej i eventowej.'],
+  ['Zbudowany pod branżę', 'Nie jest to uniwersalny system z podmienionymi nazwami. Funkcje wynikają z codziennej pracy firmy animacyjnej i eventowej.'],
   ['Własne konta zespołu', 'Pracownicy logują się na swoje konta i widzą informacje zgodnie z rolą oraz nadanymi uprawnieniami.'],
-  ['Telefon i komputer', 'Przydaś działa jako aplikacja webowa i PWA, więc może być pod ręką również podczas realizacji.'],
-  ['Dane rozdzielone per organizacja', 'Dostęp do informacji jest rozdzielany według organizacji, użytkownika i jego roli w systemie.'],
+  ['Telefon i komputer', 'Przydaś działa na komputerze i telefonie. Na telefonie możesz dodać go do ekranu głównego i otwierać jak zwykłą aplikację.'],
+  ['Dane każdej firmy są oddzielone', 'Każda osoba widzi tylko informacje, do których ma dostęp w swojej firmie.'],
 ];
 
 const faq = [
@@ -134,7 +134,7 @@ const faq = [
   },
   {
     q: 'Czy Przydaś działa na telefonie?',
-    a: 'Tak. Interfejs działa na komputerach i urządzeniach mobilnych, a Przydaś może być instalowany jako PWA.',
+    a: 'Tak. Przydaś działa na komputerze i telefonie. Na telefonie możesz dodać go do ekranu głównego i otwierać jak zwykłą aplikację.',
   },
   {
     q: 'Co dzieje się z informacjami po zakończeniu wydarzenia?',
@@ -142,7 +142,7 @@ const faq = [
   },
   {
     q: 'Czy dane różnych firm i użytkowników są od siebie oddzielone?',
-    a: 'Tak. Przydaś korzysta z modelu organizacji i ról użytkowników. Dostęp do informacji jest kontrolowany na podstawie organizacji oraz uprawnień konta.',
+    a: 'Tak. Każda firma ma własną przestrzeń, a użytkownik widzi tylko informacje, do których ma nadany dostęp.',
   },
 ];
 ---
@@ -207,7 +207,7 @@ const faq = [
         </tbody>
       </table>
     </div>
-    <p class="comparison-note">Wyższy pakiet zawiera funkcje pakietów niższych. Zakres funkcji może zmieniać się wraz z kolejnymi wersjami Przydasia.</p>
+    <p class="comparison-note">Wyższy pakiet zawiera funkcje pakietów niższych. Aktualny zakres zawsze znajdziesz w tabeli powyżej.</p>
     </details>
   </div>
 </section>

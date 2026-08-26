@@ -16,14 +16,14 @@ const legalCards = [
     text: 'Inaczej traktujemy dane konta Przydasia, a inaczej dane klientów i pracowników wprowadzane przez Twoją firmę.',
     links: [
       ['Polityka prywatności', '/polityka-prywatnosci'],
-      ['Cookies i storage', '/cookies'],
+      ['Cookies i pamięć urządzenia', '/cookies'],
       ['Podprocesorzy', '/podprocesorzy'],
     ],
   },
   {
     eyebrow: 'Bezpieczeństwo',
     title: 'Bez obietnic „zera ryzyka”.',
-    text: 'Pokazujemy faktyczny model: izolację organizacji, szyfrowanie transmisji, kontrolę dostępu, ochronę kont i prywatne Storage.',
+    text: 'Pokazujemy konkretnie, jak oddzielamy dane firm, chronimy połączenie, konta i dostęp do plików.',
     links: [
       ['Jak chronimy dane', '/bezpieczenstwo'],
       ['Zgłoś incydent', 'mailto:bezpieczenstwo@xn--przyda-8ib.pl'],
@@ -32,7 +32,7 @@ const legalCards = [
   {
     eyebrow: 'Dokumenty',
     title: 'Formalności w jednym miejscu.',
-    text: 'Regulamin, zasady prywatności, cookies i dokumentacja infrastruktury są dostępne bez logowania.',
+    text: 'Regulamin, zasady prywatności, informacje o cookies i bezpieczeństwie są dostępne bez logowania.',
     links: [
       ['Regulamin', '/regulamin'],
       ['Dokumenty prawne', '/polityka-prywatnosci'],
@@ -41,10 +41,10 @@ const legalCards = [
 ];
 
 const securityFaq = [
-  ['Czy dane różnych firm są od siebie oddzielone?', 'Tak. Przydaś wykorzystuje organizacje, role i reguły dostępu po stronie bazy. Nie polegamy wyłącznie na tym, co jest ukryte w interfejsie.'],
-  ['Gdzie znajdują się podstawowe dane?', 'Główny projekt Supabase działa w europejskim regionie eu-central-1.'],
+  ['Czy dane różnych firm są od siebie oddzielone?', 'Tak. Dane każdej firmy są oddzielone, a użytkownik widzi tylko informacje, do których ma nadany dostęp.'],
+  ['Gdzie znajdują się podstawowe dane?', 'Podstawowe dane Przydasia są przechowywane w europejskim centrum danych.'],
   ['Co w przypadku utraty hasła lub podejrzanego logowania?', 'System korzysta z kontroli nowych urządzeń i dodatkowej weryfikacji kodem. Incydenty można zgłaszać bezpośrednio na dedykowany adres bezpieczeństwa.'],
-  ['Jak podchodzimy do kopii zapasowych?', 'Backup bazy i kopie plików traktujemy jako odrębne obszary. Zakres retencji i odtwarzania wynika z konfiguracji środowiska produkcyjnego oraz dokumentacji operacyjnej.'],
+  ['Jak podchodzimy do kopii zapasowych?', 'Kopie danych i kopie plików są zabezpieczane osobno, tak aby jedna forma kopii nie była jedynym zabezpieczeniem.'],
 ];
 ---
 
@@ -120,7 +120,7 @@ const securityFaq = [
       <strong>Prawo i dane</strong>
       <a href="/regulamin">Regulamin</a>
       <a href="/polityka-prywatnosci">Polityka prywatności</a>
-      <a href="/cookies">Cookies i storage</a>
+      <a href="/cookies">Cookies i pamięć urządzenia</a>
       <a href="/podprocesorzy">Podprocesorzy</a>
       <a href="/bezpieczenstwo">Bezpieczeństwo danych</a>
     </div>
@@ -134,7 +134,7 @@ const securityFaq = [
 
   <div class="complete-footer-shell footer-bottom-new">
     <span>© 2026 Przydaś</span>
-    <span>Dokumentacja prawna v1.0 · 26.08.2026</span>
+    <span>Dokumenty prawne i informacje o prywatności</span>
   </div>
 </footer>
 
