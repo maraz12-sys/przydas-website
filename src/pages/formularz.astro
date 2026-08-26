@@ -156,6 +156,39 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         uwagi:'Dodatkowe informacje dla organizatora',
       };
       const wideKeys = new Set(['adres','atrakcje','faktura_dane','uwagi']);
+      const fieldOrder = [
+        'title',
+        'rodzaj_wydarzenia',
+        'data_wydarzenia',
+        'godzina_rozpoczecia',
+        'godzina_zakonczenia',
+        'adres',
+        'osoba_do_kontaktu',
+        'telefon_kontaktowy',
+        'email_kontaktowy',
+        'typ_klienta',
+        'kontrahent_nazwa',
+        'pakiet',
+        'atrakcje',
+        'liczba_dzieci',
+        'wiek_dzieci',
+        'solenizant',
+        'faktura',
+        'faktura_wymagana',
+        'faktura_nip',
+        'faktura_dane',
+        'sposob_platnosci',
+        'uwagi',
+      ];
+      const fieldOrderIndex = new Map(fieldOrder.map((key,index)=>[key,index]));
+      const orderFields = fields => fields
+        .map((field,index)=>({field,index}))
+        .sort((a,b)=>{
+          const aOrder = fieldOrderIndex.has(a.field.key) ? fieldOrderIndex.get(a.field.key) : (a.field.key === 'uwagi' ? 9999 : 9000 + a.index);
+          const bOrder = fieldOrderIndex.has(b.field.key) ? fieldOrderIndex.get(b.field.key) : (b.field.key === 'uwagi' ? 9999 : 9000 + b.index);
+          return aOrder - bOrder || a.index - b.index;
+        })
+        .map(item=>item.field);
       const callApi = async payload => {
         const response = await fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),credentials:'omit',cache:'no-store'});
         const data = await response.json().catch(()=>({ok:false,message:'Nieprawidłowa odpowiedź serwera.'}));
@@ -177,7 +210,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       const renderForm = data => {
         formData=data;
         if(data.completed){showState('Formularz został już przekazany',data.message||'Wszystko jest zapisane — nie musisz nic więcej robić.',true);return;}
-        const fields=Array.isArray(data.fields)?data.fields:[];
+        const fields=orderFields(Array.isArray(data.fields)?data.fields:[]);
         card.innerHTML=`<header class="head"><span class="organization">${esc(data.organization_name||'Organizator')}</span><h1>${esc(data.template_name||'Informacje o wydarzeniu')}</h1><p>${esc(data.description||'Uzupełnij informacje dotyczące wydarzenia. Po wysłaniu trafią bezpośrednio do organizatora.')}</p><div class="meta">${data.expires_at?`<span>Link ważny do ${esc(fmtDate(data.expires_at))}</span>`:''}<span>Dane trafiają bezpośrednio do organizatora</span></div></header><div class="form-body"><div class="form-intro"><div><strong>Informacje o wydarzeniu</strong><span>Uzupełnij pola poniżej i wyślij formularz.</span></div><span class="required-note">* pola wymagane</span></div><form id="reservation-form">${fields.map(renderField).join('')}<div id="form-error" class="error-wrap"></div><div class="actions"><div class="actions-copy">Przed wysłaniem możesz jeszcze sprawdzić wszystkie wpisane informacje.</div><button class="submit" type="submit">Wyślij formularz →</button></div></form></div>`;
         document.getElementById('reservation-form').addEventListener('submit',submitForm);
       };
