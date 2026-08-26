@@ -96,3 +96,4 @@ audit = replaceOnce(
 fs.writeFileSync(formPath, src, 'utf8');
 fs.writeFileSync(auditPath, audit, 'utf8');
 console.log('OK: public form half-hour times, +2h end, address hint and title label');
+// retry marker: visual audit workflow already updated directly
