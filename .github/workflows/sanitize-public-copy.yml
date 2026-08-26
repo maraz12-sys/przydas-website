@@ -32,6 +32,16 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/components/LandingTop.astro src/components/FinalSections.astro
-          git commit -m "Clean pre-launch wording from public pages"
+          git add \
+            src/components/LandingTop.astro \
+            src/components/FinalSections.astro \
+            src/components/ProductShowcase.astro \
+            src/components/LegalFooter.astro \
+            src/pages/bezpieczenstwo.astro \
+            src/pages/cookies.astro \
+            src/pages/kontakt.astro \
+            src/pages/podprocesorzy.astro \
+            src/pages/polityka-prywatnosci.astro \
+            src/pages/regulamin.astro
+          git commit -m "Remove technical and pre-launch wording from public pages"
           git push
