@@ -11,7 +11,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
     <meta name="theme-color" content="#087f53" />
     <title>Formularz wydarzenia | Przydaś</title>
     <link rel="icon" href="/przydas-mark.svg" type="image/svg+xml" />
-    <style>
+    <style is:global>
       :root{
         font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
         color:#17251f;
@@ -134,7 +134,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       const token = new URLSearchParams(window.location.search).get('t') || '';
       let formData = null;
 
-      const esc = (value='') => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
+      const esc = (value='') => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[char]));
       const fmtDate = value => { if(!value) return ''; const d=new Date(value); return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('pl-PL',{day:'2-digit',month:'2-digit',year:'numeric'}).format(d); };
       const placeholders = {
         title:'np. Urodziny Zosi',
