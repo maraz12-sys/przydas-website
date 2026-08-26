@@ -3,21 +3,19 @@ import LegalLayout from '../layouts/LegalLayout.astro';
 ---
 <LegalLayout
   title="Podprocesorzy i dostawcy"
-  description="Kategorie dostawców infrastruktury wykorzystywanych do działania Przydasia i status ich wykorzystania."
+  description="Kategorie dostawców infrastruktury wykorzystywanych do działania Przydasia i zakres ich wykorzystania."
   eyebrow="RODO · infrastruktura"
-  draft={true}
 >
   <h2>Aktualny model infrastruktury</h2>
-  <p>Przydaś korzysta z wyspecjalizowanych dostawców wyłącznie w zakresie potrzebnym do świadczenia Usługi. Finalna lista kontraktowa wraz z właściwymi mechanizmami transferowymi będzie elementem dokumentacji komercyjnej.</p>
+  <p>Przydaś korzysta z wyspecjalizowanych dostawców wyłącznie w zakresie potrzebnym do świadczenia Usługi. Lista poniżej obejmuje główne usługi wykorzystywane przez aktualne środowisko Przydasia.</p>
 
   <table>
     <thead><tr><th>Dostawca / kategoria</th><th>Cel</th><th>Status</th></tr></thead>
     <tbody>
-      <tr><td>Supabase</td><td>Backend, PostgreSQL, uwierzytelnianie, Storage i funkcje serwerowe. Główny region projektu: West EU (Irlandia).</td><td>Wykorzystywany</td></tr>
+      <tr><td>Supabase</td><td>Backend, PostgreSQL, uwierzytelnianie, Storage i funkcje serwerowe. Projekt działa w europejskim regionie eu-central-1.</td><td>Wykorzystywany</td></tr>
       <tr><td>WeWeb</td><td>Warstwa aplikacji webowej i dostarczanie interfejsu Przydasia.</td><td>Wykorzystywany</td></tr>
       <tr><td>Cloudflare</td><td>DNS, ochrona ruchu, SSL/TLS i dostarczanie strony marketingowej.</td><td>Wykorzystywany</td></tr>
       <tr><td>Resend / poczta transakcyjna</td><td>Wiadomości techniczne, np. zaproszenia i komunikacja systemowa, w zakresie skonfigurowanym w aplikacji.</td><td>Wykorzystywany w procesach transakcyjnych</td></tr>
-      <tr><td>Operator płatności</td><td>Płatności za subskrypcję.</td><td>Nie wdrożony na obecnym etapie</td></tr>
     </tbody>
   </table>
 
@@ -25,7 +23,7 @@ import LegalLayout from '../layouts/LegalLayout.astro';
   <p>Jeżeli dostawca lub jego dalszy podprocesor przetwarza dane poza EOG, zastosowanie mają mechanizmy przewidziane w RODO, np. decyzje o odpowiednim stopniu ochrony, standardowe klauzule umowne oraz – jeśli wymagane – środki uzupełniające.</p>
 
   <h2>Zmiany listy</h2>
-  <p>Lista będzie aktualizowana przy uruchamianiu nowych integracji, płatności, analityki lub innych usług mających wpływ na przetwarzanie danych. Przed startem komercyjnym zostanie zweryfikowana względem faktycznej produkcji i zawartych DPA.</p>
+  <p>Lista jest aktualizowana wraz z uruchamianiem, zmianą lub wyłączaniem usług mających wpływ na przetwarzanie danych.</p>
 
   <h2>Kontakt</h2>
   <p>Pytania dotyczące dostawców i przetwarzania danych można wysłać na <a href="mailto:bezpieczenstwo@xn--przyda-8ib.pl">bezpieczenstwo@przydaś.pl</a>.</p>
