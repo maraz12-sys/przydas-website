@@ -74,6 +74,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       .field.field-wide{grid-column:1/-1}
       .field[hidden]{display:none!important}
       .field>span{display:flex;align-items:center;gap:5px;color:#34453c;font-size:12px;font-weight:780}
+      .field-hint{margin-top:-1px;color:#7b8a82;font-size:10px;line-height:1.5}
       .field em{font-style:normal;color:var(--danger);font-weight:900}
       .field input,.field textarea,.field select{
         width:100%;
@@ -166,7 +167,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       const placeholders = {
         title:'np. Urodziny Zosi',
         rodzaj_wydarzenia:'np. urodziny, piknik, warsztaty',
-        adres:'Miejscowość, ulica i numer',
+        adres:'Miejscowość, ulica, numer i kod pocztowy',
         osoba_do_kontaktu:'Imię i nazwisko',
         telefon_kontaktowy:'np. 500 000 000',
         email_kontaktowy:'np. kontakt@firma.pl',
@@ -182,7 +183,12 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         sposob_platnosci:'np. przelew, gotówka',
         uwagi:'Dodatkowe informacje dla organizatora',
       };
+      const fieldLabels = { title:'Nazwa wydarzenia' };
+      const fieldHints = { adres:'Podaj dokładny adres z kodem pocztowym. Jeżeli dojazd jest niestandardowy, opisz to w uwagach na dole formularza.' };
       const wideKeys = new Set(['adres','atrakcje','faktura_dane','uwagi']);
+      const timeSlotKeys = new Set(['godzina_start','godzina_end']);
+      const timeOptions = Array.from({length:48},(_,index)=>{const total=index*30;const h=String(Math.floor(total/60)).padStart(2,'0');const m=String(total%60).padStart(2,'0');return `${h}:${m}`;});
+      const plusTwoHours = value => { const match=/^(\d{2}):(\d{2})$/.exec(String(value||'')); if(!match)return ''; const total=(Number(match[1])*60+Number(match[2])+120)%(24*60); return `${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`; };
       const invoiceDependentKeys = new Set(['faktura_nip','faktura_dane']);
       const fieldOrder = [
         'title',
@@ -235,16 +241,18 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       successAction.addEventListener('click',()=>showState('Formularz wysłany','Formularz został przekazany organizatorowi. Oczekuj na potwierdzenie rezerwacji.',true));
 
       const renderField = (field,hasInvoiceToggle=false) => {
-        const key=esc(field.key),label=esc(field.label||field.key),required=field.required===true?' required':'',mark=field.required===true?' <em>*</em>':'';
+        const key=esc(field.key),label=esc(fieldLabels[field.key]||field.label||field.key),required=field.required===true?' required':'',mark=field.required===true?' <em>*</em>':'';
         const wide=wideKeys.has(field.key)||field.type==='textarea'?' field-wide':'';
         const invoiceDependent=hasInvoiceToggle&&invoiceDependentKeys.has(field.key);
         const dependentClass=invoiceDependent?' invoice-dependent':'';
         const dependentAttrs=invoiceDependent?' data-invoice-dependent="true" hidden':'';
         const placeholder=placeholders[field.key]?` placeholder="${esc(placeholders[field.key])}"`:'';
+        const hint=fieldHints[field.key]?`<small class="field-hint">${esc(fieldHints[field.key])}</small>`:'';
         if(field.type==='checkbox') return `<label class="field check${dependentClass}"${dependentAttrs}><input type="checkbox" name="${key}"><span>${label}${mark}</span></label>`;
-        if(field.type==='textarea') return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><textarea name="${key}"${required}${placeholder}></textarea></label>`;
-        const allowed=['date','time','email','tel','number','text']; const type=allowed.includes(field.type)?field.type:'text';
-        return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><input type="${type}" name="${key}"${required}${placeholder}${type==='email'?' autocomplete="email"':''}${type==='tel'?' autocomplete="tel"':''}></label>`;
+        if(field.type==='textarea') return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><textarea name="${key}"${required}${placeholder}></textarea>${hint}</label>`;
+        if(timeSlotKeys.has(field.key)) return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><select name="${key}"${required}><option value="">Wybierz godzinę</option>${timeOptions.map(value=>`<option value="${value}">${value}</option>`).join('')}</select>${hint}</label>`;
+        const allowed=['date','email','tel','number','text']; const type=allowed.includes(field.type)?field.type:'text';
+        return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><input type="${type}" name="${key}"${required}${placeholder}${type==='email'?' autocomplete="email"':''}${type==='tel'?' autocomplete="tel"':''}>${hint}</label>`;
       };
       const wireInvoiceDependencies = form => {
         const toggle=form.elements.namedItem('faktura_wymagana');
@@ -263,6 +271,13 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         toggle.addEventListener('change',sync);
         sync();
       };
+      const wireTimeDefaults = form => {
+        const start=form.elements.namedItem('godzina_start');
+        const end=form.elements.namedItem('godzina_end');
+        if(!start||!end)return;
+        const sync=()=>{ if(!start.value)return; end.value=plusTwoHours(start.value); };
+        start.addEventListener('change',sync);
+      };
       const renderForm = data => {
         formData=data;
         if(data.completed){showState('Formularz został już przekazany',data.message||'Wszystko jest zapisane — nie musisz nic więcej robić.',true);return;}
@@ -271,6 +286,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         card.innerHTML=`<header class="head"><span class="organization">${esc(data.organization_name||'Organizator')}</span><h1>${esc(data.template_name||'Informacje o wydarzeniu')}</h1><p>${esc(data.description||'Uzupełnij informacje dotyczące wydarzenia. Po wysłaniu trafią bezpośrednio do organizatora.')}</p><div class="meta">${data.expires_at?`<span>Link ważny do ${esc(fmtDate(data.expires_at))}</span>`:''}<span>Dane trafiają bezpośrednio do organizatora</span></div></header><div class="form-body"><div class="process-note"><strong>Jak wygląda dalszy proces?</strong><span>Uzupełnij i wyślij formularz. Organizator zweryfikuje dane, a po zaakceptowaniu rezerwacji otrzymasz potwierdzenie na podany adres e-mail. Jeśli coś będzie wymagało doprecyzowania, organizator skontaktuje się telefonicznie.</span><small>Wysłanie formularza nie oznacza jeszcze potwierdzenia rezerwacji.</small></div><div class="form-intro"><div><strong>Informacje o wydarzeniu</strong><span>Uzupełnij pola poniżej i wyślij formularz.</span></div><span class="required-note">* pola wymagane</span></div><form id="reservation-form">${fields.map(field=>renderField(field,hasInvoiceToggle)).join('')}<div id="form-error" class="error-wrap" aria-live="polite"></div><div class="actions"><div class="actions-copy">Przed wysłaniem możesz jeszcze sprawdzić wszystkie wpisane informacje.</div><button class="submit" type="submit">Wyślij formularz →</button></div></form></div>`;
         const form=document.getElementById('reservation-form');
         wireInvoiceDependencies(form);
+        wireTimeDefaults(form);
         form.addEventListener('submit',submitForm);
       };
       const submitForm = async event => {
