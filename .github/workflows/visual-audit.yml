@@ -79,7 +79,7 @@ jobs:
           };
 
           const expectedOrder = [
-            'Nazwa / temat wydarzenia',
+            'Nazwa wydarzenia',
             'Rodzaj wydarzenia',
             'Data wydarzenia',
             'Godzina rozpoczęcia',
@@ -122,9 +122,17 @@ jobs:
               const field = document.querySelector('.field');
               const labels = Array.from(document.querySelectorAll('#reservation-form .field > span')).map(el => el.textContent.replace('*','').trim());
               const processText = document.querySelector('.process-note')?.textContent.replace(/\s+/g,' ').trim() || '';
+              const addressHint = document.querySelector('input[name="adres"]')?.parentElement?.querySelector('.field-hint')?.textContent.trim() || '';
+              const startSelect = document.querySelector('select[name="godzina_start"]');
+              const endSelect = document.querySelector('select[name="godzina_end"]');
+              const timeValues = startSelect ? Array.from(startSelect.options).map(option=>option.value) : [];
               return {
                 labels,
                 processText,
+                addressHint,
+                timeValues,
+                startTag:startSelect?.tagName||'',
+                endTag:endSelect?.tagName||'',
                 formDisplay: getComputedStyle(form).display,
                 formColumns: getComputedStyle(form).gridTemplateColumns,
                 fieldDisplay: getComputedStyle(field).display,
@@ -146,6 +154,9 @@ jobs:
             if (JSON.stringify(result.labels) !== JSON.stringify(expectedOrder)) throw new Error(`Pola są w złej kolejności. Otrzymano: ${JSON.stringify(result.labels)}`);
             if (!/po zaakceptowaniu rezerwacji otrzymasz potwierdzenie/i.test(result.processText)) throw new Error(`Brakuje informacji o potwierdzeniu po akceptacji: ${result.processText}`);
             if (!/nie oznacza jeszcze potwierdzenia rezerwacji/i.test(result.processText)) throw new Error(`Brakuje rozróżnienia formularz/rezerwacja: ${result.processText}`);
+            if (!/dokładny adres z kodem pocztowym/i.test(result.addressHint) || !/niestandardowy/i.test(result.addressHint)) throw new Error(`Brakuje instrukcji przy adresie: ${result.addressHint}`);
+            if (result.startTag!=='SELECT' || result.endTag!=='SELECT') throw new Error(`Godziny nie są listami wyboru: ${JSON.stringify(result)}`);
+            if (result.timeValues.length!==49 || result.timeValues[1]!=='00:00' || result.timeValues[2]!=='00:30' || result.timeValues.at(-1)!=='23:30') throw new Error(`Lista godzin nie ma interwału 30 minut: ${JSON.stringify(result.timeValues)}`);
 
             const invoiceToggle = page.locator('input[name="faktura_wymagana"]');
             const nipWrapper = page.locator('[data-invoice-dependent="true"]').filter({ has: page.locator('input[name="faktura_nip"]') });
@@ -164,9 +175,10 @@ jobs:
             await page.locator('input[name="title"]').fill('Urodziny Zosi');
             await page.locator('input[name="rodzaj_wydarzenia"]').fill('Urodziny');
             await page.locator('input[name="data_wydarzenia"]').fill('2026-09-20');
-            await page.locator('input[name="godzina_start"]').fill('15:00');
-            await page.locator('input[name="godzina_end"]').fill('17:00');
-            await page.locator('input[name="adres"]').fill('Bydgoszcz, ul. Testowa 1');
+            await page.locator('select[name="godzina_start"]').selectOption('15:00');
+            const autoEnd=await page.locator('select[name="godzina_end"]').inputValue();
+            if(autoEnd!=='17:00') throw new Error(`Godzina zakończenia nie ustawiła się +2h. Otrzymano: ${autoEnd}`);
+            await page.locator('input[name="adres"]').fill('Bydgoszcz, ul. Testowa 1, 85-001');
             await page.locator('input[name="osoba_do_kontaktu"]').fill('Jan Kowalski');
             await page.locator('input[name="telefon_kontaktowy"]').fill('500000000');
             await page.locator('input[name="email_kontaktowy"]').fill('jan@example.com');
