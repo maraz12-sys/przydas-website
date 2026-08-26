@@ -27,5 +27,17 @@ replaceOnce(
   'payment method renderer',
 );
 
+replaceOnce(
+  "        <p>Formularz został przekazany organizatorowi. Oczekuj na potwierdzenie rezerwacji.</p>\n        <small>Wysłanie formularza nie oznacza jeszcze potwierdzenia terminu.</small>",
+  "        <p>Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji.</p>\n        <small><strong>Pamiętaj!</strong> Wysłanie formularza nie oznacza potwierdzenia rezerwacji — otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.</small>",
+  'client-facing success modal copy',
+);
+
+replaceOnce(
+  "      successAction.addEventListener('click',()=>showState('Formularz wysłany','Formularz został przekazany organizatorowi. Oczekuj na potwierdzenie rezerwacji.',true));",
+  "      successAction.addEventListener('click',()=>showState('Formularz wysłany','Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji. Wysłanie formularza nie oznacza potwierdzenia rezerwacji — otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.',true));",
+  'client-facing success state copy',
+);
+
 fs.writeFileSync(file, src, 'utf8');
-console.log('OK: payment method uses canonical single-choice controls.');
+console.log('OK: payment method uses canonical single-choice controls and success copy is client-facing.');
