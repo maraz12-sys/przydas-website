@@ -63,16 +63,18 @@ jobs:
             completed: false,
             fields: [
               { key: 'uwagi', label: 'Uwagi', type: 'textarea', required: false },
-              { key: 'godzina_zakonczenia', label: 'Godzina zakończenia', type: 'time', required: false },
+              { key: 'godzina_end', label: 'Godzina zakończenia', type: 'time', required: false },
+              { key: 'faktura_dane', label: 'Dane do faktury', type: 'textarea', required: false },
               { key: 'adres', label: 'Adres wydarzenia', type: 'text', required: true },
               { key: 'data_wydarzenia', label: 'Data wydarzenia', type: 'date', required: true },
-              { key: 'godzina_rozpoczecia', label: 'Godzina rozpoczęcia', type: 'time', required: true },
+              { key: 'faktura_nip', label: 'NIP', type: 'text', required: false },
+              { key: 'godzina_start', label: 'Godzina rozpoczęcia', type: 'time', required: true },
               { key: 'rodzaj_wydarzenia', label: 'Rodzaj wydarzenia', type: 'text', required: true },
               { key: 'title', label: 'Nazwa / temat wydarzenia', type: 'text', required: false },
               { key: 'telefon_kontaktowy', label: 'Telefon kontaktowy', type: 'tel', required: true },
               { key: 'osoba_do_kontaktu', label: 'Osoba do kontaktu', type: 'text', required: true },
               { key: 'email_kontaktowy', label: 'E-mail kontaktowy', type: 'email', required: false },
-              { key: 'faktura', label: 'Czy potrzebna jest faktura?', type: 'checkbox', required: false }
+              { key: 'faktura_wymagana', label: 'Czy potrzebna jest faktura?', type: 'checkbox', required: false }
             ]
           };
 
@@ -87,22 +89,31 @@ jobs:
             'Telefon kontaktowy',
             'E-mail kontaktowy',
             'Czy potrzebna jest faktura?',
+            'NIP',
+            'Dane do faktury',
             'Uwagi',
           ];
 
           const browser = await chromium.launch({ headless: true });
 
-          async function testViewport(width, height, output) {
+          async function preparePage(width, height) {
             const context = await browser.newContext({ viewport: { width, height }, locale: 'pl-PL' });
             const page = await context.newPage();
-            await page.route('**/functions/v1/formularz-rezerwacyjny-publiczny', route => route.fulfill({
-              status: 200,
-              contentType: 'application/json',
-              body: JSON.stringify(mockResponse),
-            }));
+            await page.route('**/functions/v1/formularz-rezerwacyjny-publiczny', async route => {
+              let action = 'get';
+              try { action = JSON.parse(route.request().postData() || '{}').action || 'get'; } catch {}
+              if (action === 'submit') {
+                return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok:true, submitted:true, message:'Formularz został przekazany organizatorowi.' }) });
+              }
+              return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(mockResponse) });
+            });
             await page.goto('http://127.0.0.1:4173/formularz/?t=PWYzYneFaA3YiafLu66v7Ualkc03Bm0PaA-PbmLB57k', { waitUntil: 'domcontentloaded' });
             await page.locator('#reservation-form').waitFor({ state: 'visible' });
+            return { context, page };
+          }
 
+          async function auditLayout(width, height, output) {
+            const { context, page } = await preparePage(width, height);
             const result = await page.evaluate(() => {
               const form = document.querySelector('#reservation-form');
               const input = document.querySelector('.field input');
@@ -110,8 +121,10 @@ jobs:
               const head = document.querySelector('.head');
               const field = document.querySelector('.field');
               const labels = Array.from(document.querySelectorAll('#reservation-form .field > span')).map(el => el.textContent.replace('*','').trim());
+              const processText = document.querySelector('.process-note')?.textContent.replace(/\s+/g,' ').trim() || '';
               return {
                 labels,
+                processText,
                 formDisplay: getComputedStyle(form).display,
                 formColumns: getComputedStyle(form).gridTemplateColumns,
                 fieldDisplay: getComputedStyle(field).display,
@@ -131,13 +144,44 @@ jobs:
             if (result.headPaddingTop < 20) throw new Error(`Nagłówek formularza nie dostał finalnych stylów: ${JSON.stringify(result)}`);
             if (width > 720 && result.formColumns.split(' ').length < 2) throw new Error(`Desktop nie ma układu 2-kolumnowego: ${JSON.stringify(result)}`);
             if (JSON.stringify(result.labels) !== JSON.stringify(expectedOrder)) throw new Error(`Pola są w złej kolejności. Otrzymano: ${JSON.stringify(result.labels)}`);
+            if (!/po zaakceptowaniu rezerwacji otrzymasz potwierdzenie/i.test(result.processText)) throw new Error(`Brakuje informacji o potwierdzeniu po akceptacji: ${result.processText}`);
+            if (!/nie oznacza jeszcze potwierdzenia rezerwacji/i.test(result.processText)) throw new Error(`Brakuje rozróżnienia formularz/rezerwacja: ${result.processText}`);
+
+            const invoiceToggle = page.locator('input[name="faktura_wymagana"]');
+            const nipWrapper = page.locator('[data-invoice-dependent="true"]').filter({ has: page.locator('input[name="faktura_nip"]') });
+            const invoiceDataWrapper = page.locator('[data-invoice-dependent="true"]').filter({ has: page.locator('textarea[name="faktura_dane"]') });
+            if (await nipWrapper.isVisible() || await invoiceDataWrapper.isVisible()) throw new Error('Pola faktury są widoczne przed zaznaczeniem faktury.');
+            await invoiceToggle.check();
+            if (!(await nipWrapper.isVisible()) || !(await invoiceDataWrapper.isVisible())) throw new Error('Pola faktury nie pojawiają się po zaznaczeniu faktury.');
 
             await page.screenshot({ path: output, fullPage: true });
+            if (width > 720) await page.screenshot({ path: 'visual-audit/form-invoice-desktop-1440.png', fullPage: true });
             await context.close();
           }
 
-          await testViewport(1440, 1100, 'visual-audit/form-desktop-1440.png');
-          await testViewport(390, 844, 'visual-audit/form-mobile-390.png');
+          async function auditSubmitSuccess() {
+            const { context, page } = await preparePage(1440, 1100);
+            await page.locator('input[name="title"]').fill('Urodziny Zosi');
+            await page.locator('input[name="rodzaj_wydarzenia"]').fill('Urodziny');
+            await page.locator('input[name="data_wydarzenia"]').fill('2026-09-20');
+            await page.locator('input[name="godzina_start"]').fill('15:00');
+            await page.locator('input[name="godzina_end"]').fill('17:00');
+            await page.locator('input[name="adres"]').fill('Bydgoszcz, ul. Testowa 1');
+            await page.locator('input[name="osoba_do_kontaktu"]').fill('Jan Kowalski');
+            await page.locator('input[name="telefon_kontaktowy"]').fill('500000000');
+            await page.locator('input[name="email_kontaktowy"]').fill('jan@example.com');
+            await page.locator('button.submit').click();
+            await page.locator('#success-overlay').waitFor({ state: 'visible' });
+            const modalText=(await page.locator('#success-overlay').innerText()).replace(/\s+/g,' ').trim();
+            if (!/Formularz wysłany pomyślnie/i.test(modalText)) throw new Error(`Brakuje komunikatu sukcesu: ${modalText}`);
+            if (!/Oczekuj na potwierdzenie rezerwacji/i.test(modalText)) throw new Error(`Brakuje informacji o oczekiwaniu na potwierdzenie: ${modalText}`);
+            await page.screenshot({ path:'visual-audit/form-success-desktop-1440.png', fullPage:true });
+            await context.close();
+          }
+
+          await auditLayout(1440, 1100, 'visual-audit/form-desktop-1440.png');
+          await auditLayout(390, 844, 'visual-audit/form-mobile-390.png');
+          await auditSubmitSuccess();
           await browser.close();
           EOF
           node form-audit.mjs
