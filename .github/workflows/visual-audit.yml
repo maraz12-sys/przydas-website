@@ -1,11 +1,16 @@
 name: Visual Audit
 
 on:
+  push:
+    paths:
+      - 'src/pages/formularz.astro'
+      - '.github/workflows/visual-audit.yml'
   workflow_dispatch:
 
 jobs:
   screenshots:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,12 +39,89 @@ jobs:
           cat /tmp/http-server.log
           exit 1
 
-      - name: Capture desktop tablet and mobile
+      - name: Capture landing page
         run: |
           mkdir -p visual-audit
           npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1440,1100" --full-page http://127.0.0.1:4173/ visual-audit/desktop-1440.png
           npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1024,900" --full-page http://127.0.0.1:4173/ visual-audit/tablet-1024.png
           npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "390,844" --full-page http://127.0.0.1:4173/ visual-audit/mobile-390.png
+
+      - name: Verify and capture public reservation form
+        shell: bash
+        run: |
+          cat > /tmp/form-audit.mjs <<'EOF'
+          import { chromium } from 'playwright';
+
+          const mockResponse = {
+            ok: true,
+            organization_name: 'Animilandia',
+            template_name: 'Formularz rezerwacji wydarzenia',
+            description: 'Uzupełnij najważniejsze informacje dotyczące wydarzenia.',
+            expires_at: '2026-09-02T12:00:00+02:00',
+            completed: false,
+            fields: [
+              { key: 'data_wydarzenia', label: 'Data wydarzenia', type: 'date', required: true },
+              { key: 'godzina_rozpoczecia', label: 'Godzina rozpoczęcia', type: 'time', required: true },
+              { key: 'godzina_zakonczenia', label: 'Godzina zakończenia', type: 'time', required: false },
+              { key: 'rodzaj_wydarzenia', label: 'Rodzaj wydarzenia', type: 'text', required: true },
+              { key: 'title', label: 'Nazwa / temat wydarzenia', type: 'text', required: false },
+              { key: 'adres', label: 'Adres wydarzenia', type: 'text', required: true },
+              { key: 'osoba_do_kontaktu', label: 'Osoba do kontaktu', type: 'text', required: true },
+              { key: 'telefon_kontaktowy', label: 'Telefon kontaktowy', type: 'tel', required: true },
+              { key: 'email_kontaktowy', label: 'E-mail kontaktowy', type: 'email', required: false },
+              { key: 'uwagi', label: 'Uwagi', type: 'textarea', required: false },
+              { key: 'faktura', label: 'Czy potrzebna jest faktura?', type: 'checkbox', required: false }
+            ]
+          };
+
+          const browser = await chromium.launch({ headless: true });
+
+          async function testViewport(width, height, output) {
+            const context = await browser.newContext({ viewport: { width, height }, locale: 'pl-PL' });
+            const page = await context.newPage();
+            await page.route('**/functions/v1/formularz-rezerwacyjny-publiczny', route => route.fulfill({
+              status: 200,
+              contentType: 'application/json',
+              body: JSON.stringify(mockResponse),
+            }));
+            await page.goto('http://127.0.0.1:4173/formularz/?t=PWYzYneFaA3YiafLu66v7Ualkc03Bm0PaA-PbmLB57k', { waitUntil: 'domcontentloaded' });
+            await page.locator('#reservation-form').waitFor({ state: 'visible' });
+
+            const styles = await page.evaluate(() => {
+              const form = document.querySelector('#reservation-form');
+              const input = document.querySelector('.field input');
+              const submit = document.querySelector('.submit');
+              const head = document.querySelector('.head');
+              const field = document.querySelector('.field');
+              return {
+                formDisplay: getComputedStyle(form).display,
+                formColumns: getComputedStyle(form).gridTemplateColumns,
+                fieldDisplay: getComputedStyle(field).display,
+                inputRadius: parseFloat(getComputedStyle(input).borderRadius),
+                inputHeight: parseFloat(getComputedStyle(input).height),
+                submitRadius: parseFloat(getComputedStyle(submit).borderRadius),
+                submitHeight: parseFloat(getComputedStyle(submit).height),
+                headPaddingTop: parseFloat(getComputedStyle(head).paddingTop),
+              };
+            });
+
+            console.log(`${width}x${height}`, styles);
+            if (styles.formDisplay !== 'grid') throw new Error(`Formularz nie ma display:grid: ${JSON.stringify(styles)}`);
+            if (styles.fieldDisplay !== 'grid') throw new Error(`Dynamiczne pola nie dostały stylów: ${JSON.stringify(styles)}`);
+            if (styles.inputRadius < 10 || styles.inputHeight < 45) throw new Error(`Input wygląda jak domyślny element przeglądarki: ${JSON.stringify(styles)}`);
+            if (styles.submitRadius < 10 || styles.submitHeight < 45) throw new Error(`Przycisk nie dostał finalnych stylów: ${JSON.stringify(styles)}`);
+            if (styles.headPaddingTop < 20) throw new Error(`Nagłówek formularza nie dostał finalnych stylów: ${JSON.stringify(styles)}`);
+            if (width > 720 && styles.formColumns.split(' ').length < 2) throw new Error(`Desktop nie ma układu 2-kolumnowego: ${JSON.stringify(styles)}`);
+
+            await page.screenshot({ path: output, fullPage: true });
+            await context.close();
+          }
+
+          await testViewport(1440, 1100, 'visual-audit/form-desktop-1440.png');
+          await testViewport(390, 844, 'visual-audit/form-mobile-390.png');
+          await browser.close();
+          EOF
+          node /tmp/form-audit.mjs
 
       - name: Upload screenshots
         uses: actions/upload-artifact@v4
