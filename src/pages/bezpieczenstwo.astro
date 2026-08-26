@@ -6,10 +6,10 @@ import LegalLayout from '../layouts/LegalLayout.astro';
   description="Jak Przydaś podchodzi do izolacji organizacji, szyfrowania, dostępu, kopii zapasowych i ochrony kont."
   eyebrow="Bezpieczeństwo bez marketingowych obietnic"
 >
-  <div class="callout"><strong>Najważniejsze</strong><p>Nie obiecujemy „zera ryzyka”. Budujemy warstwowe zabezpieczenia, ograniczamy dostęp i przed komercyjnym startem domykamy mechanizmy backupu oraz regularnego odtwarzania.</p></div>
+  <div class="callout"><strong>Najważniejsze</strong><p>Nie obiecujemy „zera ryzyka”. Stosujemy warstwowe zabezpieczenia, ograniczamy dostęp i regularnie weryfikujemy mechanizmy odpowiedzialne za ochronę kont, danych i plików.</p></div>
 
   <h2>1. Gdzie są dane</h2>
-  <p>Podstawowe dane aplikacyjne są przechowywane w zarządzanym środowisku Supabase w regionie West EU (Irlandia), czyli w Unii Europejskiej. Przydaś nie opiera działania na jednym komputerze ani lokalnym pliku.</p>
+  <p>Podstawowe dane aplikacyjne są przechowywane w zarządzanym środowisku Supabase w regionie europejskim <strong>eu-central-1</strong>. Przydaś nie opiera działania na jednym komputerze ani lokalnym pliku.</p>
 
   <h2>2. Separacja firm i uprawnienia</h2>
   <p>Dane organizacji są logicznie rozdzielane. Dostęp ograniczamy na poziomie bazy danych i aplikacji według organizacji, użytkownika, roli i uprawnień. Nie polegamy wyłącznie na ukrywaniu przycisków we frontendzie.</p>
@@ -19,28 +19,20 @@ import LegalLayout from '../layouts/LegalLayout.astro';
   </div>
 
   <h2>3. Transmisja i pliki</h2>
-  <p>Komunikacja z backendem odbywa się po szyfrowanym HTTPS/TLS. Pliki użytkowników są przechowywane w prywatnych zasobach Storage, a dostęp jest kontrolowany politykami zamiast publicznych linków dla każdego.</p>
+  <p>Komunikacja z backendem odbywa się po szyfrowanym HTTPS/TLS. Pliki użytkowników są przechowywane w prywatnych zasobach Storage, a dostęp jest kontrolowany politykami i krótkotrwałymi mechanizmami dostępu zamiast publicznych linków.</p>
 
   <h2>4. Konta i urządzenia</h2>
-  <p>Poza polityką haseł rozwijamy i testujemy kontrolę nowych urządzeń z dodatkowym kodem weryfikacyjnym. Dostęp do wrażliwych funkcji nie powinien opierać się wyłącznie na znajomości jednego hasła.</p>
+  <p>Poza polityką haseł Przydaś korzysta z kontroli nowych urządzeń i dodatkowej weryfikacji kodem. Dla wybranych operacji o podwyższonym ryzyku system może wymagać ponownego potwierdzenia tożsamości.</p>
 
-  <h2>5. Backup i odtwarzanie</h2>
-  <table>
-    <thead><tr><th>Obszar</th><th>Stan przed komercyjnym startem</th></tr></thead>
-    <tbody>
-      <tr><td>Automatyczny backup bazy</td><td>Wymagany płatny plan produkcyjny z automatycznymi kopiami.</td></tr>
-      <tr><td>Niezależna kopia</td><td>Planowana osobna, szyfrowana kopia poza podstawowym środowiskiem.</td></tr>
-      <tr><td>Pliki Storage</td><td>Osobna kopia obiektów, ponieważ backup bazy nie zastępuje backupu plików.</td></tr>
-      <tr><td>Test odtworzenia</td><td>Regularny restore do izolowanego środowiska i zapis wyniku.</td></tr>
-    </tbody>
-  </table>
-  <p>Nie używamy sformułowań „pełna redundancja”, „zero downtime” ani „backup w kilku miejscach” dopóki konkretne mechanizmy nie zostaną uruchomione i przetestowane.</p>
+  <h2>5. Kopie zapasowe i odtwarzanie</h2>
+  <p>Dane są utrzymywane w zarządzanym środowisku backendowym, a zakres kopii zapasowych i retencji wynika z konfiguracji środowiska produkcyjnego oraz polityk operacyjnych. Backup bazy danych i kopie plików są traktowane jako odrębne obszary, ponieważ kopia bazy nie zastępuje kopii obiektów Storage.</p>
+  <p>Szczegóły techniczne dotyczące harmonogramów, retencji i procedur odtwarzania są elementem dokumentacji operacyjnej i nie są publikowane na stronie sprzedażowej.</p>
 
   <h2>6. Dane kadrowe wysokiego ryzyka</h2>
-  <p>PESEL, KRK, pełne dokumenty tożsamości i dane szczególnych kategorii nie powinny trafiać do zwykłego modułu plików. Dla takiej dokumentacji przewidziany jest osobny „Sejf dokumentów” z prywatnym storage, odrębnymi uprawnieniami, krótkotrwałymi linkami i audytem dostępu.</p>
+  <p>PESEL, KRK, pełne dokumenty tożsamości i dane szczególnych kategorii nie powinny trafiać do zwykłego modułu plików. Dla dokumentacji wymagającej podwyższonej ochrony Przydaś wykorzystuje osobny „Sejf dokumentów” z prywatnym Storage, odrębnymi uprawnieniami, krótkotrwałymi linkami i audytem dostępu.</p>
 
   <h2>7. Dostęp administracyjny</h2>
-  <p>Dostęp serwisowy powinien być ograniczony do uzasadnionych sytuacji i zasady najmniejszych uprawnień. Nie deklarujemy, że technicznie „nikt nigdy nie może zobaczyć danych”; właściwym celem jest dostęp kontrolowany, uzasadniony i audytowany.</p>
+  <p>Dostęp serwisowy jest ograniczany do uzasadnionych sytuacji i zasady najmniejszych uprawnień. Nie deklarujemy, że technicznie „nikt nigdy nie może zobaczyć danych”; właściwym celem jest dostęp kontrolowany, uzasadniony i audytowany.</p>
 
   <h2>8. Zgłoszenie incydentu</h2>
   <p>Jeżeli zauważysz podejrzane logowanie, możliwy wyciek danych lub inną sytuację bezpieczeństwa, napisz na <a href="mailto:bezpieczenstwo@xn--przyda-8ib.pl">bezpieczenstwo@przydaś.pl</a>.</p>
