@@ -1,3 +1,4 @@
+# Visual regression checks for the public reservation form
 name: Visual Audit
 
 on:
