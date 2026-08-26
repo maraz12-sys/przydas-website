@@ -8,22 +8,124 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex,nofollow,noarchive" />
     <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#087f53" />
     <title>Formularz wydarzenia | Przydaś</title>
+    <link rel="icon" href="/przydas-mark.svg" type="image/svg+xml" />
     <style>
-      :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#263444;background:#f5f8f6;--g:#159447;--gd:#0f7a39;--soft:#edf8f1;--border:#dce6e0;--muted:#718096;--navy:#172033}
-      *{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(180deg,#f8fbf9 0,#f3f7f5 100%)}
-      .shell{width:min(760px,calc(100% - 28px));margin:0 auto;padding:36px 0 56px}.brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.brand strong{color:var(--gd);font-size:20px}.brand span{font-size:11px;color:#98a2b3}
-      .card{border:1px solid var(--border);border-radius:18px;background:#fff;box-shadow:0 14px 42px rgba(19,54,38,.07);overflow:hidden}.head{padding:26px 28px 22px;border-bottom:1px solid #edf2ef}.eyebrow{display:inline-flex;padding:5px 8px;border-radius:999px;background:var(--soft);color:var(--gd);font-size:9px;font-weight:850;letter-spacing:.06em;text-transform:uppercase}.head h1{margin:10px 0 6px;color:var(--navy);font-size:clamp(24px,5vw,34px);line-height:1.12}.head p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}.meta{margin-top:13px;display:flex;gap:7px;flex-wrap:wrap}.meta span{padding:5px 8px;border:1px solid #e4ebe7;border-radius:999px;color:#758194;font-size:9px;background:#fbfcfb}
-      .body{padding:25px 28px 28px}.state{min-height:240px;display:grid;place-items:center;text-align:center;padding:28px}.state div{max-width:460px}.state h2{margin:0 0 8px;color:var(--navy);font-size:20px}.state p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}.spinner{width:32px;height:32px;margin:0 auto 14px;border:3px solid #e2eee7;border-top-color:var(--g);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
-      form{display:grid;gap:15px}.field{display:grid;gap:6px}.field>span{font-size:11px;font-weight:780;color:#465467}.field em{font-style:normal;color:#b42318}.field input,.field textarea,.field select{width:100%;border:1px solid #d5dfd9;border-radius:10px;background:#fff;color:#263444;outline:none;font:inherit;font-size:13px;transition:.16s}.field input,.field select{height:46px;padding:0 12px}.field textarea{min-height:108px;padding:11px 12px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:#6db88b;box-shadow:0 0 0 3px rgba(21,148,71,.10)}.check{min-height:48px;padding:11px 12px;display:flex!important;grid-template-columns:none!important;align-items:center;gap:10px;border:1px solid #e0e8e3;border-radius:10px;background:#fbfcfb}.check input{width:20px!important;height:20px!important;accent-color:var(--g);flex:0 0 auto}.check span{font-size:12px!important}.actions{padding-top:4px;display:flex;justify-content:flex-end}.submit{min-height:46px;padding:0 19px;border:0;border-radius:10px;background:var(--g);color:#fff;font-weight:800;cursor:pointer}.submit:hover{background:var(--gd)}.submit:disabled{opacity:.55;cursor:default}.error{padding:10px 12px;border:1px solid #f1c5bf;border-radius:9px;background:#fff4f2;color:#b42318;font-size:11px;line-height:1.5}.privacy{margin:13px auto 0;max-width:620px;text-align:center;color:#8995a5;font-size:9px;line-height:1.55}.privacy a{color:#657385}.success-icon{width:52px;height:52px;margin:0 auto 14px;display:grid;place-items:center;border-radius:50%;background:var(--soft);color:var(--gd);font-size:25px;font-weight:900}
-      @media(max-width:600px){.shell{padding:18px 0 35px}.brand{padding:0 4px}.card{border-radius:14px}.head,.body{padding-left:18px;padding-right:18px}.head{padding-top:21px}.actions .submit{width:100%}}
+      :root{
+        font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+        color:#17251f;
+        background:#f3f8f5;
+        --green:#087f53;
+        --green-2:#10a66b;
+        --green-dark:#056941;
+        --green-soft:#eaf7f0;
+        --ink:#17251f;
+        --muted:#68776f;
+        --line:#dce8e1;
+        --line-strong:#cbdad1;
+        --danger:#b42318;
+        --danger-soft:#fff3f1;
+        --white:#fff;
+      }
+      *{box-sizing:border-box}
+      html{min-height:100%;background:#f3f8f5}
+      body{
+        margin:0;
+        min-height:100vh;
+        color:var(--ink);
+        background:
+          radial-gradient(circle at 8% 4%,rgba(8,127,83,.09),transparent 29rem),
+          radial-gradient(circle at 92% 15%,rgba(16,166,107,.07),transparent 26rem),
+          linear-gradient(180deg,#f8fbf9 0%,#f1f7f3 100%);
+      }
+      button,input,textarea,select{font:inherit}
+      button,a,input,textarea,select{transition:border-color .18s ease,box-shadow .18s ease,background .18s ease,transform .18s ease}
+      .page-shell{width:min(980px,calc(100% - 32px));margin:0 auto;padding:30px 0 54px}
+      .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px;padding:0 2px}
+      .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+      .brand img{width:38px;height:38px;display:block}
+      .brand strong{font-size:20px;letter-spacing:-.025em}
+      .secure-label{display:inline-flex;align-items:center;gap:8px;color:#607168;font-size:12px;font-weight:700}
+      .secure-label::before{content:"✓";display:grid;place-items:center;width:22px;height:22px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:900}
+      .form-card{overflow:hidden;border:1px solid rgba(201,219,208,.9);border-radius:24px;background:rgba(255,255,255,.96);box-shadow:0 28px 80px rgba(24,67,46,.10),0 3px 12px rgba(24,67,46,.04)}
+      .head{position:relative;padding:34px 38px 30px;border-bottom:1px solid #e8f0eb;background:linear-gradient(135deg,#ffffff 0%,#fbfdfc 68%,#eff9f4 100%)}
+      .head::after{content:"";position:absolute;right:-45px;top:-70px;width:190px;height:190px;border-radius:50%;background:rgba(8,127,83,.055);pointer-events:none}
+      .organization{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;margin-bottom:15px;padding:7px 10px;border:1px solid #d8e9df;border-radius:999px;background:#f4fbf7;color:var(--green-dark);font-size:11px;font-weight:850;letter-spacing:.02em}
+      .organization::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green-2);box-shadow:0 0 0 4px rgba(16,166,107,.10)}
+      .head h1{position:relative;z-index:1;margin:0;color:#15231d;font-size:clamp(30px,4.8vw,46px);line-height:1.06;letter-spacing:-.045em}
+      .head p{position:relative;z-index:1;max-width:700px;margin:13px 0 0;color:var(--muted);font-size:14px;line-height:1.65}
+      .meta{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+      .meta span{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #e0eae4;border-radius:10px;background:rgba(255,255,255,.82);color:#6d7b74;font-size:11px;font-weight:700}
+      .meta span::before{content:"✓";color:var(--green);font-weight:900}
+      .form-body{padding:32px 38px 36px}
+      .form-intro{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
+      .form-intro strong{display:block;font-size:15px;letter-spacing:-.01em}
+      .form-intro span{display:block;margin-top:4px;color:#7a8981;font-size:11px}
+      .required-note{flex:0 0 auto;padding:6px 9px;border-radius:9px;background:#f7faf8;color:#718078;font-size:10px!important;font-weight:700}
+      form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 16px}
+      .field{display:grid;align-content:start;gap:7px;min-width:0}
+      .field.field-wide{grid-column:1/-1}
+      .field>span{display:flex;align-items:center;gap:5px;color:#34453c;font-size:12px;font-weight:780}
+      .field em{font-style:normal;color:var(--danger);font-weight:900}
+      .field input,.field textarea,.field select{
+        width:100%;
+        border:1px solid var(--line-strong);
+        border-radius:13px;
+        background:#fff;
+        color:#1f2f27;
+        outline:none;
+        font-size:14px;
+        box-shadow:0 1px 2px rgba(26,62,43,.025);
+      }
+      .field input,.field select{height:50px;padding:0 14px}
+      .field textarea{min-height:126px;padding:13px 14px;resize:vertical;line-height:1.55}
+      .field input::placeholder,.field textarea::placeholder{color:#a2aea8}
+      .field input:hover,.field textarea:hover,.field select:hover{border-color:#adcbc0}
+      .field input:focus,.field textarea:focus,.field select:focus{border-color:#5eae88;box-shadow:0 0 0 4px rgba(8,127,83,.09)}
+      .check{grid-column:1/-1;min-height:56px;padding:13px 14px;display:flex!important;align-items:center;gap:11px;border:1px solid #dce8e1;border-radius:13px;background:#f8fbf9;cursor:pointer}
+      .check:hover{border-color:#b8d4c5;background:#f4faf6}
+      .check input{appearance:none;width:22px!important;height:22px!important;flex:0 0 auto;margin:0;padding:0!important;border:1.5px solid #aebeb5;border-radius:6px;background:#fff;display:grid;place-items:center;cursor:pointer}
+      .check input:checked{border-color:var(--green);background:var(--green)}
+      .check input:checked::after{content:"✓";color:#fff;font-size:13px;font-weight:900;line-height:1}
+      .check span{font-size:13px!important;font-weight:750!important;color:#34453c}
+      .error-wrap{grid-column:1/-1}
+      .error{padding:12px 14px;border:1px solid #f0c7c1;border-radius:12px;background:var(--danger-soft);color:var(--danger);font-size:12px;line-height:1.55}
+      .actions{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:4px;padding-top:22px;border-top:1px solid #edf2ef}
+      .actions-copy{max-width:470px;color:#78877f;font-size:10px;line-height:1.55}
+      .submit{min-height:50px;min-width:190px;padding:0 22px;border:0;border-radius:13px;background:linear-gradient(180deg,#0a915e,#087f53);color:#fff;font-size:13px;font-weight:850;letter-spacing:.01em;cursor:pointer;box-shadow:0 8px 20px rgba(8,127,83,.18)}
+      .submit:hover{transform:translateY(-1px);background:linear-gradient(180deg,#0b9c66,#08764e);box-shadow:0 10px 24px rgba(8,127,83,.24)}
+      .submit:active{transform:translateY(0)}
+      .submit:disabled{opacity:.58;cursor:default;transform:none;box-shadow:none}
+      .privacy{max-width:760px;margin:15px auto 0;text-align:center;color:#89968f;font-size:10px;line-height:1.6}
+      .privacy a{color:#5d7568;text-underline-offset:2px}
+      .state{min-height:390px;display:grid;place-items:center;text-align:center;padding:44px 28px;background:linear-gradient(180deg,#fff,#fbfdfc)}
+      .state>div{max-width:500px}
+      .state h2{margin:0 0 9px;color:#192820;font-size:25px;letter-spacing:-.03em}
+      .state p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+      .spinner{width:40px;height:40px;margin:0 auto 18px;border:3px solid #dfece5;border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+      .success-icon{width:62px;height:62px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;background:var(--green-soft);color:var(--green);font-size:28px;font-weight:900;box-shadow:inset 0 0 0 1px #d4ebdf}
+      @keyframes spin{to{transform:rotate(360deg)}}
+      @media(max-width:720px){
+        .page-shell{width:min(100% - 22px,980px);padding:16px 0 34px}
+        .topbar{margin-bottom:14px;padding:0 3px}.brand img{width:32px;height:32px}.brand strong{font-size:18px}.secure-label{font-size:10px}.secure-label::before{width:20px;height:20px}
+        .form-card{border-radius:18px}.head{padding:26px 20px 23px}.head h1{font-size:31px}.head p{font-size:13px}.meta{margin-top:16px}.meta span{font-size:10px}
+        .form-body{padding:24px 20px 26px}.form-intro{align-items:flex-start;flex-direction:column;gap:9px;margin-bottom:20px}.required-note{margin-top:0!important}
+        form{grid-template-columns:1fr;gap:16px}.field.field-wide,.check,.error-wrap,.actions{grid-column:1}
+        .actions{align-items:stretch;flex-direction:column-reverse;padding-top:20px}.actions-copy{text-align:center}.submit{width:100%;min-height:52px}
+        .state{min-height:330px;padding:36px 20px}.state h2{font-size:23px}
+      }
+      @media(max-width:420px){.secure-label span{display:none}.head h1{font-size:28px}.organization{font-size:10px}}
     </style>
   </head>
   <body>
-    <main class="shell">
-      <div class="brand"><strong>Przydaś</strong><span>Bezpieczny formularz wydarzenia</span></div>
-      <section class="card" id="card">
-        <div class="state" id="loading"><div><div class="spinner"></div><h2>Ładujemy formularz</h2><p>Sprawdzamy link i przygotowujemy dane.</p></div></div>
+    <main class="page-shell">
+      <div class="topbar">
+        <a class="brand" href="/" aria-label="Przydaś — strona główna"><img src="/przydas-mark.svg" alt="" /><strong>Przydaś</strong></a>
+        <div class="secure-label"><span>Bezpieczny formularz wydarzenia</span></div>
+      </div>
+      <section class="form-card" id="card">
+        <div class="state" id="loading"><div><div class="spinner"></div><h2>Ładujemy formularz</h2><p>Sprawdzamy link i przygotowujemy dane wydarzenia.</p></div></div>
       </section>
       <p class="privacy">Dane z formularza są przekazywane organizatorowi wydarzenia za pośrednictwem Przydasia. <a href="/polityka-prywatnosci/" target="_blank" rel="noopener">Polityka prywatności</a>.</p>
     </main>
@@ -34,6 +136,26 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
 
       const esc = (value='') => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
       const fmtDate = value => { if(!value) return ''; const d=new Date(value); return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('pl-PL',{day:'2-digit',month:'2-digit',year:'numeric'}).format(d); };
+      const placeholders = {
+        title:'np. Urodziny Zosi',
+        rodzaj_wydarzenia:'np. urodziny, piknik, warsztaty',
+        adres:'Miejscowość, ulica i numer',
+        osoba_do_kontaktu:'Imię i nazwisko',
+        telefon_kontaktowy:'np. 500 000 000',
+        email_kontaktowy:'np. kontakt@firma.pl',
+        pakiet:'Nazwa wybranego pakietu',
+        atrakcje:'Opisz ustalony zakres lub atrakcje',
+        liczba_dzieci:'np. 20',
+        wiek_dzieci:'np. 5–8 lat',
+        solenizant:'Imię i wiek',
+        typ_klienta:'np. osoba prywatna, firma, szkoła',
+        kontrahent_nazwa:'Nazwa firmy lub instytucji',
+        faktura_dane:'Dane potrzebne do wystawienia faktury',
+        faktura_nip:'NIP',
+        sposob_platnosci:'np. przelew, gotówka',
+        uwagi:'Dodatkowe informacje dla organizatora',
+      };
+      const wideKeys = new Set(['adres','atrakcje','faktura_dane','uwagi']);
       const callApi = async payload => {
         const response = await fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),credentials:'omit',cache:'no-store'});
         const data = await response.json().catch(()=>({ok:false,message:'Nieprawidłowa odpowiedź serwera.'}));
@@ -45,16 +167,18 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       };
       const renderField = field => {
         const key=esc(field.key),label=esc(field.label||field.key),required=field.required===true?' required':'',mark=field.required===true?' <em>*</em>':'';
+        const wide=wideKeys.has(field.key)||field.type==='textarea'?' field-wide':'';
+        const placeholder=placeholders[field.key]?` placeholder="${esc(placeholders[field.key])}"`:'';
         if(field.type==='checkbox') return `<label class="field check"><input type="checkbox" name="${key}"><span>${label}${mark}</span></label>`;
-        if(field.type==='textarea') return `<label class="field"><span>${label}${mark}</span><textarea name="${key}"${required}></textarea></label>`;
+        if(field.type==='textarea') return `<label class="field${wide}"><span>${label}${mark}</span><textarea name="${key}"${required}${placeholder}></textarea></label>`;
         const allowed=['date','time','email','tel','number','text']; const type=allowed.includes(field.type)?field.type:'text';
-        return `<label class="field"><span>${label}${mark}</span><input type="${type}" name="${key}"${required}${type==='email'?' autocomplete="email"':''}${type==='tel'?' autocomplete="tel"':''}></label>`;
+        return `<label class="field${wide}"><span>${label}${mark}</span><input type="${type}" name="${key}"${required}${placeholder}${type==='email'?' autocomplete="email"':''}${type==='tel'?' autocomplete="tel"':''}></label>`;
       };
       const renderForm = data => {
         formData=data;
-        if(data.completed){showState('Formularz został już przekazany',data.message||'Nie musisz nic więcej robić.',true);return;}
+        if(data.completed){showState('Formularz został już przekazany',data.message||'Wszystko jest zapisane — nie musisz nic więcej robić.',true);return;}
         const fields=Array.isArray(data.fields)?data.fields:[];
-        card.innerHTML=`<header class="head"><span class="eyebrow">${esc(data.organization_name||'Organizator')}</span><h1>${esc(data.template_name||'Uzupełnij informacje')}</h1><p>${esc(data.description||'Uzupełnij poniższe informacje dotyczące wydarzenia. Po wysłaniu organizator zweryfikuje dane.')}</p><div class="meta">${data.expires_at?`<span>Link ważny do ${esc(fmtDate(data.expires_at))}</span>`:''}<span>Dane trafiają bezpośrednio do organizatora</span></div></header><div class="body"><form id="reservation-form">${fields.map(renderField).join('')}<div id="form-error"></div><div class="actions"><button class="submit" type="submit">Wyślij formularz</button></div></form></div>`;
+        card.innerHTML=`<header class="head"><span class="organization">${esc(data.organization_name||'Organizator')}</span><h1>${esc(data.template_name||'Informacje o wydarzeniu')}</h1><p>${esc(data.description||'Uzupełnij informacje dotyczące wydarzenia. Po wysłaniu trafią bezpośrednio do organizatora.')}</p><div class="meta">${data.expires_at?`<span>Link ważny do ${esc(fmtDate(data.expires_at))}</span>`:''}<span>Dane trafiają bezpośrednio do organizatora</span></div></header><div class="form-body"><div class="form-intro"><div><strong>Informacje o wydarzeniu</strong><span>Uzupełnij pola poniżej i wyślij formularz.</span></div><span class="required-note">* pola wymagane</span></div><form id="reservation-form">${fields.map(renderField).join('')}<div id="form-error" class="error-wrap"></div><div class="actions"><div class="actions-copy">Przed wysłaniem możesz jeszcze sprawdzić wszystkie wpisane informacje.</div><button class="submit" type="submit">Wyślij formularz →</button></div></form></div>`;
         document.getElementById('reservation-form').addEventListener('submit',submitForm);
       };
       const submitForm = async event => {
@@ -67,8 +191,8 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
           answers[field.key]=field.type==='checkbox'?Boolean(input.checked):String(input.value||'').trim();
         }
         button.disabled=true;button.textContent='Wysyłanie…';errorBox.innerHTML='';
-        try{const data=await callApi({action:'submit',token,answers});showState('Dziękujemy',data.message||'Formularz został przekazany organizatorowi do weryfikacji.',true);}
-        catch(error){errorBox.innerHTML=`<div class="error">${esc(error.message||'Nie udało się wysłać formularza.')}</div>`;button.disabled=false;button.textContent='Wyślij formularz';}
+        try{const data=await callApi({action:'submit',token,answers});showState('Dziękujemy — formularz wysłany',data.message||'Informacje zostały przekazane organizatorowi do weryfikacji.',true);}
+        catch(error){errorBox.innerHTML=`<div class="error">${esc(error.message||'Nie udało się wysłać formularza.')}</div>`;button.disabled=false;button.textContent='Wyślij formularz →';}
       };
       (async()=>{
         if(token.length<30){showState('Nieprawidłowy link','Poproś organizatora o ponowne przesłanie formularza.');return;}
