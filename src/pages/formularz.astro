@@ -158,8 +158,8 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       <div class="success-dialog">
         <div class="success-icon">✓</div>
         <h2 id="success-title">Formularz wysłany pomyślnie</h2>
-        <p>Formularz został przekazany organizatorowi. Oczekuj na potwierdzenie rezerwacji.</p>
-        <small>Wysłanie formularza nie oznacza jeszcze potwierdzenia terminu.</small>
+        <p>Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji.</p>
+        <small><strong>Pamiętaj!</strong> Wysłanie formularza nie oznacza potwierdzenia rezerwacji — otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.</small>
         <button class="success-action" id="success-action" type="button">Gotowe</button>
       </div>
     </div>
@@ -248,7 +248,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         document.body.classList.add('modal-open');
         requestAnimationFrame(()=>successAction.focus());
       };
-      successAction.addEventListener('click',()=>showState('Formularz wysłany','Formularz został przekazany organizatorowi. Oczekuj na potwierdzenie rezerwacji.',true));
+      successAction.addEventListener('click',()=>showState('Formularz wysłany','Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji. Wysłanie formularza nie oznacza potwierdzenia rezerwacji — otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.',true));
 
       const renderField = (field,hasInvoiceToggle=false) => {
         const key=esc(field.key),label=esc(fieldLabels[field.key]||field.label||field.key),required=field.required===true?' required':'',mark=field.required===true?' <em>*</em>':'';
