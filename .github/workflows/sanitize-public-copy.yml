@@ -1,0 +1,37 @@
+name: Sanitize public copy
+
+on:
+  push:
+    paths:
+      - 'scripts/sanitize-public-copy.mjs'
+      - '.github/workflows/sanitize-public-copy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Apply copy cleanup
+        run: node scripts/sanitize-public-copy.mjs
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo "No copy changes required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/components/LandingTop.astro src/components/FinalSections.astro
+          git commit -m "Clean pre-launch wording from public pages"
+          git push
