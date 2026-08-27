@@ -38,6 +38,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/pages/formularz.astro .github/workflows/visual-audit.yml
+          git add src/pages/formularz.astro
           git commit -m "Make reservation form copy configurable"
           git push
