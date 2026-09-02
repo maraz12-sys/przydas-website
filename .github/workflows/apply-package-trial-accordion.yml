@@ -7,7 +7,7 @@ on:
       - '.github/workflows/apply-package-trial-accordion.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   apply:
@@ -37,11 +37,10 @@ jobs:
           exit 1
       - name: Audit desktop and mobile
         run: node scripts/package_audit.mjs
-      - name: Export patched source files
-        uses: actions/upload-artifact@v4
-        with:
-          name: package-trial-website-source
-          path: |
-            src/components/PackagesSection.astro
-            src/components/FinalSections.astro
-          retention-days: 1
+      - name: Commit validated website source
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/components/PackagesSection.astro src/components/FinalSections.astro
+          git commit -m 'Add trial offer and expandable package matrix'
+          git push
