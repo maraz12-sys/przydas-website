@@ -57,28 +57,56 @@ jobs:
       - name: Verify mobile and desktop layout
         shell: bash
         run: |
+          mkdir -p layout-diagnostics
           cat > /tmp/check-layout.mjs <<'EOF'
           import { chromium } from 'playwright';
+          import fs from 'node:fs';
           const browser = await chromium.launch({headless:true});
+          const results=[];
+          const issues=[];
           for (const v of [{w:390,h:844,name:'mobile'},{w:1440,h:1100,name:'desktop'}]) {
             const ctx=await browser.newContext({viewport:{width:v.w,height:v.h},locale:'pl-PL'});
             const p=await ctx.newPage();
             await p.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
-            const m=await p.evaluate(()=>({
-              innerWidth:window.innerWidth,
-              scrollWidth:document.documentElement.scrollWidth,
-              business:Array.from(document.querySelectorAll('.package-card')).find(c=>c.querySelector('.package-name')?.textContent?.trim()==='BIZNES')?.querySelector('.package-price-row.monthly-only .package-price')?.textContent?.trim(),
-              cards:Array.from(document.querySelectorAll('.package-card')).length,
-              old199:(document.body.innerText.match(/199 zł/g)||[]).length
-            }));
-            console.log(v.name,m);
-            if(m.scrollWidth>m.innerWidth+2) throw new Error(`${v.name}: horizontal overflow ${m.scrollWidth}/${m.innerWidth}`);
-            if(m.cards!==3||m.business!=='249 zł'||m.old199!==0) throw new Error(`${v.name}: pricing regression ${JSON.stringify(m)}`);
+            const m=await p.evaluate(()=>{
+              const overflow=Array.from(document.querySelectorAll('body *')).filter(el=>{
+                const style=getComputedStyle(el);
+                if(style.position==='fixed') return false;
+                const r=el.getBoundingClientRect();
+                return r.right>window.innerWidth+2||r.left<-2;
+              }).slice(0,30).map(el=>{
+                const r=el.getBoundingClientRect();
+                return {tag:el.tagName,cls:el.className?.toString?.()||'',left:Math.round(r.left),right:Math.round(r.right),width:Math.round(r.width),text:(el.textContent||'').replace(/\s+/g,' ').trim().slice(0,100)};
+              });
+              return {
+                innerWidth:window.innerWidth,
+                scrollWidth:document.documentElement.scrollWidth,
+                overflow,
+                business:Array.from(document.querySelectorAll('.package-card')).find(c=>c.querySelector('.package-name')?.textContent?.trim()==='BIZNES')?.querySelector('.package-price-row.monthly-only .package-price')?.textContent?.trim(),
+                cards:Array.from(document.querySelectorAll('.package-card')).length,
+                old199:(document.body.innerText.match(/199 zł/g)||[]).length
+              };
+            });
+            results.push({viewport:v,metrics:m});
+            if(m.scrollWidth>m.innerWidth+2) issues.push(`${v.name}: horizontal overflow ${m.scrollWidth}/${m.innerWidth}`);
+            if(m.cards!==3||m.business!=='249 zł'||m.old199!==0) issues.push(`${v.name}: pricing regression`);
+            await p.screenshot({path:`layout-diagnostics/${v.name}.png`,fullPage:true});
             await ctx.close();
           }
           await browser.close();
+          fs.writeFileSync('layout-diagnostics/metrics.json',JSON.stringify({results,issues},null,2));
+          console.log(JSON.stringify({results,issues},null,2));
+          if(issues.length) process.exitCode=1;
           EOF
           node /tmp/check-layout.mjs
+
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-layout-diagnostics
+          path: layout-diagnostics/*
+          retention-days: 7
 
       - name: Clean temporary audit workflows
         run: rm -f .github/workflows/landing-visual-audit-249.yml .github/workflows/fix-mobile-overflow-and-clean-audit.yml
