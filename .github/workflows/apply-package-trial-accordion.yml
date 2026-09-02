@@ -45,3 +45,5 @@ jobs:
           git add -A
           git commit -m 'Add trial offer and expandable package matrix'
           git push
+
+# Retry after fixing closed accordion DOM assertion.
