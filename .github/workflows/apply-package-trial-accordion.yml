@@ -7,7 +7,7 @@ on:
       - '.github/workflows/apply-package-trial-accordion.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   apply:
@@ -37,13 +37,11 @@ jobs:
           exit 1
       - name: Audit desktop and mobile
         run: node scripts/package_audit.mjs
-      - name: Commit final website
-        run: |
-          rm -f .github/workflows/apply-package-trial-accordion.yml scripts/apply_package_trial.py scripts/package_audit.mjs
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git commit -m 'Add trial offer and expandable package matrix'
-          git push
-
-# Retry after fixing closed accordion DOM assertion.
+      - name: Export patched source files
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-trial-website-source
+          path: |
+            src/components/PackagesSection.astro
+            src/components/FinalSections.astro
+          retention-days: 1
