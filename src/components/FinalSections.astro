@@ -4,21 +4,21 @@ const comparisonSections = [
     title: 'Kalendarz i rezerwacje',
     rows: [
       ['Widok kalendarza dzień / tydzień / miesiąc', '✓', '✓', '✓'],
-      ['Dodawanie, edycja i duplikacja rezerwacji', '✓', '✓', '✓'],
-      ['Dyspozycyjność, przypisania i potwierdzenia', '✓', '✓', '✓'],
+      ['Dodawanie, edycja i duplikowanie rezerwacji', '✓', '✓', '✓'],
+      ['Dyspozycyjność, przypisania i potwierdzanie udziału', '✓', '✓', '✓'],
       ['Dni kluczowe', '—', '✓', '✓'],
       ['Osoba odpowiedzialna za wydarzenie', '—', '✓', '✓'],
       ['Ankieta po wydarzeniu', '—', '✓', '✓'],
-      ['Checklisty materiałowe i zakupowe', '—', '—', '✓'],
+      ['Checklisty materiałowe i zakupowe przy wydarzeniu', '—', '—', '✓'],
     ],
   },
   {
     title: 'Powiadomienia i braki',
     rows: [
-      ['Powiadomienia o przypisaniu i odrzuceniu', '✓', '✓', '✓'],
+      ['Powiadomienia o przypisaniu i odrzuceniu udziału', '✓', '✓', '✓'],
       ['Pełny system powiadomień', '—', '✓', '✓'],
       ['Braki w danych rezerwacji', '✓', '✓', '✓'],
-      ['Braki dotyczące przypisania zespołu', '—', '✓', '✓'],
+      ['Braki dotyczące obsady zespołu', '—', '✓', '✓'],
       ['Braki materiałowe i rozliczeniowe', '—', '—', '✓'],
     ],
   },
@@ -27,50 +27,70 @@ const comparisonSections = [
     rows: [
       ['Tworzenie i zarządzanie zespołem', '✓', '✓', '✓'],
       ['Zbiorczy widok zespołu', '✓', '✓', '✓'],
-      ['Stanowiska, role i zadania pracowników', '—', '✓', '✓'],
+      ['Stanowiska i przypisywanie stanowisk', '—', '✓', '✓'],
+      ['Zadania dla członków zespołu', '—', '✓', '✓'],
       ['Garderoba i informacje pracownicze', '—', '✓', '✓'],
       ['Rozliczenia pracowników i naliczanie wypłat', '—', '—', '✓'],
     ],
   },
   {
-    title: 'Wiedza i Przydaś',
+    title: 'Przydasie — wiedza i narzędzia',
     rows: [
-      ['Notatnik Przydasia', '✓', '✓', '✓'],
+      ['Notatnik', '✓', '✓', '✓'],
       ['Współdzielone notatki', '—', '✓', '✓'],
-      ['Checklisty, standardy i instrukcje', '—', '✓', '✓'],
-    ],
-  },
-  {
-    title: 'Klienci i sprzedaż',
-    rows: [
-      ['Historia zleceń klienta w jednym systemie', '✓', '✓', '✓'],
-      ['Przypomnienia o ponownym kontakcie z byłymi klientami', '—', '—', '✓'],
-      ['Zaawansowane statystyki klientów i źródeł zleceń', '—', '—', '✓'],
-    ],
-  },
-  {
-    title: 'Finanse, magazyn i dane',
-    rows: [
-      ['Podstawowy panel rozliczeń', '✓', '✓', '✓'],
-      ['Gotówka i historia wypłat pracowników', '—', '—', '✓'],
-      ['Podstawowe statystyki', '—', '✓', '✓'],
-      ['Magazyn', '—', '1 kategoria', 'Bez limitu'],
-      ['Materiały i zakupy', '—', '—', '✓'],
-      ['Eksport danych', '—', '—', '✓'],
-      ['Integracje fakturowe', '—', '—', 'Wkrótce'],
+      ['Standardy, instrukcje, TODO i przydatne linki', '—', '✓', '✓'],
+      ['Checklisty', '—', '—', '✓'],
+      ['Generator formułek', '—', '—', '✓'],
       ['Podwykonawcy', '—', '—', '✓'],
-      ['Asystent AI', '—', '—', 'Wkrótce'],
-      ['Zaawansowane statystyki i zestawienia', '—', '—', '✓'],
+      ['Asystent AI', '—', '—', 'W przygotowaniu'],
     ],
   },
   {
-    title: 'Konfiguracja organizacji',
+    title: 'Magazyn',
+    rows: [
+      ['Dostęp do Magazynu', '—', 'Do 3 kategorii', 'Bez limitu'],
+    ],
+  },
+  {
+    title: 'Rozliczenia i finanse',
+    rows: [
+      ['Podstawowy panel: liczba i wartość rezerwacji, kwoty do zapłaty', '✓', '✓', '✓'],
+      ['Pełna lista rezerwacji i dostosowanie tabeli', '—', '✓', '✓'],
+      ['Oznaczanie faktur', '—', '✓', '✓'],
+      ['Rozliczenia pracowników według własnych stawek', '—', '—', '✓'],
+      ['Gotówka, wypłaty i historia rozliczeń pracowników', '—', '—', '✓'],
+      ['Eksport danych do Excela', '—', '—', '✓'],
+      ['Integracja z programem fakturowym', '—', '—', 'W przygotowaniu'],
+    ],
+  },
+  {
+    title: 'Statystyki i klienci',
+    rows: [
+      ['Zbiorczy widok i podsumowanie miesięczne', '—', '✓', '✓'],
+      ['Analiza ankiet po wydarzeniach', '—', '✓', '✓'],
+      ['Przypomnienia o ponownym kontakcie z klientami', '—', '—', '✓'],
+      ['Potencjalne stałe współprace i imprezy prywatne', '—', '—', '✓'],
+      ['Analiza wydarzeń, źródeł, typów i wartości klientów', '—', '—', '✓'],
+    ],
+  },
+  {
+    title: 'Dane organizacji',
     rows: [
       ['Liczba obsługiwanych firm', '1', 'Do 3', 'Bez limitu'],
+      ['Pliki organizacji', '—', '✓', '✓'],
+      ['Kopia danych', '—', '✓', '✓'],
+      ['Automatyczne przypomnienie o kopii co 30 dni', '—', '—', '✓'],
+    ],
+  },
+  {
+    title: 'Ustawienia',
+    rows: [
+      ['Preferencje użytkownika', '✓', '✓', '✓'],
       ['Konfiguracja formularza rezerwacji', 'Częściowa', 'Pełna', 'Pełna'],
-      ['Kopie zapasowe', '—', '✓', '✓'],
-      ['Własne poziomy dostępu', '—', '—', '✓'],
-      ['Automatyczne działania', '—', '—', 'Wkrótce'],
+      ['Wymagania profilowe pracowników', '—', '✓', '✓'],
+      ['Włączanie i wyłączanie ankiet', '—', '✓', '✓'],
+      ['Zarządzanie uprawnieniami ról', '—', '✓', '✓'],
+      ['Sterowanie progami priorytetów Braków', '—', '✓', '✓'],
     ],
   },
 ];
@@ -86,13 +106,13 @@ const comparisonOutcomes = [
     plan: 'ZESPÓŁ',
     price: '149 zł / mies.',
     label: 'Gdy najbardziej boli brak czasu',
-    text: 'Właściciel przestaje być ręcznym centrum dyspozycyjności, potwierdzeń, zadań i codziennej komunikacji zespołu.',
+    text: 'Stanowiska, zadania, pełne powiadomienia, ankiety i podstawowe statystyki zdejmują z właściciela codzienne pilnowanie ludzi.',
   },
   {
     plan: 'BIZNES',
-    price: '199 zł / mies.',
-    label: 'Gdy chcesz przestać liczyć wszystko ręcznie',
-    text: 'Przydaś nalicza rozliczenia pracowników według Twoich stawek, porządkuje wypłaty i gotówkę, a do tego dokłada materiały, zaawansowane dane i pracę nad powrotami klientów.',
+    price: '249 zł / mies.',
+    label: 'Gdy chcesz automatyzować finanse i rozwój',
+    text: 'Przydaś nalicza wynagrodzenia pracowników według Twoich stawek, porządkuje wypłaty i gotówkę oraz dokłada narzędzia do analizy i powrotów klientów.',
   },
 ];
 
@@ -113,6 +133,10 @@ const faq = [
     a: 'Jeśli koordynowanie zespołu zabiera Ci realny czas albo ręczne pilnowanie powoduje pomyłki — właśnie z tym trzeba porównać cenę. Przy płatności rocznej pakiet ZESPÓŁ kosztuje efektywnie 124,17 zł brutto miesięcznie. Kalkulator wyżej pozwala dodatkowo odnieść abonament do wartości własnych zleceń.',
   },
   {
+    q: 'Co dostaję za 249 zł w pakiecie BIZNES?',
+    a: 'BIZNES jest dla firmy, która chce zdjąć z właściciela pracę finansową i wykorzystać dane do dalszej sprzedaży. Obejmuje m.in. naliczanie wynagrodzeń pracowników według własnych stawek, obsługę gotówki i historii wypłat, checklisty materiałowe i zakupowe, zaawansowane statystyki, przypomnienia o powrotach klientów, nielimitowany Magazyn i eksport danych.',
+  },
+  {
     q: 'Czy jeden dodatkowy klient może pokryć abonament?',
     a: 'To zależy od wartości Twoich zleceń i wybranego pakietu. Kalkulator pokazuje wyłącznie relację wartości sprzedaży do ceny abonamentu, a nie zysk ani gwarantowany wynik. Przypomnienia o ponownym kontakcie z byłymi klientami są funkcją pakietu BIZNES.',
   },
@@ -126,11 +150,11 @@ const faq = [
   },
   {
     q: 'Czy podane ceny są brutto?',
-    a: 'Tak. Ceny 59 zł, 149 zł i 199 zł są kwotami brutto za miesiąc korzystania z odpowiedniego pakietu.',
+    a: 'Tak. Ceny 59 zł, 149 zł i 249 zł są kwotami brutto za miesiąc korzystania z odpowiedniego pakietu.',
   },
   {
     q: 'Jak działa abonament roczny i 2 miesiące gratis?',
-    a: 'Przy płatności z góry za 12 miesięcy płacisz równowartość 10 miesięcy: START 590 zł brutto, ZESPÓŁ 1 490 zł brutto, BIZNES 1 990 zł brutto.',
+    a: 'Przy płatności z góry za 12 miesięcy płacisz równowartość 10 miesięcy: START 590 zł brutto, ZESPÓŁ 1 490 zł brutto, BIZNES 2 490 zł brutto.',
   },
   {
     q: 'Czy mogę później zmienić pakiet?',
@@ -161,7 +185,7 @@ const faq = [
       <span class="eyebrow-text">Jeśli chcesz porównać wszystko</span>
       <h2>Potwierdź wybór funkcjami punkt po punkcie.</h2>
       <p>
-        START porządkuje podstawy, ZESPÓŁ odzyskuje czas właściciela, a BIZNES dokłada kontrolę nad wynikiem i klientami.
+        START porządkuje podstawy, ZESPÓŁ porządkuje pracę ludzi, a BIZNES automatyzuje rozliczenia i dokłada narzędzia do analizy oraz sprzedaży.
         Tabela niżej pokazuje dokładnie, gdzie przebiegają różnice.
       </p>
     </div>
@@ -193,7 +217,7 @@ const faq = [
             <th scope="col">Funkcja</th>
             <th scope="col">START<br /><span>59 zł / mies.</span></th>
             <th scope="col" class="team-col">ZESPÓŁ<br /><span>149 zł / mies.</span></th>
-            <th scope="col" class="business-col">BIZNES<br /><span>199 zł / mies.</span></th>
+            <th scope="col" class="business-col">BIZNES<br /><span>249 zł / mies.</span></th>
           </tr>
         </thead>
         <tbody>

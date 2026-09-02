@@ -34,19 +34,19 @@ const plans = [
       'Wszystko z pakietu START',
       'Dni kluczowe i osoba odpowiedzialna',
       'Ankiety po wydarzeniach i pełne powiadomienia',
-      'Stanowiska, zadania i organizacja pracy zespołu',
-      'Checklisty, standardy i podstawowe statystyki',
+      'Stanowiska, zadania i garderoba zespołu',
+      'Standardy, instrukcje, TODO, linki i podstawowe statystyki',
     ],
   },
   {
     name: 'BIZNES',
-    monthlyPrice: '199 zł',
-    annualPrice: '1 990 zł',
-    annualMonthly: '165,83 zł',
-    annualSaving: '398 zł',
-    dailyPrice: 'ok. 6,63 zł dziennie',
-    kicker: 'Rozliczenia, kontrola i wzrost',
-    effect: 'Mniej ręcznego liczenia = więcej kontroli',
+    monthlyPrice: '249 zł',
+    annualPrice: '2 490 zł',
+    annualMonthly: '207,50 zł',
+    annualSaving: '498 zł',
+    dailyPrice: 'ok. 8,30 zł dziennie',
+    kicker: 'Finanse i rozwój pod kontrolą',
+    effect: 'Wypłaty i dane biznesowe bez arkuszy',
     recommended: false,
     business: true,
     bullets: [
@@ -55,7 +55,7 @@ const plans = [
       'Gotówka, wypłaty i historia rozliczeń pracowników',
       'Checklisty materiałowe i zakupowe',
       'Przypomnienia o ponownym kontakcie z klientami',
-      'Magazyn i eksport danych',
+      'Nielimitowany magazyn i eksport danych',
       'Integracje fakturowe — wkrótce dostępne',
       'Zaawansowane statystyki i analityka',
     ],
@@ -124,7 +124,7 @@ const plans = [
           <select data-roi-plan aria-label="Pakiet do porównania">
             <option value="590" data-name="START">START · 590 zł / rok</option>
             <option value="1490" data-name="ZESPÓŁ">ZESPÓŁ · 1 490 zł / rok</option>
-            <option value="1990" data-name="BIZNES" selected>BIZNES · 1 990 zł / rok</option>
+            <option value="2490" data-name="BIZNES" selected>BIZNES · 2 490 zł / rok</option>
           </select>
         </label>
       </div>
@@ -241,17 +241,6 @@ const plans = [
       section.querySelectorAll('.annual-only').forEach((el) => el.setAttribute('aria-hidden', String(value !== 'annual')));
     };
     billingButtons.forEach((button) => button.addEventListener('click', () => setBilling(button.getAttribute('data-billing-value') || 'monthly')));
-
-    const featureDetails = section.querySelectorAll('.package-feature-details');
-    const mobilePackages = window.matchMedia('(max-width: 640px)');
-    const syncPackageDetails = () => {
-      featureDetails.forEach((details) => {
-        if (mobilePackages.matches) details.removeAttribute('open');
-        else details.setAttribute('open', '');
-      });
-    };
-    syncPackageDetails();
-    mobilePackages.addEventListener?.('change', syncPackageDetails);
 
     section.querySelectorAll('[data-plan]').forEach((button) => {
       button.addEventListener('click', () => {

@@ -54,7 +54,7 @@ import LegalFooter from '../components/LegalFooter.astro';
           "@type": "AggregateOffer",
           "priceCurrency": "PLN",
           "lowPrice": "59",
-          "highPrice": "199",
+          "highPrice": "249",
           "offerCount": "3"
         },
         "featureList": [
@@ -109,7 +109,7 @@ import LegalFooter from '../components/LegalFooter.astro';
     .comparison-table tbody { display: grid !important; gap: 7px !important; }
     .comparison-table tbody tr:not(.comparison-category) {
       display: grid !important;
-      grid-template-columns: minmax(0, 1fr) repeat(3, 54px) !important;
+      grid-template-columns: minmax(0, 1fr) repeat(3, 64px) !important;
       overflow: hidden;
       border: 1px solid #dfe8e3;
       border-radius: 12px;
@@ -148,9 +148,9 @@ import LegalFooter from '../components/LegalFooter.astro';
       font-weight: 900;
       letter-spacing: .04em;
     }
-    .comparison-table td:nth-child(2)::before { content: 'S'; }
-    .comparison-table td:nth-child(3)::before { content: 'Z'; }
-    .comparison-table td:nth-child(4)::before { content: 'B'; }
+    .comparison-table td:nth-child(2)::before { content: 'START'; }
+    .comparison-table td:nth-child(3)::before { content: 'ZESPÓŁ'; }
+    .comparison-table td:nth-child(4)::before { content: 'BIZNES'; }
     .comparison-table td:nth-child(3) { background: #f4faf7 !important; }
     .comparison-table td:nth-child(4) { background: #e9f8f0 !important; }
     .comparison-table .comparison-category {
