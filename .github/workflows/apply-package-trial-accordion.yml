@@ -14,253 +14,34 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Patch package and trial UX
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-
-          packages = Path('src/components/PackagesSection.astro')
-          final = Path('src/components/FinalSections.astro')
-          ci = Path('.github/workflows/website-ci.yml')
-
-          p = packages.read_text(encoding='utf-8')
-          if "'Magazyn do 5 kategorii'," not in p:
-              needle = "      'Stanowiska, zadania i garderoba zespołu',\n"
-              if needle not in p:
-                  raise SystemExit('Nie znaleziono miejsca na bullet Magazynu w ZESPÓŁ')
-              p = p.replace(needle, needle + "      'Magazyn do 5 kategorii',\n", 1)
-
-          trial_markup = '''      <div class="trial-offer" aria-label="Bezpłatny okres próbny pakietu BIZNES">
-        <div class="trial-offer-badge">30 DNI BIZNES ZA 0 ZŁ</div>
-        <div class="trial-offer-copy">
-          <strong>Najpierw korzystasz ze wszystkiego. Dopiero potem wybierasz.</strong>
-          <p>Każda nowa firma zaczyna od 30 dni pełnego pakietu BIZNES bez opłat. Przez miesiąc sprawdzasz wszystkie dostępne funkcje, a po okresie próbnym wybierasz START, ZESPÓŁ albo BIZNES. Twoje dane zostają w Przydasiu niezależnie od wybranego pakietu.</p>
-        </div>
-        <a href="#porownanie">Zobacz, co przetestujesz <span>→</span></a>
-      </div>
-
-'''
-          marker = '      <div class="pricing-controls">\n'
-          if 'class="trial-offer"' not in p:
-              if marker not in p:
-                  raise SystemExit('Nie znaleziono pricing-controls')
-              p = p.replace(marker, trial_markup + marker, 1)
-
-          trial_css = '''
-  .trial-offer {
-    width: 100%;
-    margin: 30px 0 20px;
-    padding: 20px 22px;
-    border: 1px solid #b9e6d0;
-    border-radius: 20px;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 18px;
-    background: linear-gradient(135deg, #eefaf4 0%, #ffffff 68%);
-    box-shadow: 0 14px 34px rgba(18, 101, 66, .07);
-    text-align: left;
-  }
-  .trial-offer-badge {
-    padding: 9px 11px;
-    border-radius: 999px;
-    color: #fff;
-    background: #087f53;
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: .06em;
-    white-space: nowrap;
-  }
-  .trial-offer-copy { display: grid; gap: 5px; }
-  .trial-offer-copy strong { color: #10251d; font-size: 15px; line-height: 1.3; }
-  .trial-offer-copy p { margin: 0; color: #627169; font-size: 12px; line-height: 1.55; }
-  .trial-offer a { color: #087f53; font-size: 12px; font-weight: 850; white-space: nowrap; }
-  .trial-offer a:hover { color: #056b45; }
-  @media (max-width: 760px) {
-    .trial-offer { grid-template-columns: 1fr; gap: 12px; padding: 18px; }
-    .trial-offer-badge { width: fit-content; }
-    .trial-offer a { width: fit-content; }
-  }
-'''
-          if '.trial-offer {' not in p:
-              idx = p.rfind('</style>')
-              if idx < 0:
-                  raise SystemExit('Brak </style> w PackagesSection')
-              p = p[:idx] + trial_css + p[idx:]
-          packages.write_text(p, encoding='utf-8')
-
-          s = final.read_text(encoding='utf-8')
-          s = s.replace("['Dostęp do Magazynu', '—', 'Do 3 kategorii', 'Bez limitu']", "['Dostęp do Magazynu', '—', 'Do 5 kategorii', 'Bez limitu']")
-
-          trial_faq = '''  {
-    q: 'Jak działa bezpłatny okres próbny?',
-    a: 'Każda nowa firma otrzymuje 30 dni pełnego pakietu BIZNES bez opłat. Przed końcem okresu próbnego przypomnimy Ci o wyborze pakietu. Po 30 dniach wybierasz START, ZESPÓŁ albo BIZNES. Wybranie niższego pakietu nie usuwa danych — po prostu ogranicza dostęp do funkcji spoza jego zakresu.',
-  },
-'''
-          faq_marker = 'const faq = [\n'
-          if "q: 'Jak działa bezpłatny okres próbny?'" not in s:
-              if faq_marker not in s:
-                  raise SystemExit('Brak tablicy FAQ')
-              s = s.replace(faq_marker, faq_marker + trial_faq, 1)
-
-          old_intro = '''      <span class="eyebrow-text">Jeśli chcesz porównać wszystko</span>
-      <h2>Potwierdź wybór funkcjami punkt po punkcie.</h2>
-      <p>
-        START porządkuje podstawy, ZESPÓŁ porządkuje pracę ludzi, a BIZNES automatyzuje rozliczenia i dokłada narzędzia do analizy oraz sprzedaży.
-        Tabela niżej pokazuje dokładnie, gdzie przebiegają różnice.
-      </p>'''
-          new_intro = '''      <span class="eyebrow-text">Co dokładnie znajduje się w pakietach?</span>
-      <h2>Rozwiń obszar i porównaj funkcje punkt po punkcie.</h2>
-      <p>
-        START porządkuje podstawy, ZESPÓŁ porządkuje pracę ludzi, a BIZNES automatyzuje rozliczenia i dokłada narzędzia do analizy oraz sprzedaży.
-        Każdą sekcję możesz rozwinąć osobno, dzięki czemu łatwo sprawdzisz tylko te funkcje, które są dla Ciebie ważne.
-      </p>'''
-          if old_intro in s:
-              s = s.replace(old_intro, new_intro, 1)
-
-          start_marker = '    <details class="comparison-details" open>\n'
-          if start_marker in s:
-              start = s.index(start_marker)
-              end_marker = '    </details>\n'
-              end = s.index(end_marker, start) + len(end_marker)
-              accordion = '''    <div class="comparison-accordion" aria-label="Zakres funkcji w pakietach START, ZESPÓŁ i BIZNES">
-      {comparisonSections.map((section, index) => (
-        <details class="comparison-group" open={index === 0}>
-          <summary class="comparison-group-summary">
-            <span>
-              <strong>{section.title}</strong>
-              <small>{section.rows.length} {section.rows.length === 1 ? 'funkcja' : section.rows.length >= 2 && section.rows.length <= 4 ? 'funkcje' : 'funkcji'}</small>
-            </span>
-            <b aria-hidden="true">+</b>
-          </summary>
-          <div class="comparison-group-body">
-            <div class="comparison-table-wrap" role="region" aria-label={`Porównanie pakietów: ${section.title}`} tabindex="0">
-              <table class="comparison-table comparison-table-compact">
-                <caption class="sr-only">{section.title} — porównanie pakietów START, ZESPÓŁ i BIZNES</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Funkcja</th>
-                    <th scope="col">START<br /><span>59 zł / mies.</span></th>
-                    <th scope="col" class="team-col">ZESPÓŁ<br /><span>149 zł / mies.</span></th>
-                    <th scope="col" class="business-col">BIZNES<br /><span>249 zł / mies.</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {section.rows.map(([label, start, team, business]) => (
-                    <tr>
-                      <th scope="row">{label}</th>
-                      <td>{start}</td>
-                      <td class="team-col">{team}</td>
-                      <td class="business-col">{business}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </details>
-      ))}
-    </div>
-'''
-              s = s[:start] + accordion + s[end:]
-
-          accordion_css = '''
-  .comparison-accordion { margin-top: 26px; display: grid; gap: 10px; }
-  .comparison-group { border: 1px solid #dce8e1; border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 8px 24px rgba(28,74,52,.035); }
-  .comparison-group-summary { min-height: 68px; padding: 15px 18px; display: flex; align-items: center; justify-content: space-between; gap: 18px; list-style: none; cursor: pointer; background: linear-gradient(145deg,#fff,#f8fbf9); }
-  .comparison-group-summary::-webkit-details-marker { display: none; }
-  .comparison-group-summary span { display: grid; gap: 3px; }
-  .comparison-group-summary strong { color: #10251d; font-size: 14px; line-height: 1.3; }
-  .comparison-group-summary small { color: #738078; font-size: 10px; }
-  .comparison-group-summary b { width: 32px; height: 32px; flex: 0 0 32px; border-radius: 10px; display: grid; place-items: center; color: #087f53; background: #e8f6ef; font-size: 20px; line-height: 1; transition: transform .18s ease; }
-  .comparison-group[open] .comparison-group-summary { border-bottom: 1px solid #e2ebe6; background: #f5fbf8; }
-  .comparison-group[open] .comparison-group-summary b { transform: rotate(45deg); }
-  .comparison-group-body { padding: 0; }
-  .comparison-table-compact { margin: 0; }
-  .comparison-table-compact thead th:first-child { min-width: 280px; }
-  @media (max-width: 640px) {
-    .comparison-accordion { margin-top: 18px; }
-    .comparison-group-summary { min-height: 62px; padding: 13px 14px; }
-    .comparison-group-summary strong { font-size: 13px; }
-    .comparison-group-body .comparison-table-wrap { border-radius: 0; border: 0; }
-    .comparison-table-compact { min-width: 690px; }
-    .comparison-table-compact thead th:first-child { min-width: 250px; }
-  }
-'''
-          if '.comparison-accordion {' not in s:
-              idx = s.rfind('</style>')
-              if idx < 0:
-                  raise SystemExit('Brak </style> w FinalSections')
-              s = s[:idx] + accordion_css + s[idx:]
-          final.write_text(s, encoding='utf-8')
-
-          c = ci.read_text(encoding='utf-8')
-          anchor = "          grep -q 'BIZNES' dist/index.html\n"
-          extra = "          grep -q '30 dni pełnego pakietu BIZNES' dist/index.html\n          grep -q 'Do 5 kategorii' dist/index.html\n          grep -q 'comparison-accordion' dist/index.html\n"
-          if "grep -q 'Do 5 kategorii'" not in c:
-              if anchor not in c:
-                  raise SystemExit('Nie znaleziono miejsca w Website CI')
-              c = c.replace(anchor, anchor + extra, 1)
-          ci.write_text(c, encoding='utf-8')
-          PY
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-
-      - name: Install and build
+      - name: Apply website changes
+        run: python3 scripts/apply_package_trial.py
+      - name: Build and install browser
         run: |
           npm install
           npm install playwright@1.55.0 --no-save
           npm run build
           npx playwright install --with-deps chromium
-
-      - name: Visual smoke test
-        shell: bash
+      - name: Start preview
         run: |
           npx --yes http-server dist -p 4173 -c-1 > /tmp/http-server.log 2>&1 &
           for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
             sleep 1
           done
-          cat > package-audit.mjs <<'EOF'
-          import { chromium } from 'playwright';
-          const browser = await chromium.launch({headless:true});
-          for (const v of [{name:'mobile',w:390,h:844},{name:'desktop',w:1440,h:1100}]) {
-            const ctx=await browser.newContext({viewport:{width:v.w,height:v.h},locale:'pl-PL'});
-            const page=await ctx.newPage();
-            await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
-            const m=await page.evaluate(()=>({
-              innerWidth:window.innerWidth,
-              scrollWidth:document.documentElement.scrollWidth,
-              trial:document.querySelectorAll('.trial-offer').length,
-              groups:document.querySelectorAll('.comparison-group').length,
-              openGroups:document.querySelectorAll('.comparison-group[open]').length,
-              warehouse:document.body.innerText.includes('Do 5 kategorii'),
-              oldWarehouse:document.body.innerText.includes('Do 3 kategorii')
-            }));
-            console.log(v.name,m);
-            if(m.scrollWidth>m.innerWidth+2) throw new Error(`${v.name}: horizontal overflow ${m.scrollWidth}/${m.innerWidth}`);
-            if(m.trial!==1||m.groups<8||m.openGroups<1||!m.warehouse||m.oldWarehouse) throw new Error(`${v.name}: package/trial regression ${JSON.stringify(m)}`);
-            await ctx.close();
-          }
-          await browser.close();
-          EOF
-          node package-audit.mjs
-
+          cat /tmp/http-server.log
+          exit 1
+      - name: Audit desktop and mobile
+        run: node scripts/package_audit.mjs
       - name: Commit final website
-        shell: bash
         run: |
-          set -euo pipefail
-          rm -f package-audit.mjs .github/workflows/apply-package-trial-accordion.yml
+          rm -f .github/workflows/apply-package-trial-accordion.yml scripts/apply_package_trial.py scripts/package_audit.mjs
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/components/PackagesSection.astro src/components/FinalSections.astro .github/workflows/website-ci.yml .github/workflows/apply-package-trial-accordion.yml
+          git add -A
           git commit -m 'Add trial offer and expandable package matrix'
           git push
