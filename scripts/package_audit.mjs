@@ -11,9 +11,9 @@ for (const v of [{ name: 'mobile', w: 390, h: 844 }, { name: 'desktop', w: 1440,
     trial: document.querySelectorAll('.trial-offer').length,
     groups: document.querySelectorAll('.comparison-group').length,
     openGroups: document.querySelectorAll('.comparison-group[open]').length,
-    warehouse: document.body.innerText.includes('Do 5 kategorii'),
-    oldWarehouse: document.body.innerText.includes('Do 3 kategorii'),
-    trialFaq: document.body.innerText.includes('Jak działa bezpłatny okres próbny?'),
+    warehouse: document.body.textContent.includes('Do 5 kategorii'),
+    oldWarehouse: document.body.textContent.includes('Do 3 kategorii'),
+    trialFaq: document.body.textContent.includes('Jak działa bezpłatny okres próbny?'),
   }));
   console.log(v.name, m);
   if (m.scrollWidth > m.innerWidth + 2) throw new Error(`${v.name}: horizontal overflow ${m.scrollWidth}/${m.innerWidth}`);
