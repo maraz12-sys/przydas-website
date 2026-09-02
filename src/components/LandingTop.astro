@@ -20,7 +20,7 @@ const problems = [
   },
   {
     no: '04',
-    title: 'Dobry klient znika po evencie',
+    title: 'Dobry klient znika po wydarzeniu',
     text: 'Realizacja się kończy, kontakt zostaje w historii wiadomości, a przy kolejnej okazji klient może po prostu szukać od nowa.',
     loss: 'Koszt: sprzedaż, o którą nikt ponownie nie zapytał.',
   },
@@ -28,9 +28,11 @@ const problems = [
 
 const capabilities = [
   ['Rezerwacje bez szukania', 'Termin, klient, ustalenia, status i szczegóły wydarzenia w jednym miejscu.'],
+  ['Formularz dla klienta bez przepisywania', 'Wysyłasz link, klient uzupełnia dane, a po Twojej weryfikacji mogą trafić prosto do rezerwacji.'],
   ['Zespół bez setek wiadomości', 'Dyspozycyjność, przypisania, potwierdzenia, zadania i odpowiedzialność są widoczne od razu.'],
   ['Braki zanim staną się problemem', 'System przypomina o rzeczach, których nie warto trzymać w głowie.'],
-  ['Firma po evencie też pracuje', 'Rozliczenia, feedback, statystyki i historia klienta nie znikają wraz z zakończeniem realizacji.'],
+  ['Koniec ze żmudnym rozliczaniem pracowników', 'Animator uzupełnia dane po realizacji. Przydaś stosuje Twoje stawki, wylicza należność i pilnuje historii wypłat.'],
+  ['Powiadomienia, które prowadzą do działania', 'Przypisania, potwierdzenia, braki i rozliczenia trafiają do właściwej osoby zamiast ginąć w kolejnej rozmowie.'],
 ];
 
 const beforeEvent = [
@@ -59,8 +61,8 @@ const afterEvent = [
   },
   {
     no: '05',
-    title: 'Zamykasz rozliczenie',
-    text: 'Pracownicy, płatności i dane potrzebne do zamknięcia zlecenia nie wiszą tygodniami w pamięci.',
+    title: 'Przydaś liczy rozliczenie',
+    text: 'Animator uzupełnia czas, dojazd, przygotowanie, kilometry i pobraną gotówkę. System wylicza należność według Twoich stawek — Ty sprawdzasz i zatwierdzasz.',
   },
   {
     no: '06',
@@ -86,15 +88,15 @@ const audiences = [
     plan: 'ZESPÓŁ',
     eyebrow: 'Masz ludzi i za dużo pilnowania',
     title: 'Odzyskaj czas właściciela',
-    text: 'Dla firmy, w której dyspozycyjność, potwierdzenia, zadania i rozliczenia pracowników zaczynają zabierać realne godziny.',
+    text: 'Dla firmy, w której dyspozycyjność, potwierdzenia, zadania i codzienna komunikacja zespołu zaczynają zabierać realne godziny.',
     result: 'Efekt: mniej wiadomości i mniej ręcznego koordynowania.',
   },
   {
     plan: 'BIZNES',
-    eyebrow: 'Chcesz zarządzać wynikiem, nie tylko kalendarzem',
-    title: 'Pilnuj pieniędzy i klientów',
-    text: 'Dla firmy, która chce kontrolować koszty, materiały, wyniki, dane po realizacji i powroty do byłych klientów.',
-    result: 'Efekt: decyzje oparte na danych i więcej okazji do ponownej sprzedaży.',
+    eyebrow: 'Chcesz przestać ręcznie liczyć wypłaty i pilnować pieniędzy',
+    title: 'Rozlicz zespół bez arkuszy',
+    text: 'Dla firmy, która chce naliczać rozliczenia pracowników według własnych stawek, kontrolować wypłaty i gotówkę oraz lepiej wykorzystywać dane po realizacji.',
+    result: 'Efekt: mniej liczenia po nocach, pełna historia wypłat i lepsza kontrola wyniku.',
   },
 ];
 ---
@@ -130,8 +132,8 @@ const audiences = [
 
     <h1>Mniej pilnowania.<br /><span>Więcej czasu na firmę.</span></h1>
     <p class="hero-lead">
-      Przydaś łączy rezerwacje, kalendarz, zespół, braki, rozliczenia i dane po realizacji.
-      Zamiast pamiętać o wszystkim samemu, budujesz proces, który pomaga oszczędzać czas, ograniczać straty i wracać do klientów.
+      Przydaś łączy rezerwacje, formularze dla klientów, kalendarz, zespół, braki, rozliczenia i dane po realizacji.
+      Zamiast składać firmę z Messengera, notatek i arkuszy, budujesz proces, który oszczędza czas, ogranicza straty i pomaga wracać do klientów.
     </p>
 
     <div class="hero-actions">

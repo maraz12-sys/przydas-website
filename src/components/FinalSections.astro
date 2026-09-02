@@ -29,7 +29,7 @@ const comparisonSections = [
       ['Zbiorczy widok zespołu', '✓', '✓', '✓'],
       ['Stanowiska, role i zadania pracowników', '—', '✓', '✓'],
       ['Garderoba i informacje pracownicze', '—', '✓', '✓'],
-      ['Rozliczenia pracowników', '—', '✓', '✓'],
+      ['Rozliczenia pracowników i naliczanie wypłat', '—', '—', '✓'],
     ],
   },
   {
@@ -52,6 +52,7 @@ const comparisonSections = [
     title: 'Finanse, magazyn i dane',
     rows: [
       ['Podstawowy panel rozliczeń', '✓', '✓', '✓'],
+      ['Gotówka i historia wypłat pracowników', '—', '—', '✓'],
       ['Podstawowe statystyki', '—', '✓', '✓'],
       ['Magazyn', '—', '1 kategoria', 'Bez limitu'],
       ['Materiały i zakupy', '—', '—', '✓'],
@@ -85,13 +86,13 @@ const comparisonOutcomes = [
     plan: 'ZESPÓŁ',
     price: '149 zł / mies.',
     label: 'Gdy najbardziej boli brak czasu',
-    text: 'Właściciel przestaje być ręcznym centrum dyspozycyjności, potwierdzeń, zadań i rozliczeń pracowników.',
+    text: 'Właściciel przestaje być ręcznym centrum dyspozycyjności, potwierdzeń, zadań i codziennej komunikacji zespołu.',
   },
   {
     plan: 'BIZNES',
     price: '199 zł / mies.',
-    label: 'Gdy chcesz pilnować wyniku',
-    text: 'Do operacji dochodzą pieniądze, materiały, zaawansowane dane oraz praca nad powrotami klientów i kolejną sprzedażą.',
+    label: 'Gdy chcesz przestać liczyć wszystko ręcznie',
+    text: 'Przydaś nalicza rozliczenia pracowników według Twoich stawek, porządkuje wypłaty i gotówkę, a do tego dokłada materiały, zaawansowane dane i pracę nad powrotami klientów.',
   },
 ];
 
@@ -103,6 +104,10 @@ const trustItems = [
 ];
 
 const faq = [
+  {
+    q: 'Czy Przydaś naprawdę liczy wypłaty pracowników?',
+    a: 'Tak — w pakiecie BIZNES. Animator uzupełnia dane po realizacji, np. czas pracy, dojazd, przygotowanie, kilometry lub pobraną gotówkę, zależnie od ustawień firmy. Właściciel ustala zasady i stawki, a Przydaś wylicza należność, porządkuje miesiąc, gotówkę i historię wypłat. Ty sprawdzasz i zatwierdzasz zamiast składać rozliczenie z wiadomości i arkuszy.',
+  },
   {
     q: 'Czy 149 zł miesięcznie ma sens dla małej firmy?',
     a: 'Jeśli koordynowanie zespołu zabiera Ci realny czas albo ręczne pilnowanie powoduje pomyłki — właśnie z tym trzeba porównać cenę. Przy płatności rocznej pakiet ZESPÓŁ kosztuje efektywnie 124,17 zł brutto miesięcznie. Kalkulator wyżej pozwala dodatkowo odnieść abonament do wartości własnych zleceń.',
