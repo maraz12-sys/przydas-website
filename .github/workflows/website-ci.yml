@@ -55,6 +55,16 @@ jobs:
           grep -q 'form-intro' dist/formularz/index.html
           grep -q 'X-Robots-Tag: noindex' dist/_headers
 
+          # Commercial truth gates: keep website copy aligned with the live plan contract.
+          grep -q 'Magazyn do 3 kategorii' dist/index.html
+          ! grep -q 'Magazyn do 5 kategorii' dist/index.html
+          grep -q 'Zadania zespołu, garderoba i checklisty materiałowe' dist/index.html
+          grep -q 'Szanse sprzedażowe: potencjalne stałe współprace i imprezy prywatne' dist/index.html
+          grep -q 'W przygotowaniu' dist/index.html
+          grep -q '60 dni BIZNES za 0 zł' dist/index.html
+          grep -q 'Chcę uruchomić bezpłatny test' dist/index.html
+          ! grep -q 'Publiczny start dla nowych firm jest kolejnym krokiem' dist/index.html
+
           ! grep -Rqi 'Dokument przed uruchomieniem' dist
           ! grep -Rqi 'dane identyfikacyjne operatora.*zostaną uzupełnione' dist
           ! grep -Rqi 'przed komercyjnym startem' dist
@@ -62,5 +72,5 @@ jobs:
           ! grep -Rqi 'przed płatnym startem' dist
 
 # CI validates the assembled production landing page, conversion-critical copy,
-# structured data, SEO files, public form API access, tester-facing copy,
-# security headers and custom error routing.
+# commercial plan claims, structured data, SEO files, public form API access,
+# tester-facing copy, security headers and custom error routing.
