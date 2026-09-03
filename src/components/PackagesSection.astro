@@ -34,8 +34,8 @@ const plans = [
       'Wszystko z pakietu START',
       'Dni kluczowe i osoba odpowiedzialna',
       'Ankiety po wydarzeniach i pełne powiadomienia',
-      'Stanowiska, zadania i garderoba zespołu',
-      'Magazyn do 5 kategorii',
+      'Stanowiska, prywatne TODO i współdzielona wiedza zespołu',
+      'Magazyn do 3 kategorii',
       'Standardy, instrukcje, TODO, linki i podstawowe statystyki',
     ],
   },
@@ -54,7 +54,7 @@ const plans = [
       'Wszystko z pakietu ZESPÓŁ',
       'Rozliczenia pracowników naliczane według Twoich stawek',
       'Gotówka, wypłaty i historia rozliczeń pracowników',
-      'Checklisty materiałowe i zakupowe',
+      'Zadania zespołu, garderoba i checklisty materiałowe',
       'Przypomnienia o ponownym kontakcie z klientami',
       'Nielimitowany magazyn i eksport danych',
       'Integracje fakturowe — wkrótce dostępne',
@@ -68,7 +68,7 @@ const plans = [
   <div class="shell packages-shell">
     <div class="value-intro">
       <div class="value-intro-copy">
-        <span class="eyebrow-text">Każda stała opłata ma się bronić wynikiem</span>
+        <span class="eyebrow-text">Każda stała opłata ma dawać konkretną wartość</span>
         <h2>Program kosztuje. Chaos też.</h2>
         <p>
           Cenę Przydasia warto porównać nie z „darmowym Excelem”, ale z czasem właściciela, pomyłkami, zakupami na ostatnią chwilę
@@ -154,6 +154,7 @@ const plans = [
         <div class="trial-offer-copy">
           <strong>Najpierw korzystasz ze wszystkiego. Dopiero potem wybierasz.</strong>
           <p>Każda nowa firma zaczyna od 30 dni pełnego pakietu BIZNES bez opłat. Przez miesiąc sprawdzasz wszystkie dostępne funkcje, a po okresie próbnym wybierasz START, ZESPÓŁ albo BIZNES. Twoje dane zostają w Przydasiu niezależnie od wybranego pakietu.</p>
+          <p><b>Oferta startowa:</b> pierwsze 10 nowych firm otrzymuje dodatkowe 30 dni, czyli łącznie 60 dni BIZNES za 0 zł.</p>
         </div>
         <a href="#porownanie">Zobacz, co przetestujesz <span>→</span></a>
       </div>
@@ -218,7 +219,7 @@ const plans = [
           </details>
 
           <a class:list={['button', plan.recommended || plan.business ? 'button-primary' : 'button-secondary', 'package-button']} href="#start" data-plan={plan.name}>
-            Interesuje mnie {plan.name} <span>→</span>
+            Wypróbuj 30 dni za 0 zł <span>→</span>
           </a>
         </article>
       ))}
@@ -256,7 +257,7 @@ const plans = [
       button.addEventListener('click', () => {
         const plan = button.getAttribute('data-plan') || '';
         const label = document.querySelector('[data-selected-plan-label]');
-        if (label && plan) label.textContent = `Interesuje Cię pakiet ${plan}`;
+        if (label && plan) label.textContent = `Po okresie próbnym interesuje Cię pakiet ${plan}`;
       });
     });
 
