@@ -35,6 +35,11 @@ jobs:
           test -s dist/kontakt/index.html
           test -s dist/regulamin/index.html
           test -s dist/polityka-prywatnosci/index.html
+          test -s dist/cookies/index.html
+          test -s dist/podprocesorzy/index.html
+          test -s dist/bezpieczenstwo/index.html
+          test -s dist/umowa-powierzenia/index.html
+          test -s dist/zglos-nielegalna-tresc/index.html
           test -s dist/robots.txt
           test -s dist/sitemap.xml
           test -s dist/_headers
@@ -58,7 +63,7 @@ jobs:
           grep -q 'form-intro' dist/formularz/index.html
           grep -q 'X-Robots-Tag: noindex' dist/_headers
 
-          # Commercial truth gates: keep website copy aligned with the live plan contract.
+          # Commercial truth gates.
           grep -q 'Magazyn do 3 kategorii' dist/index.html
           ! grep -q 'Magazyn do 5 kategorii' dist/index.html
           grep -q 'Zadania zespołu, garderoba i checklisty materiałowe' dist/index.html
@@ -68,7 +73,7 @@ jobs:
           grep -q 'Chcę uruchomić bezpłatny test' dist/index.html
           ! grep -q 'Publiczny start dla nowych firm jest kolejnym krokiem' dist/index.html
 
-          # Legal identity gates: never publish an anonymous SaaS operator again.
+          # Legal identity gates.
           grep -q 'Ewelina Nalewalska ANIMILANDIA' dist/index.html
           grep -q '5621808600' dist/index.html
           grep -q '368796206' dist/index.html
@@ -76,10 +81,29 @@ jobs:
           grep -q 'Ewelina Nalewalska ANIMILANDIA' dist/kontakt/index.html
           grep -q 'Władysława Jagiełły 6' dist/kontakt/index.html
           grep -q 'Boczna 23' dist/kontakt/index.html
-          grep -q '5621808600' dist/regulamin/index.html
-          grep -q '368796206' dist/regulamin/index.html
+
+          # Contract/legal release gates.
+          grep -q 'Uruchomienie Okresu próbnego nie powoduje automatycznego przejścia na płatną Subskrypcję' dist/regulamin/index.html
+          grep -q 'pierwsze 10 kwalifikujących się nowych Organizacji' dist/regulamin/index.html
+          grep -q '8 września 2026' dist/regulamin/index.html
+          grep -q '14 dni' dist/regulamin/index.html
+          grep -q 'obowiązku zapłaty' dist/regulamin/index.html
+          grep -q '/umowa-powierzenia' dist/regulamin/index.html
+          grep -q 'art. 28 RODO' dist/umowa-powierzenia/index.html
+          grep -q 'udokumentowane polecenie' dist/umowa-powierzenia/index.html
+          grep -q 'podprocesor' dist/umowa-powierzenia/index.html
+          grep -q 'audyt' dist/umowa-powierzenia/index.html
           grep -q 'Administrator danych' dist/polityka-prywatnosci/index.html
-          grep -q '5621808600' dist/polityka-prywatnosci/index.html
+          grep -q 'art. 6 ust. 1 lit. f RODO' dist/polityka-prywatnosci/index.html
+          grep -q 'Skąd otrzymujemy dane' dist/polityka-prywatnosci/index.html
+          grep -q 'art. 399 Prawa komunikacji elektronicznej' dist/cookies/index.html
+          grep -q 'nie używamy opcjonalnych narzędzi analitycznych ani marketingowych' dist/cookies/index.html
+          grep -q 'Plus Five Five, Inc. (Resend)' dist/podprocesorzy/index.html
+          grep -q 'WEWEB SAS' dist/podprocesorzy/index.html
+          grep -q 'Zgłoszenie nielegalnej treści' dist/zglos-nielegalna-tresc/index.html
+          grep -q 'w dobrej wierze' dist/zglos-nielegalna-tresc/index.html
+          grep -q 'umowa-powierzenia' dist/sitemap.xml
+          grep -q 'zglos-nielegalna-tresc' dist/sitemap.xml
 
           ! grep -Rqi 'Dokument przed uruchomieniem' dist
           ! grep -Rqi 'dane identyfikacyjne operatora.*zostaną uzupełnione' dist
@@ -87,6 +111,6 @@ jobs:
           ! grep -Rqi 'przed sprzedażą komercyjną' dist
           ! grep -Rqi 'przed płatnym startem' dist
 
-# CI validates the assembled production landing page, conversion-critical copy,
-# commercial plan claims, published operator identity, structured data, SEO files,
-# public form API access, tester-facing copy, security headers and custom error routing.
+# CI validates the public site, commercial plan claims, legal identity,
+# trial/subscription disclosures, GDPR/DPA, PKE storage disclosure, DSA notice
+# mechanism, SEO files, security headers and public form routing.

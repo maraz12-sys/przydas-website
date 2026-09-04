@@ -3,33 +3,38 @@ import LegalLayout from '../layouts/LegalLayout.astro';
 ---
 <LegalLayout
   title="Cookies i pamięć urządzenia"
-  description="Informacja o technologiach zapisywanych na urządzeniu podczas korzystania ze strony i aplikacji Przydaś."
+  description="Informacja o cookies i innych technologiach pamięci urządzenia używanych przez stronę i aplikację Przydaś."
   eyebrow="Prywatność w przeglądarce"
 >
-  <h2>1. Co obejmuje ta polityka</h2>
-  <p>Ta polityka opisuje pliki cookies i inne dane zapisywane przez przeglądarkę, potrzebne m.in. do logowania, bezpieczeństwa i zapamiętania ustawień.</p>
+  <h2>1. Zakres polityki</h2>
+  <p>Polityka obejmuje cookies oraz inne technologie pozwalające przechowywać informacje na urządzeniu lub uzyskiwać dostęp do informacji już zapisanych w przeglądarce. W Przydasiu mogą to być m.in. cookies, localStorage, sessionStorage, IndexedDB oraz pamięć podręczna aplikacji i service workera.</p>
+  <p>Zasady korzystania z takich technologii wynikają w szczególności z art. 399 Prawa komunikacji elektronicznej. Technologie, które nie są niezbędne do transmisji albo dostarczenia usługi żądanej przez użytkownika, są uruchamiane dopiero po uzyskaniu wymaganej zgody.</p>
 
   <h2>2. Technologie niezbędne</h2>
-  <p>Przydaś może korzystać z technologii niezbędnych do:</p>
+  <p>Technologie niezbędne mogą służyć do:</p>
   <ul>
-    <li>utrzymania sesji i logowania;</li>
-    <li>ochrony konta oraz rozpoznawania zaufanego urządzenia;</li>
-    <li>zapamiętania ustawień wymaganych do prawidłowego działania usługi;</li>
-    <li>ochrony usługi przed nadużyciami.</li>
+    <li>logowania, utrzymania aktywnej sesji i odświeżenia uwierzytelnienia;</li>
+    <li>ochrony konta, obsługi zaufanego urządzenia oraz dodatkowej weryfikacji bezpieczeństwa;</li>
+    <li>zapamiętania ustawień koniecznych do prawidłowego działania interfejsu i aplikacji;</li>
+    <li>działania aplikacji instalowanej na ekranie głównym, pamięci podręcznej i mechanizmów PWA;</li>
+    <li>ochrony witryny i Usługi przed nadużyciami, błędami technicznymi oraz nieautoryzowanym dostępem.</li>
   </ul>
-  <p>Mechanizmy konieczne do świadczenia żądanej usługi lub bezpieczeństwa mogą działać bez zgody w zakresie przewidzianym przez obowiązujące przepisy.</p>
+  <p>W zakresie, w którym przechowywanie informacji lub dostęp do nich jest ściśle niezbędny do świadczenia żądanej Usługi albo wykonania transmisji, technologie te mogą działać bez dodatkowej zgody. Ich zablokowanie może uniemożliwić logowanie, zapamiętanie ustawień bezpieczeństwa albo poprawne działanie aplikacji.</p>
 
   <h2>3. Analityka i marketing</h2>
-  <div class="callout"><strong>Analityka i marketing</strong><p>Obecnie nie używamy opcjonalnych narzędzi analitycznych ani marketingowych wymagających zgody. Jeżeli takie narzędzia zostaną włączone, poprosimy o zgodę przed ich uruchomieniem.</p></div>
-  <p>Usługi odpowiedzialne za bezpieczeństwo i dostarczanie strony mogą korzystać z niezbędnych zabezpieczeń chroniących przed nadużyciami.</p>
+  <div class="callout"><strong>Aktualny stan</strong><p>Obecnie na publicznej stronie Przydasia nie używamy opcjonalnych narzędzi analitycznych ani marketingowych wymagających zgody. Z tego powodu nie wyświetlamy banera, którego jedynym zadaniem byłoby pozyskanie zgody na technologie, których nie uruchamiamy.</p></div>
+  <p>Jeżeli w przyszłości włączymy analitykę, reklamę, profilowanie albo inną technologię niewymaganą do działania żądanej Usługi, zostanie ona zablokowana do czasu uzyskania uprzedniej zgody, jeżeli prawo jej wymaga. Użytkownik otrzyma wtedy możliwość odmowy równie łatwą jak możliwość wyrażenia zgody oraz możliwość późniejszego wycofania lub zmiany wyboru.</p>
 
-  <h2>4. Aplikacja Przydaś</h2>
-  <p>Aplikacja może zapisywać w przeglądarce informacje potrzebne do logowania i bezpieczeństwa urządzenia. Dane firmy są przechowywane w Przydasiu zgodnie z zasadami opisanymi w Polityce prywatności.</p>
+  <h2>4. Bezpieczeństwo i dostarczanie strony</h2>
+  <p>Dostawcy odpowiedzialni za bezpieczeństwo, ochronę ruchu, DNS i szybkie dostarczanie strony mogą stosować techniczne identyfikatory lub mechanizmy niezbędne do ochrony przed nadużyciami. Nie wykorzystujemy ich samodzielnie do reklamy behawioralnej.</p>
 
-  <h2>5. Jak zmienić ustawienia</h2>
-  <p>Ustawienia przeglądarki pozwalają usuwać lub blokować cookies i dane witryn. Zablokowanie technologii koniecznych może jednak uniemożliwić logowanie albo prawidłowe działanie aplikacji.</p>
-  <p>Jeżeli w przyszłości uruchomimy opcjonalną analitykę lub marketing, na stronie pojawi się panel zgód pozwalający zaakceptować, odrzucić i później zmienić wybór bez utrudniania późniejszej zmiany decyzji.</p>
+  <h2>5. Aplikacja Przydaś</h2>
+  <p>Aplikacja zapisuje w przeglądarce informacje potrzebne do uwierzytelnienia, utrzymania sesji i bezpieczeństwa urządzenia. Pamięć aplikacji nie jest przeznaczona do trwałego przechowywania pełnej kopii danych biznesowych Organizacji; podstawowe dane są przechowywane po stronie infrastruktury Usługi zgodnie z <a href="/polityka-prywatnosci">Polityką prywatności</a>.</p>
 
-  <h2>6. Kontakt</h2>
-  <p>Pytania dotyczące cookies i prywatności można wysłać na <a href="mailto:bezpieczenstwo@xn--przyda-8ib.pl">bezpieczenstwo@przydaś.pl</a>.</p>
+  <h2>6. Jak usunąć lub zablokować dane urządzenia</h2>
+  <p>Ustawienia przeglądarki pozwalają usuwać lub blokować cookies i dane witryn, a także wyczyścić pamięć aplikacji. Usunięcie danych niezbędnych może wylogować Użytkownika, usunąć lokalne ustawienia lub spowodować konieczność ponownego potwierdzenia urządzenia.</p>
+  <p>Jeżeli w przyszłości pojawi się panel zgód dla technologii opcjonalnych, będzie on zawierał mechanizm późniejszej zmiany decyzji bez konieczności kontaktowania się z Usługodawcą.</p>
+
+  <h2>7. Kontakt</h2>
+  <p>Pytania dotyczące cookies i technologii pamięci urządzenia można wysłać na <a href="mailto:bezpieczenstwo@xn--przyda-8ib.pl">bezpieczenstwo@przydaś.pl</a>.</p>
 </LegalLayout>

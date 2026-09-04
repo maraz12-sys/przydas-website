@@ -3,37 +3,45 @@ import LegalLayout from '../layouts/LegalLayout.astro';
 ---
 <LegalLayout
   title="Bezpieczeństwo danych"
-  description="Jak Przydaś chroni konta, dane firm, pliki i dostęp do informacji."
+  description="Jak Przydaś ogranicza ryzyko dla kont, danych Organizacji, plików i dostępu do informacji."
   eyebrow="Bezpieczeństwo bez marketingowych obietnic"
 >
-  <div class="callout"><strong>Najważniejsze</strong><p>Nie obiecujemy „zera ryzyka”. Stosujemy warstwowe zabezpieczenia, ograniczamy dostęp i regularnie weryfikujemy mechanizmy odpowiedzialne za ochronę kont, danych i plików.</p></div>
+  <div class="callout"><strong>Najważniejsze</strong><p>Żaden system internetowy nie daje „zera ryzyka”. Przydaś stosuje warstwowe zabezpieczenia i zasadę ograniczonego dostępu, a krytyczne mechanizmy są testowane także po stronie backendu, niezależnie od tego, co jest widoczne w interfejsie.</p></div>
 
-  <h2>1. Gdzie są dane</h2>
-  <p>Podstawowe dane Przydasia są przechowywane w europejskim centrum danych. Nie opieramy działania systemu na jednym komputerze ani lokalnym pliku.</p>
+  <h2>1. Infrastruktura i lokalizacja danych</h2>
+  <p>Podstawowa baza danych i prywatne obszary plików produkcyjnego projektu Przydasia są utrzymywane w wybranym europejskim regionie infrastruktury Supabase. Niektóre usługi pomocnicze, takie jak dostarczanie poczty transakcyjnej lub ochrona ruchu sieciowego, mogą korzystać z infrastruktury poza EOG na zasadach opisanych w <a href="/podprocesorzy">informacji o podprocesorach</a>.</p>
 
-  <h2>2. Separacja firm i uprawnienia</h2>
-  <p>Dane każdej firmy są oddzielone. Użytkownik widzi tylko informacje, do których ma nadany dostęp — niezależnie od tego, co jest widoczne na ekranie.</p>
+  <h2>2. Oddzielenie Organizacji</h2>
+  <p>Dostęp do danych jest ograniczany na poziomie backendu, m.in. przez reguły dostępu do danych, kontrolowane funkcje serwerowe i sprawdzanie przynależności użytkownika do Organizacji. Interfejs nie jest jedyną granicą bezpieczeństwa.</p>
   <div class="grid">
-    <div class="mini"><strong>Oddzielenie danych firm</strong><p>Dane jednej firmy nie są udostępniane użytkownikom innych firm.</p></div>
-    <div class="mini"><strong>Role i zakres dostępu</strong><p>Właściciel, menedżer i pracownik nie muszą widzieć ani edytować tych samych danych.</p></div>
+    <div class="mini"><strong>Izolacja tenantów</strong><p>Żądania dotyczące danych Organizacji są sprawdzane pod kątem tożsamości i przynależności użytkownika. Mechanizmy są testowane również scenariuszami prób dostępu do cudzej Organizacji.</p></div>
+    <div class="mini"><strong>Role i uprawnienia</strong><p>Właściciel, menedżer, pracownik i osoby o ograniczonym zakresie dostępu nie muszą mieć tych samych możliwości odczytu i edycji.</p></div>
   </div>
 
-  <h2>3. Transmisja i pliki</h2>
-  <p>Połączenie z Przydasiem jest szyfrowane. Pliki są przechowywane prywatnie i mogą je otwierać tylko osoby z odpowiednim dostępem.</p>
+  <h2>3. Transmisja, API i pliki</h2>
+  <p>Połączenia z publiczną stroną i aplikacją odbywają się przez HTTPS. Pliki wymagające autoryzacji są przechowywane w prywatnych obszarach i udostępniane przez mechanizmy sprawdzające dostęp, w tym czasowe odnośniki tam, gdzie jest to właściwe.</p>
+  <p>Sam fakt posiadania adresu lub identyfikatora zasobu nie powinien wystarczać do odczytu danych należących do innej Organizacji.</p>
 
-  <h2>4. Konta i urządzenia</h2>
-  <p>Przydaś obsługuje zaufane urządzenia i dodatkową weryfikację kodem w obszarach, które tego wymagają. Dla wybranych operacji o podwyższonym ryzyku system może wymagać ponownego potwierdzenia tożsamości, a reset hasła unieważnia wcześniejsze zaufane sesje i urządzenia.</p>
+  <h2>4. Konta, hasła i urządzenia</h2>
+  <p>Przydaś korzysta z uwierzytelniania, mechanizmu zaufanych urządzeń i dodatkowego potwierdzenia w operacjach, które tego wymagają. Reset hasła unieważnia wcześniejsze potwierdzenia zaufania i sesje objęte tym mechanizmem. Użytkownik powinien jednocześnie chronić skrzynkę e-mail, urządzenie i dane logowania.</p>
 
-  <h2>5. Kopie zapasowe i odtwarzanie</h2>
-  <p>Kopię danych organizacji można pobrać osobno. Pliki przechowywane w prywatnej przestrzeni plików nie są częścią tego eksportu, dlatego kopii danych nie należy traktować jako kopii wszystkich plików.</p>
-  <p>Mechanizmy eksportu, retencji i dostępu do plików są weryfikowane oddzielnie od pozostałych zabezpieczeń usługi.</p>
+  <h2>5. Uprawnienia Planu nie są tylko elementem interfejsu</h2>
+  <p>Dostęp do funkcji zależnych od Planu jest sprawdzany również po stronie backendu dla krytycznych operacji. Ukrycie przycisku nie jest traktowane jako wystarczające zabezpieczenie przed użyciem funkcji spoza aktywnego Planu.</p>
 
-  <h2>6. Dane kadrowe wysokiego ryzyka</h2>
-  <p>PESEL, KRK, pełne dokumenty tożsamości i inne szczególnie wrażliwe informacje nie powinny trafiać do zwykłych plików. Dla dokumentów wymagających większej ochrony Przydaś wykorzystuje osobny „Sejf dokumentów” z ograniczonym dostępem i historią otwarć.</p>
+  <h2>6. Eksport, kopie i odtwarzanie</h2>
+  <p>Kopia danych Organizacji dostępna w aplikacji jest eksportem określonych danych biznesowych. Nie należy utożsamiać jej z pełną techniczną kopią całej infrastruktury ani z kopią wszystkich plików w prywatnych zasobach.</p>
+  <p>Mechanizmy eksportu, retencji, plików i odtwarzania są od siebie rozdzielone. Klient powinien pobierać ważne eksporty zgodnie z potrzebami swojej działalności i własną polityką ciągłości działania.</p>
 
-  <h2>7. Dostęp administracyjny</h2>
-  <p>Dostęp administracyjny jest ograniczony do uzasadnionych sytuacji i tylko do niezbędnego zakresu. Każdy taki dostęp powinien być kontrolowany i możliwy do sprawdzenia.</p>
+  <h2>7. Sejf dokumentów i dane wysokiego ryzyka</h2>
+  <p>Sejf dokumentów zapewnia bardziej ograniczony dostęp i rejestrowanie wybranych operacji niż zwykłe obszary plików. Nie zmienia to obowiązków Klienta wynikających z RODO i innych przepisów – umieszczenie dokumentu w Sejfie nie tworzy podstawy prawnej do jego przetwarzania.</p>
+  <p>Do zwykłych modułów nie należy wprowadzać PESEL, informacji z KRK, pełnych dokumentów tożsamości, danych zdrowotnych ani innych danych wysokiego ryzyka bez rzeczywistej potrzeby i właściwej podstawy prawnej. Przydaś nie powinien być traktowany jako system antywirusowy; pliki z nieznanego źródła należy weryfikować przed otwarciem.</p>
 
-  <h2>8. Zgłoszenie incydentu</h2>
-  <p>Jeżeli zauważysz podejrzane logowanie, możliwy wyciek danych lub inną sytuację bezpieczeństwa, napisz na <a href="mailto:bezpieczenstwo@xn--przyda-8ib.pl">bezpieczenstwo@przydaś.pl</a>.</p>
+  <h2>8. Dostęp administracyjny</h2>
+  <p>Dostęp administracyjny powinien być wykorzystywany wyłącznie w uzasadnionych sytuacjach, np. do obsługi incydentu, wykonania obowiązku prawnego lub rozwiązania problemu technicznego, i ograniczony do zakresu potrzebnego do realizacji danego celu.</p>
+
+  <h2>9. Testy i zmiany bezpieczeństwa</h2>
+  <p>Zabezpieczenia mogą być aktualizowane wraz z rozwojem produktu, zmianą zagrożeń i infrastruktury. Przed wdrożeniami produkcyjnymi stosujemy testy regresyjne obejmujące m.in. kontrolę dostępu, krytyczne funkcje backendowe i wybrane scenariusze negatywne.</p>
+
+  <h2>10. Zgłoszenie incydentu</h2>
+  <p>Jeżeli zauważysz podejrzane logowanie, możliwy wyciek danych, nieprawidłowy dostęp albo inną sytuację bezpieczeństwa, napisz na <a href="mailto:bezpieczenstwo@xn--przyda-8ib.pl">bezpieczenstwo@przydaś.pl</a>. W zgłoszeniu nie przesyłaj hasła, kodu jednorazowego ani danych karty płatniczej.</p>
 </LegalLayout>
