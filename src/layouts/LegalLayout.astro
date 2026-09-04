@@ -4,6 +4,7 @@ const {
   description,
   eyebrow = 'Dokumenty Przydasia',
   updated = '04.09.2026',
+  version = '2.0',
 } = Astro.props;
 ---
 <!doctype html>
@@ -39,7 +40,7 @@ const {
         <h1>{title}</h1>
         <p>{description}</p>
         <div class="meta">
-          <span>Wersja 1.1</span>
+          <span>Wersja {version}</span>
           <span>Aktualizacja: {updated}</span>
         </div>
       </div>
@@ -58,8 +59,11 @@ const {
         </div>
         <nav aria-label="Stopka dokumentów">
           <a href="/regulamin">Regulamin</a>
+          <a href="/umowa-powierzenia">Umowa powierzenia</a>
           <a href="/polityka-prywatnosci">Polityka prywatności</a>
-          <a href="/cookies">Cookies i pamięć urządzenia</a>
+          <a href="/cookies">Cookies</a>
+          <a href="/podprocesorzy">Podprocesorzy</a>
+          <a href="/zglos-nielegalna-tresc">Nielegalne treści</a>
           <a href="/bezpieczenstwo">Bezpieczeństwo</a>
           <a href="/kontakt">Kontakt</a>
         </nav>
