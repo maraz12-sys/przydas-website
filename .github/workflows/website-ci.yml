@@ -32,6 +32,9 @@ jobs:
           test -s dist/index.html
           test -s dist/404.html
           test -s dist/formularz/index.html
+          test -s dist/kontakt/index.html
+          test -s dist/regulamin/index.html
+          test -s dist/polityka-prywatnosci/index.html
           test -s dist/robots.txt
           test -s dist/sitemap.xml
           test -s dist/_headers
@@ -65,6 +68,19 @@ jobs:
           grep -q 'Chcę uruchomić bezpłatny test' dist/index.html
           ! grep -q 'Publiczny start dla nowych firm jest kolejnym krokiem' dist/index.html
 
+          # Legal identity gates: never publish an anonymous SaaS operator again.
+          grep -q 'Ewelina Nalewalska ANIMILANDIA' dist/index.html
+          grep -q '5621808600' dist/index.html
+          grep -q '368796206' dist/index.html
+          grep -q 'Boczna 23' dist/index.html
+          grep -q 'Ewelina Nalewalska ANIMILANDIA' dist/kontakt/index.html
+          grep -q 'Władysława Jagiełły 6' dist/kontakt/index.html
+          grep -q 'Boczna 23' dist/kontakt/index.html
+          grep -q '5621808600' dist/regulamin/index.html
+          grep -q '368796206' dist/regulamin/index.html
+          grep -q 'Administrator danych' dist/polityka-prywatnosci/index.html
+          grep -q '5621808600' dist/polityka-prywatnosci/index.html
+
           ! grep -Rqi 'Dokument przed uruchomieniem' dist
           ! grep -Rqi 'dane identyfikacyjne operatora.*zostaną uzupełnione' dist
           ! grep -Rqi 'przed komercyjnym startem' dist
@@ -72,5 +88,5 @@ jobs:
           ! grep -Rqi 'przed płatnym startem' dist
 
 # CI validates the assembled production landing page, conversion-critical copy,
-# commercial plan claims, structured data, SEO files, public form API access,
-# tester-facing copy, security headers and custom error routing.
+# commercial plan claims, published operator identity, structured data, SEO files,
+# public form API access, tester-facing copy, security headers and custom error routing.
