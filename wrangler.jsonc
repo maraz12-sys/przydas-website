@@ -1,7 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "przydas-website",
+  "main": "./src/prelaunch-worker.js",
   "compatibility_date": "2026-08-24",
+  "vars": {
+    "PRELAUNCH_MODE": "true"
+  },
   "routes": [
     {
       "pattern": "xn--przyda-8ib.pl",
@@ -10,6 +14,11 @@
   ],
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/",
+      "/index.html"
+    ],
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   }
