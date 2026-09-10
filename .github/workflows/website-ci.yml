@@ -17,9 +17,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24.12.0'
+          cache: npm
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Build landing page
         run: npm run build
@@ -116,4 +120,5 @@ jobs:
 
 # CI validates the public site, commercial plan claims, legal identity,
 # trial/subscription disclosures, GDPR/DPA, PKE storage disclosure, DSA notice
-# mechanism, SEO files, security headers and public form routing.
+# mechanism, SEO files, security headers, deterministic locked dependencies,
+# production dependency security and public form routing.
