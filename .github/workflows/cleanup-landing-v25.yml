@@ -1,0 +1,65 @@
+name: Landing v25 cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/cleanup-landing-v25.mjs'
+      - '.github/workflows/cleanup-landing-v25.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup-build-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.19.0'
+          cache: npm
+
+      - name: Apply landing cleanup
+        run: node scripts/cleanup-landing-v25.mjs
+
+      - name: Verify requested removals and fixes
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -R "data-roi-calculator" src/components/PackagesSection.astro
+          ! grep -R "Kalkulator wyżej" src/components/FinalSections.astro
+          ! grep -R "Czy jeden dodatkowy klient może pokryć abonament" src/components/FinalSections.astro
+          grep -q "comparison-table thead th { position: static; top: auto;" src/components/FinalSections.astro
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production website
+        run: npm run build
+
+      - name: Publish tested source changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/components/LandingTop.astro src/components/ProductShowcase.astro src/components/PackagesSection.astro src/components/FinalSections.astro
+          if git diff --cached --quiet; then
+            echo "No source changes to publish."
+            exit 0
+          fi
+          git commit -m "Tighten landing sections and remove ROI calculator"
+          git push origin HEAD:main
