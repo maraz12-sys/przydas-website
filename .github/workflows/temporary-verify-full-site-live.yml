@@ -1,0 +1,46 @@
+name: Temporary verify full site live
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/temporary-verify-full-site-live.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Verify full public website replaced prelaunch screen
+        shell: bash
+        run: |
+          set -euo pipefail
+          urls=(
+            "https://xn--przyda-8ib.pl/"
+            "https://www.xn--przyda-8ib.pl/"
+          )
+
+          for url in "${urls[@]}"; do
+            passed=false
+            for attempt in $(seq 1 30); do
+              body="$(mktemp)"
+              status="$(curl -L -sS -o "$body" -w '%{http_code}' --connect-timeout 10 --max-time 30 "$url" || true)"
+              if [ "$status" = "200" ] && grep -q 'Mniej pilnowania' "$body" && ! grep -q 'Już za chwilę startujemy' "$body"; then
+                echo "PASS $url -> full site live"
+                passed=true
+                rm -f "$body"
+                break
+              fi
+              echo "WAIT $url attempt $attempt/30 status=${status:-curl_error}"
+              rm -f "$body"
+              sleep 10
+            done
+            if [ "$passed" != "true" ]; then
+              echo "FAIL $url still does not serve the full site"
+              exit 1
+            fi
+          done
