@@ -10,6 +10,10 @@
     {
       "pattern": "xn--przyda-8ib.pl",
       "custom_domain": true
+    },
+    {
+      "pattern": "www.xn--przyda-8ib.pl",
+      "custom_domain": true
     }
   ],
   "assets": {
