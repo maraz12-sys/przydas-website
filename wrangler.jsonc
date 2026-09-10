@@ -4,7 +4,7 @@
   "main": "./src/prelaunch-worker.js",
   "compatibility_date": "2026-08-24",
   "vars": {
-    "PRELAUNCH_MODE": "true"
+    "PRELAUNCH_MODE": "false"
   },
   "routes": [
     {
