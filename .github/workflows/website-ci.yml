@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: '24.12.0'
 
       - name: Install dependencies
         run: npm install
@@ -56,6 +56,9 @@ jobs:
           grep -q 'SoftwareApplication' dist/index.html
           grep -q 'xn--przyda-8ib.pl/sitemap.xml' dist/robots.txt
           grep -q 'xn--przyda-8ib.pl' dist/sitemap.xml
+          grep -q 'Strict-Transport-Security: max-age=31536000; includeSubDomains' dist/_headers
+          grep -q 'X-Content-Type-Options: nosniff' dist/_headers
+          grep -q 'X-Frame-Options: DENY' dist/_headers
           grep -q 'Content-Security-Policy' dist/_headers
           grep -q "connect-src 'self' https://jyzajgbgkqlczjpoxxzt.supabase.co" dist/_headers
           grep -q 'formularz-rezerwacyjny-publiczny' dist/formularz/index.html
