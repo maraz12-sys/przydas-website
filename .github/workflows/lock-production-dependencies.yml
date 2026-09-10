@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'package.json'
       - '.github/workflows/lock-production-dependencies.yml'
   workflow_dispatch:
 
