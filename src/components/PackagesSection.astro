@@ -100,49 +100,6 @@ const plans = [
       </div>
     </div>
 
-    <div class="roi-calculator" data-roi-calculator>
-      <div class="roi-copy">
-        <span class="roi-kicker">Nie wierz nam na słowo — policz</span>
-        <h3>Ile znaczy jedno dodatkowe zlecenie od klienta, który już Cię zna?</h3>
-        <p>
-          Wpisz swoją średnią wartość zlecenia i załóż dowolną liczbę dodatkowych powrotów klientów w ciągu roku.
-          Kalkulator porównuje wyłącznie wartość sprzedaży z rocznym abonamentem — niczego nie obiecuje.
-        </p>
-        <span class="roi-plan-note">Przypomnienia o ponownym kontakcie z byłymi klientami są funkcją pakietu BIZNES.</span>
-      </div>
-
-      <div class="roi-fields">
-        <label>
-          <span>Średnia wartość zlecenia</span>
-          <div class="roi-input-wrap"><input type="number" min="0" step="100" value="1000" inputmode="numeric" data-roi-order aria-label="Średnia wartość zlecenia" /><b>zł</b></div>
-        </label>
-        <label>
-          <span>Dodatkowe zlecenia / rok</span>
-          <div class="roi-input-wrap"><input type="number" min="0" step="1" value="1" inputmode="numeric" data-roi-clients aria-label="Liczba dodatkowych zleceń rocznie" /><b>szt.</b></div>
-        </label>
-        <label>
-          <span>Porównaj z pakietem</span>
-          <select data-roi-plan aria-label="Pakiet do porównania">
-            <option value="590" data-name="START">START · 590 zł / rok</option>
-            <option value="1490" data-name="ZESPÓŁ">ZESPÓŁ · 1 490 zł / rok</option>
-            <option value="2490" data-name="BIZNES" selected>BIZNES · 2 490 zł / rok</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="roi-result" aria-live="polite">
-        <div>
-          <span>Wartość dodatkowych zleceń</span>
-          <strong data-roi-value>1 000 zł</strong>
-        </div>
-        <div class="roi-result-highlight">
-          <span>W odniesieniu do rocznej ceny</span>
-          <strong data-roi-ratio>50%</strong>
-          <em data-roi-message>To równowartość ok. 50% rocznej ceny pakietu BIZNES.</em>
-        </div>
-      </div>
-      <small class="roi-disclaimer">To kalkulator wartości sprzedaży, nie zysku ani prognozy wyniku. Rzeczywisty efekt zależy m.in. od marży, liczby klientów i sposobu pracy firmy.</small>
-    </div>
 
     <div class="section-head packages-head" id="cennik">
       <span class="eyebrow-text">3 poziomy zamiast systemu na wyrost</span>
@@ -261,42 +218,11 @@ const plans = [
       });
     });
 
-    const calculator = section.querySelector('[data-roi-calculator]');
-    if (!calculator) return;
-    const orderInput = calculator.querySelector('[data-roi-order]');
-    const clientsInput = calculator.querySelector('[data-roi-clients]');
-    const planInput = calculator.querySelector('[data-roi-plan]');
-    const valueOutput = calculator.querySelector('[data-roi-value]');
-    const ratioOutput = calculator.querySelector('[data-roi-ratio]');
-    const messageOutput = calculator.querySelector('[data-roi-message]');
-    const money = new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN', maximumFractionDigits: 0 });
-
-    const updateRoi = () => {
-      const orderValue = Math.max(0, Number(orderInput?.value || 0));
-      const clients = Math.max(0, Number(clientsInput?.value || 0));
-      const planCost = Math.max(1, Number(planInput?.value || 1));
-      const recoveredValue = orderValue * clients;
-      const ratio = Math.round((recoveredValue / planCost) * 100);
-      const selected = planInput?.selectedOptions?.[0];
-      const planName = selected?.getAttribute('data-name') || 'wybranego pakietu';
-
-      if (valueOutput) valueOutput.textContent = money.format(recoveredValue);
-      if (ratioOutput) ratioOutput.textContent = `${ratio}%`;
-      if (!messageOutput) return;
-
-      if (recoveredValue === 0) messageOutput.textContent = 'Wpisz swoje założenia i porównaj je z ceną abonamentu.';
-      else if (recoveredValue >= planCost) messageOutput.textContent = `Wartość tych zleceń jest wyższa od rocznej ceny pakietu ${planName} o ${money.format(recoveredValue - planCost)}.`;
-      else messageOutput.textContent = `To równowartość ok. ${ratio}% rocznej ceny pakietu ${planName}.`;
-    };
-
-    [orderInput, clientsInput].forEach((input) => input?.addEventListener('input', updateRoi));
-    planInput?.addEventListener('change', updateRoi);
-    updateRoi();
   })();
 </script>
 
 <style>
-  .packages-section { padding: 104px 0; background: #f5f9f7; }
+  .packages-section { padding: 76px 0; background: #f5f9f7; }
   .value-intro { margin-bottom: 34px; }
   .value-intro-copy { max-width: 930px; margin-bottom: 30px; }
   .value-intro-copy h2 { margin: 0 0 20px; font-size: clamp(40px, 4.5vw, 62px); line-height: 1.02; letter-spacing: -.05em; }
@@ -309,29 +235,6 @@ const plans = [
   .value-card strong { display: block; margin-bottom: 9px; font-size: 17px; letter-spacing: -.02em; }
   .value-card p { margin: 0; color: #66756d; font-size: 13px; line-height: 1.58; }
 
-  .roi-calculator { margin: 28px 0 74px; padding: 34px; border: 1px solid #b7dfca; border-radius: 26px; color: #f7fbf8; background: linear-gradient(135deg, #10251b, #123b29); box-shadow: 0 22px 54px rgba(16,57,38,.12); }
-  .roi-copy { max-width: 850px; }
-  .roi-kicker { display: inline-block; margin-bottom: 12px; color: #83e9ba; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
-  .roi-copy h3 { margin: 0 0 12px; font-size: clamp(30px, 3vw, 43px); line-height: 1.04; letter-spacing: -.04em; }
-  .roi-copy p { max-width: 800px; margin: 0; color: #c0cec6; font-size: 14px; line-height: 1.58; }
-  .roi-plan-note { display: inline-flex; margin-top: 14px; padding: 7px 10px; border: 1px solid rgba(131,233,186,.22); border-radius: 999px; color: #d9eee3; background: rgba(255,255,255,.06); font-size: 10px; font-weight: 750; }
-  .roi-fields { margin-top: 27px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .roi-fields label { display: grid; gap: 8px; }
-  .roi-fields label > span { color: #c7d5cd; font-size: 11px; font-weight: 750; }
-  .roi-input-wrap, .roi-fields select { min-height: 52px; border: 1px solid rgba(151,220,187,.2); border-radius: 13px; background: rgba(255,255,255,.08); color: #fff; }
-  .roi-input-wrap { padding: 0 14px; display: flex; align-items: center; gap: 8px; }
-  .roi-input-wrap input { min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; color: #fff; font: inherit; font-size: 16px; font-weight: 800; }
-  .roi-input-wrap b { color: #93edc3; font-size: 12px; }
-  .roi-fields select { width: 100%; padding: 0 14px; outline: 0; font: inherit; font-size: 13px; font-weight: 750; }
-  .roi-fields select option { color: #15231c; background: #fff; }
-  .roi-result { margin-top: 16px; display: grid; grid-template-columns: .8fr 1.2fr; gap: 12px; }
-  .roi-result > div { min-height: 120px; padding: 20px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; background: rgba(255,255,255,.06); }
-  .roi-result span { color: #b4c5bc; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
-  .roi-result strong { margin-top: 7px; font-size: 30px; letter-spacing: -.04em; }
-  .roi-result-highlight { border: 1px solid rgba(111,224,173,.22); background: rgba(18,173,112,.14) !important; }
-  .roi-result-highlight strong { color: #91ebc3; }
-  .roi-result em { margin-top: 5px; color: #d0ded6; font-size: 12px; font-style: normal; line-height: 1.45; }
-  .roi-disclaimer { display: block; margin-top: 14px; color: #9eb0a6; font-size: 9px; line-height: 1.5; }
 
   .packages-head { max-width: 920px; scroll-margin-top: 105px; }
   .pricing-controls { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
@@ -397,7 +300,6 @@ const plans = [
   }
 
   @media (max-width: 900px) {
-    .roi-fields, .roi-result { grid-template-columns: 1fr; }
     .packages-grid { grid-template-columns: 1fr; max-width: 720px; margin-inline: auto; }
     .package-card { min-height: auto; padding: 28px; }
     .package-card-featured { transform: none; }
@@ -406,12 +308,9 @@ const plans = [
   }
 
   @media (max-width: 640px) {
-    .packages-section { padding: 72px 0; }
+    .packages-section { padding: 54px 0; }
     .value-grid { grid-template-columns: 1fr; }
     .value-card { min-height: auto; }
-    .roi-calculator { margin-bottom: 62px; padding: 22px; }
-    .roi-plan-note { border-radius: 12px; line-height: 1.45; }
-    .roi-result strong { font-size: 27px; }
     .packages-head { scroll-margin-top: 20px; }
     .pricing-controls { align-items: stretch; flex-direction: column; }
     .billing-toggle { width: 100%; }
