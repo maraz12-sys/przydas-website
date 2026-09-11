@@ -175,7 +175,7 @@ const plans = [
             </ul>
           </details>
 
-          <a class:list={['button', plan.recommended || plan.business ? 'button-primary' : 'button-secondary', 'package-button']} href="#start" data-plan={plan.name}>
+          <a class:list={['button', plan.recommended || plan.business ? 'button-primary' : 'button-secondary', 'package-button']} href="/test" data-plan={plan.name}>
             Wypróbuj 30 dni za 0 zł <span>→</span>
           </a>
         </article>
@@ -213,6 +213,12 @@ const plans = [
     section.querySelectorAll('[data-plan]').forEach((button) => {
       button.addEventListener('click', () => {
         const plan = button.getAttribute('data-plan') || '';
+        try {
+          sessionStorage.setItem('przydas_trial_plan', plan);
+          sessionStorage.setItem('przydas_trial_billing', section.getAttribute('data-billing') || 'monthly');
+        } catch {
+          // sessionStorage can be unavailable in strict privacy modes; /test still works without it.
+        }
         const label = document.querySelector('[data-selected-plan-label]');
         if (label && plan) label.textContent = `Po okresie próbnym interesuje Cię pakiet ${plan}`;
       });
