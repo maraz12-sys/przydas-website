@@ -1,0 +1,378 @@
+---
+const supabaseUrl = 'https://jyzajgbgkqlczjpoxxzt.supabase.co';
+const supabasePublishableKey = 'sb_publishable_SV-ZydWdkMyxBNIZGx557Q_TQ8jhNFp';
+const legalVersion = '2026-09-11';
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index,follow" />
+    <meta name="description" content="Uruchom 30 dni pełnego pakietu BIZNES Przydasia bez opłat. Pierwsze 10 firm otrzymuje dodatkowe 30 dni." />
+    <title>Bezpłatny test Przydasia — 30 dni BIZNES za 0 zł</title>
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Przydaś — strona główna">
+        <span class="brand-mark"><img src="/przydas-mark.svg" alt="" /></span>
+        <span><strong>Przydaś</strong><small>System dla branży animacyjnej</small></span>
+      </a>
+      <a class="login-link" href="https://app.xn--przyda-8ib.pl/">Mam już konto</a>
+    </header>
+
+    <main>
+      <section class="hero-copy">
+        <span class="eyebrow">30 DNI BIZNES ZA 0 ZŁ</span>
+        <h1>Załóż konto. Resztę uruchomimy automatycznie.</h1>
+        <p>
+          Po potwierdzeniu adresu e-mail Przydaś sam utworzy Twoją firmę i włączy pełny pakiet BIZNES na 30 dni.
+          Pierwsze 10 kwalifikujących się firm dostaje dodatkowe 30 dni. Bez karty i bez automatycznego przejścia na płatny abonament.
+        </p>
+        <div class="benefits" aria-label="Najważniejsze zasady okresu próbnego">
+          <div><b>30 dni</b><span>pełnego BIZNES</span></div>
+          <div><b>0 zł</b><span>bez podawania karty</span></div>
+          <div><b>+30 dni</b><span>dla pierwszych 10 firm</span></div>
+        </div>
+        <div class="selected-plan" data-selected-plan hidden>
+          <span>Po teście interesuje Cię</span>
+          <strong data-selected-plan-text></strong>
+          <small>To tylko preferencja. Przez okres próbny zawsze otrzymujesz pełny BIZNES.</small>
+        </div>
+      </section>
+
+      <section class="signup-card" aria-labelledby="signup-title">
+        <div class="card-head">
+          <span>KROK 1 Z 2</span>
+          <h2 id="signup-title">Utwórz konto właściciela</h2>
+          <p>Krok 2 to potwierdzenie adresu e-mail. Po nim firma i test uruchomią się automatycznie.</p>
+        </div>
+
+        <form id="trial-form" novalidate>
+          <div class="two-cols">
+            <label>
+              <span>Imię *</span>
+              <input name="first_name" autocomplete="given-name" maxlength="80" required />
+              <small class="field-error" data-error-for="first_name"></small>
+            </label>
+            <label>
+              <span>Nazwisko *</span>
+              <input name="last_name" autocomplete="family-name" maxlength="100" required />
+              <small class="field-error" data-error-for="last_name"></small>
+            </label>
+          </div>
+
+          <label>
+            <span>Nazwa firmy / organizacji *</span>
+            <input name="company_name" autocomplete="organization" maxlength="120" required />
+            <small class="field-error" data-error-for="company_name"></small>
+          </label>
+
+          <label>
+            <span>E-mail do logowania *</span>
+            <input name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required />
+            <small class="field-error" data-error-for="email"></small>
+          </label>
+
+          <div class="two-cols">
+            <label>
+              <span>Hasło *</span>
+              <input name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required />
+              <small class="field-error" data-error-for="password"></small>
+            </label>
+            <label>
+              <span>Powtórz hasło *</span>
+              <input name="password_repeat" type="password" autocomplete="new-password" minlength="8" maxlength="128" required />
+              <small class="field-error" data-error-for="password_repeat"></small>
+            </label>
+          </div>
+          <p class="password-note">Minimum 8 znaków. Użyj hasła, którego nie wykorzystujesz w innych serwisach.</p>
+
+          <label class="consent-row">
+            <input name="legal" type="checkbox" required />
+            <span>
+              Akceptuję <a href="/regulamin" target="_blank" rel="noopener">Regulamin</a> i potwierdzam zapoznanie się z
+              <a href="/polityka-prywatnosci" target="_blank" rel="noopener">Polityką prywatności</a>.
+              Jeżeli powierzam dane osobowe w Przydasiu, zastosowanie ma również
+              <a href="/umowa-powierzenia" target="_blank" rel="noopener">Umowa powierzenia</a>. *
+            </span>
+          </label>
+          <small class="field-error consent-error" data-error-for="legal"></small>
+
+          <div class="form-message" data-form-message role="alert" aria-live="polite" hidden></div>
+
+          <button class="submit-button" type="submit">
+            <span data-submit-label>Załóż konto i uruchom test</span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <p class="fine-print">Założenie testu nie uruchamia płatnej subskrypcji i nie wymaga danych karty.</p>
+        </form>
+
+        <div class="success-state" data-success hidden>
+          <div class="success-icon">✓</div>
+          <h2>Sprawdź swoją skrzynkę e-mail</h2>
+          <p>
+            Wysłaliśmy wiadomość z potwierdzeniem adresu. Po kliknięciu linku system automatycznie utworzy Twoją organizację
+            i uruchomi okres próbny BIZNES. Nie musisz czekać na ręczną aktywację.
+          </p>
+          <a class="submit-button success-button" href="https://app.xn--przyda-8ib.pl/">Po potwierdzeniu przejdź do logowania <span>→</span></a>
+          <small>Nie ma wiadomości? Sprawdź SPAM. Ponowne wysłanie jest ograniczane przez zabezpieczenia antyspamowe.</small>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Przydaś</span>
+      <nav>
+        <a href="/regulamin">Regulamin</a>
+        <a href="/polityka-prywatnosci">Prywatność</a>
+        <a href="/bezpieczenstwo">Bezpieczeństwo</a>
+        <a href="/kontakt">Kontakt</a>
+      </nav>
+    </footer>
+
+    <script define:vars={{ supabaseUrl, supabasePublishableKey, legalVersion }} is:inline>
+      (() => {
+        const form = document.querySelector('#trial-form');
+        const success = document.querySelector('[data-success]');
+        const formMessage = document.querySelector('[data-form-message]');
+        const submit = form?.querySelector('button[type="submit"]');
+        const submitLabel = form?.querySelector('[data-submit-label]');
+        const planBox = document.querySelector('[data-selected-plan]');
+        const planText = document.querySelector('[data-selected-plan-text]');
+        if (!form || !success || !formMessage || !submit || !submitLabel) return;
+
+        const planMap = {
+          start: 'START',
+          zespol: 'ZESPÓŁ',
+          'zespół': 'ZESPÓŁ',
+          biznes: 'BIZNES',
+        };
+        const billingMap = { monthly: 'miesięcznie', annual: 'rocznie' };
+        const normalizePlan = (value) => {
+          const key = String(value || '').trim().toLowerCase();
+          return Object.prototype.hasOwnProperty.call(planMap, key) ? key.replace('zespół', 'zespol') : '';
+        };
+        const normalizeBilling = (value) => ['monthly', 'annual'].includes(String(value || '').trim().toLowerCase())
+          ? String(value).trim().toLowerCase()
+          : 'monthly';
+
+        const params = new URLSearchParams(window.location.search);
+        const storedPlan = sessionStorage.getItem('przydas_trial_plan') || '';
+        const storedBilling = sessionStorage.getItem('przydas_trial_billing') || '';
+        const plan = normalizePlan(params.get('plan') || storedPlan);
+        const billing = normalizeBilling(params.get('billing') || storedBilling);
+        if (plan && planBox && planText) {
+          planText.textContent = `${planMap[plan]} · ${billingMap[billing]}`;
+          planBox.hidden = false;
+        }
+
+        const field = (name) => form.elements.namedItem(name);
+        const errorEl = (name) => form.querySelector(`[data-error-for="${name}"]`);
+        const setError = (name, message) => {
+          const input = field(name);
+          const error = errorEl(name);
+          if (input instanceof HTMLElement) input.setAttribute('aria-invalid', message ? 'true' : 'false');
+          if (error) error.textContent = message || '';
+        };
+        const clearErrors = () => {
+          ['first_name','last_name','company_name','email','password','password_repeat','legal'].forEach((name) => setError(name, ''));
+          formMessage.hidden = true;
+          formMessage.textContent = '';
+        };
+        const showFormError = (message) => {
+          formMessage.textContent = message;
+          formMessage.hidden = false;
+          formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        };
+        const validate = () => {
+          clearErrors();
+          const first = String(field('first_name')?.value || '').trim();
+          const last = String(field('last_name')?.value || '').trim();
+          const company = String(field('company_name')?.value || '').trim();
+          const email = String(field('email')?.value || '').trim();
+          const password = String(field('password')?.value || '');
+          const repeat = String(field('password_repeat')?.value || '');
+          const legal = Boolean(field('legal')?.checked);
+          let firstInvalid = '';
+          const invalid = (name, message) => { setError(name, message); if (!firstInvalid) firstInvalid = name; };
+          if (first.length < 2) invalid('first_name', 'Wpisz imię.');
+          if (last.length < 2) invalid('last_name', 'Wpisz nazwisko.');
+          if (company.length < 2) invalid('company_name', 'Wpisz nazwę firmy lub organizacji.');
+          if (!/^\S+@\S+\.\S+$/.test(email)) invalid('email', 'Wpisz prawidłowy adres e-mail.');
+          if (password.length < 8) invalid('password', 'Hasło musi mieć co najmniej 8 znaków.');
+          if (repeat !== password) invalid('password_repeat', 'Hasła muszą być identyczne.');
+          if (!legal) invalid('legal', 'Akceptacja dokumentów jest wymagana do uruchomienia testu.');
+          if (firstInvalid) {
+            const input = field(firstInvalid);
+            if (input instanceof HTMLElement) {
+              input.focus({ preventScroll: true });
+              input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return null;
+          }
+          return { first, last, company, email, password };
+        };
+
+        form.addEventListener('input', (event) => {
+          const name = event.target?.name;
+          if (name) setError(name, '');
+        });
+        form.addEventListener('change', (event) => {
+          const name = event.target?.name;
+          if (name) setError(name, '');
+        });
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const values = validate();
+          if (!values) return;
+
+          submit.disabled = true;
+          submitLabel.textContent = 'Tworzę konto…';
+          const acknowledgedAt = new Date().toISOString();
+
+          try {
+            const response = await fetch(`${supabaseUrl}/auth/v1/signup`, {
+              method: 'POST',
+              headers: {
+                apikey: supabasePublishableKey,
+                'Content-Type': 'application/json',
+                'X-Client-Info': 'przydas-website-trial/1.0',
+              },
+              body: JSON.stringify({
+                email: values.email,
+                password: values.password,
+                data: {
+                  przydas_selfservice_trial: true,
+                  company_name: values.company,
+                  first_name: values.first,
+                  last_name: values.last,
+                  trial_source: 'website',
+                  intended_plan: plan || null,
+                  intended_cycle: billing,
+                  legal_acknowledged: true,
+                  legal_acknowledged_at: acknowledgedAt,
+                  terms_version: legalVersion,
+                  privacy_version: legalVersion,
+                },
+              }),
+            });
+
+            let body = {};
+            try { body = await response.json(); } catch { body = {}; }
+            if (!response.ok) {
+              const code = String(body?.error_code || body?.code || '').toLowerCase();
+              const message = String(body?.msg || body?.message || body?.error_description || body?.error || '').toLowerCase();
+              if (response.status === 429) throw new Error('RATE_LIMIT');
+              if (code.includes('email') || message.includes('email')) {
+                setError('email', 'Sprawdź adres e-mail. Jeżeli masz już konto, przejdź do logowania.');
+                field('email')?.focus();
+                throw new Error('HANDLED');
+              }
+              if (code.includes('password') || message.includes('password')) {
+                setError('password', 'Hasło nie spełnia wymagań bezpieczeństwa. Użyj dłuższego, unikalnego hasła.');
+                field('password')?.focus();
+                throw new Error('HANDLED');
+              }
+              throw new Error('SIGNUP_FAILED');
+            }
+
+            form.hidden = true;
+            success.hidden = false;
+            success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } catch (error) {
+            const reason = String(error?.message || '');
+            if (reason === 'HANDLED') return;
+            if (reason === 'RATE_LIMIT') {
+              showFormError('Wysłano zbyt wiele prób w krótkim czasie. Odczekaj chwilę i spróbuj ponownie.');
+            } else if (reason === 'SIGNUP_FAILED') {
+              showFormError('Nie udało się teraz utworzyć konta. Sprawdź dane i spróbuj ponownie. Jeśli problem się powtarza, skontaktuj się z nami.');
+            } else {
+              showFormError('Nie udało się połączyć z usługą rejestracji. Sprawdź internet i spróbuj ponownie.');
+            }
+          } finally {
+            submit.disabled = false;
+            submitLabel.textContent = 'Załóż konto i uruchom test';
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #14231b; background: #f4f8f6; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: radial-gradient(circle at 18% 5%, #e4f7ed 0, transparent 32%), #f4f8f6; }
+  a { color: inherit; }
+  .topbar { max-width: 1180px; margin: 0 auto; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .brand { display: inline-flex; align-items: center; gap: 11px; color: #14231b; text-decoration: none; }
+  .brand-mark { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: #087f53; }
+  .brand-mark img { width: 27px; height: 27px; }
+  .brand strong, .brand small { display: block; }
+  .brand strong { font-size: 19px; letter-spacing: -.03em; }
+  .brand small { margin-top: 2px; color: #6b7972; font-size: 10px; }
+  .login-link { padding: 10px 14px; border: 1px solid #cfddd5; border-radius: 11px; background: rgba(255,255,255,.7); text-decoration: none; font-size: 13px; font-weight: 750; }
+  main { width: min(1180px, calc(100% - 40px)); margin: 46px auto 80px; display: grid; grid-template-columns: 1fr .92fr; gap: 72px; align-items: start; }
+  .hero-copy { padding-top: 32px; position: sticky; top: 24px; }
+  .eyebrow { display: inline-flex; padding: 7px 10px; border-radius: 999px; color: #087f53; background: #ddf4e8; font-size: 10px; font-weight: 900; letter-spacing: .08em; }
+  h1 { max-width: 650px; margin: 22px 0 20px; font-size: clamp(44px, 5vw, 70px); line-height: .98; letter-spacing: -.055em; }
+  .hero-copy > p { max-width: 670px; margin: 0; color: #607068; font-size: 17px; line-height: 1.65; }
+  .benefits { margin-top: 34px; display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+  .benefits div { padding: 17px; border: 1px solid #d6e5dd; border-radius: 16px; background: rgba(255,255,255,.72); }
+  .benefits b, .benefits span { display: block; }
+  .benefits b { color: #087f53; font-size: 22px; letter-spacing: -.04em; }
+  .benefits span { margin-top: 4px; color: #6a7871; font-size: 11px; line-height: 1.35; }
+  .selected-plan { margin-top: 16px; padding: 16px 18px; border: 1px solid #bde2cf; border-radius: 15px; background: #edf9f3; }
+  .selected-plan span, .selected-plan small { display: block; color: #5f7268; font-size: 10px; }
+  .selected-plan strong { display: block; margin: 4px 0; color: #087f53; font-size: 16px; }
+  .signup-card { border: 1px solid #d7e5dd; border-radius: 28px; background: #fff; box-shadow: 0 24px 80px rgba(26,74,51,.10); overflow: hidden; }
+  .card-head { padding: 30px 32px 22px; border-bottom: 1px solid #edf2ef; }
+  .card-head > span { color: #087f53; font-size: 9px; font-weight: 900; letter-spacing: .08em; }
+  .card-head h2 { margin: 9px 0 7px; font-size: 25px; letter-spacing: -.035em; }
+  .card-head p { margin: 0; color: #68776f; font-size: 12px; line-height: 1.5; }
+  form { padding: 26px 32px 32px; display: grid; gap: 17px; }
+  label > span:first-child { display: block; margin-bottom: 7px; font-size: 11px; font-weight: 800; color: #394b42; }
+  input:not([type="checkbox"]) { width: 100%; height: 46px; padding: 0 13px; border: 1px solid #ccdad2; border-radius: 11px; outline: 0; background: #fff; color: #17271f; font: inherit; font-size: 14px; transition: border .15s, box-shadow .15s; }
+  input:not([type="checkbox"]):focus { border-color: #087f53; box-shadow: 0 0 0 3px rgba(8,127,83,.10); }
+  input[aria-invalid="true"]:not([type="checkbox"]) { border-color: #d94040; background: #fff8f8; }
+  .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field-error { min-height: 13px; margin-top: 5px; display: block; color: #c52d2d; font-size: 10px; font-weight: 700; }
+  .password-note { margin: -8px 0 0; color: #7a8881; font-size: 10px; line-height: 1.4; }
+  .consent-row { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; cursor: pointer; }
+  .consent-row input { width: 17px; height: 17px; margin: 2px 0 0; accent-color: #087f53; }
+  .consent-row > span { margin: 0 !important; color: #5e6e66 !important; font-size: 11px !important; font-weight: 550 !important; line-height: 1.55; }
+  .consent-row a { color: #087f53; font-weight: 750; }
+  .consent-error { margin-top: -13px; }
+  .form-message { padding: 12px 14px; border: 1px solid #efbcbc; border-radius: 10px; background: #fff4f4; color: #a62727; font-size: 11px; line-height: 1.5; }
+  .submit-button { min-height: 49px; padding: 0 18px; border: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #fff; background: #087f53; font: inherit; font-size: 13px; font-weight: 850; text-decoration: none; cursor: pointer; box-shadow: 0 10px 25px rgba(8,127,83,.19); }
+  .submit-button:hover { background: #076d48; }
+  .submit-button:disabled { cursor: wait; opacity: .65; }
+  .fine-print { margin: -6px 0 0; color: #819087; font-size: 9px; text-align: center; }
+  .success-state { padding: 42px 34px 38px; text-align: center; }
+  .success-icon { width: 52px; height: 52px; margin: 0 auto 18px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #087f53; font-size: 24px; font-weight: 900; }
+  .success-state h2 { margin: 0 0 10px; font-size: 28px; letter-spacing: -.04em; }
+  .success-state p { margin: 0 auto 24px; max-width: 500px; color: #64736b; font-size: 13px; line-height: 1.6; }
+  .success-state small { display: block; margin-top: 14px; color: #829087; font-size: 10px; line-height: 1.5; }
+  footer { max-width: 1180px; margin: 0 auto; padding: 26px 28px 34px; border-top: 1px solid #dce8e1; display: flex; justify-content: space-between; gap: 20px; color: #75837b; font-size: 10px; }
+  footer nav { display: flex; flex-wrap: wrap; gap: 15px; }
+  footer a { text-decoration: none; }
+  [hidden] { display: none !important; }
+  @media (max-width: 900px) {
+    main { margin-top: 20px; grid-template-columns: 1fr; gap: 32px; }
+    .hero-copy { position: static; padding-top: 0; }
+    h1 { font-size: clamp(40px, 10vw, 58px); }
+  }
+  @media (max-width: 560px) {
+    .topbar { padding: 18px 16px; }
+    .brand small { display: none; }
+    main { width: min(100% - 24px, 1180px); margin-bottom: 44px; }
+    .benefits { grid-template-columns: 1fr; }
+    .two-cols { grid-template-columns: 1fr; gap: 17px; }
+    .card-head, form { padding-left: 20px; padding-right: 20px; }
+    .signup-card { border-radius: 20px; }
+    footer { padding: 22px 16px 30px; flex-direction: column; }
+  }
+</style>
