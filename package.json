@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "dev": "node scripts/normalize-subscription-signup.mjs && astro dev",
+    "build": "node scripts/normalize-subscription-signup.mjs && node scripts/audit-subscription-readiness.mjs && astro build",
+    "preview": "astro preview",
+    "audit:subscription": "node scripts/normalize-subscription-signup.mjs && node scripts/audit-subscription-readiness.mjs"
   },
   "dependencies": {
     "astro": "7.3.2"
