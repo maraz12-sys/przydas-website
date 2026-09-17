@@ -1,0 +1,62 @@
+name: Pre-payment legal version alignment
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  align-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Align trial acceptance with published legal documents
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('src/pages/test.astro')
+          text = path.read_text(encoding='utf-8')
+          old_const = "const legalVersion = '2026-09-11';"
+          new_const = "const termsVersion = '2026-09-04.1';\nconst privacyVersion = '2.0';"
+          old_meta = "terms_version: legalVersion, privacy_version: legalVersion"
+          new_meta = "terms_version: termsVersion, privacy_version: privacyVersion"
+          if old_const in text:
+              text = text.replace(old_const, new_const, 1)
+          elif new_const not in text:
+              raise SystemExit('Unexpected legal-version constant; refusing to guess')
+          if old_meta in text:
+              text = text.replace(old_meta, new_meta, 1)
+          elif new_meta not in text:
+              raise SystemExit('Unexpected legal metadata wiring; refusing to guess')
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Publish legal-version alignment
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/pages/test.astro
+          if git diff --cached --quiet; then
+            echo 'Legal versions already aligned.'
+            exit 0
+          fi
+          git commit -m 'Align trial legal acceptance versions'
+          git pull --rebase origin main
+          git push origin HEAD:main
