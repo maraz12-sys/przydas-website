@@ -1,6 +1,10 @@
 name: Pre-payment legal version alignment
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/prepayment-legal-version-fix.yml'
   workflow_dispatch:
 
 permissions:
@@ -27,6 +31,8 @@ jobs:
           new_const = "const termsVersion = '2026-09-04.1';\nconst privacyVersion = '2.0';"
           old_meta = "terms_version: legalVersion, privacy_version: legalVersion"
           new_meta = "terms_version: termsVersion, privacy_version: privacyVersion"
+          old_define = "<script define:vars={{ supabaseUrl, supabasePublishableKey, legalVersion }} is:inline>"
+          new_define = "<script define:vars={{ supabaseUrl, supabasePublishableKey, termsVersion, privacyVersion }} is:inline>"
           if old_const in text:
               text = text.replace(old_const, new_const, 1)
           elif new_const not in text:
@@ -35,6 +41,10 @@ jobs:
               text = text.replace(old_meta, new_meta, 1)
           elif new_meta not in text:
               raise SystemExit('Unexpected legal metadata wiring; refusing to guess')
+          if old_define in text:
+              text = text.replace(old_define, new_define, 1)
+          elif new_define not in text:
+              raise SystemExit('Unexpected Astro define:vars wiring; refusing to guess')
           path.write_text(text, encoding='utf-8')
           PY
 
