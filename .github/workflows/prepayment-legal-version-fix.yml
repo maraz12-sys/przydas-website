@@ -24,22 +24,20 @@ jobs:
         run: |
           set -euo pipefail
           python - <<'PY'
+          import re
           from pathlib import Path
           path = Path('src/pages/test.astro')
           text = path.read_text(encoding='utf-8')
           old_const = "const legalVersion = '2026-09-11';"
           new_const = "const termsVersion = '2026-09-04.1';\nconst privacyVersion = '2.0';"
-          old_meta = "terms_version: legalVersion, privacy_version: legalVersion"
-          new_meta = "terms_version: termsVersion, privacy_version: privacyVersion"
           old_define = "<script define:vars={{ supabaseUrl, supabasePublishableKey, legalVersion }} is:inline>"
           new_define = "<script define:vars={{ supabaseUrl, supabasePublishableKey, termsVersion, privacyVersion }} is:inline>"
           if old_const in text:
               text = text.replace(old_const, new_const, 1)
           elif new_const not in text:
               raise SystemExit('Unexpected legal-version constant; refusing to guess')
-          if old_meta in text:
-              text = text.replace(old_meta, new_meta, 1)
-          elif new_meta not in text:
+          text, meta_count = re.subn(r'terms_version:\s*legalVersion\s*,\s*privacy_version:\s*legalVersion', 'terms_version: termsVersion,\n                  privacy_version: privacyVersion', text, count=1)
+          if meta_count == 0 and not re.search(r'terms_version:\s*termsVersion\s*,\s*privacy_version:\s*privacyVersion', text):
               raise SystemExit('Unexpected legal metadata wiring; refusing to guess')
           if old_define in text:
               text = text.replace(old_define, new_define, 1)
