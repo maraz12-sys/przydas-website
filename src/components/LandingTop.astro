@@ -3,32 +3,44 @@ const problems = [
   {
     no: '01',
     title: 'Informacje są wszędzie',
-    text: 'Kalendarz, Messenger, notatki i arkusze. Jedno zlecenie potrafi żyć w kilku miejscach naraz.',
-    loss: 'Koszt: szukanie, przepisywanie i pomyłki.',
+    text: 'Kalendarz, Messenger, notatki i arkusze. Jedno zlecenie potrafi żyć w kilku miejscach naraz, a przed eventem zaczyna się szukanie: gdzie był adres, która wersja ustaleń jest aktualna i kto to ostatnio zmieniał.',
+    loss: 'Przydaś zbiera rezerwację, klienta, ustalenia i status w jednym procesie — mniej szukania, przepisywania i pomyłek.',
   },
   {
     no: '02',
     title: 'Właściciel pilnuje wszystkich',
-    text: 'Kto może pracować? Kto potwierdził? Kto ma zadanie? Zamiast prowadzić firmę, prowadzisz kolejne rozmowy.',
-    loss: 'Koszt: Twój czas i ciągłe przerywanie pracy.',
+    text: 'Kto może pracować? Kto potwierdził? Kto ma zadanie? Zamiast prowadzić firmę, prowadzisz kolejne rozmowy i co chwilę sprawdzasz, czy ktoś już odpisał.',
+    loss: 'Przydaś zbiera dyspozycyjność, przypisania i potwierdzenia w jednym miejscu, więc mniej rzeczy wymaga ręcznego dopytywania.',
   },
   {
     no: '03',
-    title: 'Braki wychodzą za późno',
-    text: 'Materiał, informacja od klienta albo rozliczenie przypominają o sobie wtedy, kiedy zaczyna być nerwowo.',
-    loss: 'Koszt: zakupy na ostatnią chwilę i niepotrzebne straty.',
+    title: 'Braki wychodzą wtedy, gdy robi się nerwowo',
+    text: 'Materiał, informacja od klienta, obsada albo rozliczenie przypominają o sobie na ostatnią chwilę, kiedy nie ma już przestrzeni na spokojne poprawki.',
+    loss: 'Przydaś pokazuje braki wcześniej i prowadzi do miejsca, w którym trzeba poprawić dane — zamiast liczyć na pamięć właściciela.',
   },
   {
     no: '04',
     title: 'Dobry klient znika po wydarzeniu',
-    text: 'Realizacja się kończy, kontakt zostaje w historii wiadomości, a przy kolejnej okazji klient może po prostu szukać od nowa.',
-    loss: 'Koszt: sprzedaż, o którą nikt ponownie nie zapytał.',
+    text: 'Realizacja się kończy, kontakt zostaje w historii wiadomości, a przy kolejnej okazji klient może po prostu szukać od nowa, bo nikt nie wrócił do niego we właściwym momencie.',
+    loss: 'Przydaś zachowuje historię współpracy i pomaga wracać do klientów przed kolejną okazją, zamiast czekać, aż sami sobie o Tobie przypomną.',
+  },
+  {
+    no: '05',
+    title: 'Koniec z dzwonieniem po kilka razy, żeby potwierdzić szczegóły',
+    text: 'Termin, adres, liczba dzieci, atrakcje i kolejne zmiany wracają w telefonach i wiadomościach. Im bliżej wydarzenia, tym częściej pojawia się pytanie: „czy wszystko nadal aktualne?”.',
+    loss: 'Wysyłasz klientowi formularz, sprawdzasz jego odpowiedzi i tworzysz rezerwację bez przepisywania. Przed wydarzeniem Przydaś może automatycznie wysłać gotowe podsumowanie do potwierdzenia, a po zmianie danych możesz poprosić o potwierdzenie ponownie.',
+  },
+  {
+    no: '06',
+    title: 'Rozliczenia pracowników zabierają wieczory',
+    text: 'Godziny, dojazdy, przygotowanie, kilometry i gotówka wracają w wiadomościach, arkuszach i notatkach. Im większy zespół, tym więcej ręcznego liczenia i sprawdzania.',
+    loss: 'Pracownik uzupełnia dane z realizacji, a Przydaś stosuje Twoje stawki, liczy należność i zachowuje historię wypłat — Ty kontrolujesz wynik zamiast składać go z wielu rozmów.',
   },
 ];
 
 const capabilities = [
   ['Rezerwacje bez szukania', 'Termin, klient, ustalenia, status i szczegóły wydarzenia w jednym miejscu.'],
-  ['Formularz dla klienta bez przepisywania', 'Wysyłasz link, klient uzupełnia dane, a po Twojej weryfikacji mogą trafić prosto do rezerwacji.'],
+  ['Formularz dla klienta bez przepisywania', 'Wysyłasz link, klient uzupełnia dane, Ty je weryfikujesz, a przed wydarzeniem Przydaś może automatycznie poprosić go o ostateczne potwierdzenie szczegółów.'],
   ['Zespół bez setek wiadomości', 'Dyspozycyjność, przypisania, potwierdzenia, zadania i odpowiedzialność są widoczne od razu.'],
   ['Braki zanim staną się problemem', 'System przypomina o rzeczach, których nie warto trzymać w głowie.'],
   ['Koniec ze żmudnym rozliczaniem pracowników', 'Animator uzupełnia dane po realizacji. Przydaś stosuje Twoje stawki, wylicza należność i pilnuje historii wypłat.'],
@@ -109,7 +121,7 @@ const audiences = [
     </a>
 
     <nav class="nav-links" aria-label="Nawigacja główna">
-      <a href="#korzysci">Korzyści</a>
+      <a href="#korzysci">Dlaczego warto</a>
       <a href="#jak-dziala">Jak działa</a>
       <a href="#cennik">Cennik</a>
       <a href="#porownanie">Porównanie</a>
@@ -220,11 +232,11 @@ const audiences = [
 <section class="problem-section" id="korzysci">
   <div class="shell">
     <div class="section-head problem-head">
-      <span class="eyebrow-text">Chaos nie jest darmowy</span>
-      <h2>Każde „ogarnę później” kosztuje czas albo pieniądze.</h2>
+      <span class="eyebrow-text">Dlaczego warto</span>
+      <h2>Przydaś rozwiązuje problemy, które codziennie zjadają czas właściciela.</h2>
       <p>
-        Największym kosztem nie musi być abonament za narzędzie. Często są nim godziny właściciela, błędy na ostatnią chwilę,
-        niepotrzebne zakupy i klienci, do których nikt już nie wrócił.
+        Nie chodzi o kolejną listę funkcji. Chodzi o mniej telefonów, mniej pilnowania ludzi, mniej przepisywania danych,
+        mniej nerwowych braków przed realizacją i mniej wieczorów spędzonych nad rozliczeniami.
       </p>
     </div>
 
@@ -240,7 +252,7 @@ const audiences = [
     </div>
 
     <div class="section-transition">
-      <strong>Przydaś ma zdejmować z Ciebie pracę, a nie dokładać kolejnej aplikacji do obsługi.</strong>
+      <strong>Jeżeli system nie oszczędza Ci realnej pracy, to jest tylko kolejnym narzędziem. Przydaś ma właśnie tę pracę zdejmować.</strong>
       <span class="transition-line"></span>
       <a href="#funkcje" aria-label="Przejdź do funkcji">→</a>
     </div>
