@@ -1,5 +1,5 @@
 ---
-const apiUrl = 'https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/rezerwacja-potwierdzenie-api';
+const apiUrl = 'https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/rezerwacja-potwierdzenie-publiczne';
 ---
 <!doctype html>
 <html lang="pl">
@@ -35,7 +35,7 @@ const apiUrl = 'https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/rezerwacja
     async function load() {
       if (!/^[A-Za-z0-9_-]{30,120}$/.test(token)) return state('Ten link jest nieprawidłowy lub wygasł','Skontaktuj się z organizatorem, aby otrzymać nową prośbę o potwierdzenie.');
       try {
-        const res = await fetch(`${api}?t=${encodeURIComponent(token)}`, {headers:{Accept:'application/json'}, cache:'no-store'});
+        const res = await fetch(api, {method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({action:'get',token}),cache:'no-store'});
         const data = await res.json().catch(()=>({}));
         if (!res.ok || !data.ok) return state(data.status==='potwierdzone'?'Rezerwacja jest potwierdzona':'Ten link nie jest już aktywny', data.status==='potwierdzone'?'Dziękujemy. Ostateczne potwierdzenie zostało zapisane.':'Skontaktuj się z organizatorem, aby otrzymać aktualny link.', data.status==='potwierdzone');
         if (data.status === 'potwierdzone') return state('Rezerwacja jest potwierdzona','Dziękujemy. Ostateczne potwierdzenie zostało zapisane.',true);
@@ -47,7 +47,7 @@ const apiUrl = 'https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/rezerwacja
           e.preventDefault(); if(!checkbox.checked)return;
           button.disabled=true; button.innerHTML='<span class="button-spinner"></span>Zapisywanie potwierdzenia…';
           try {
-            const r=await fetch(api,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({token,statement_accepted:true})});
+            const r=await fetch(api,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({action:'confirm',token,statement_accepted:true})});
             const d=await r.json().catch(()=>({}));
             if(!r.ok||!d.ok) throw new Error(d.message||'Nie udało się zapisać potwierdzenia.');
             state('Rezerwacja potwierdzona','Dziękujemy. Ostateczne potwierdzenie zostało zapisane.',true);
