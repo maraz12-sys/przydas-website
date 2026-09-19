@@ -1,0 +1,69 @@
+---
+const apiUrl = 'https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/rezerwacja-potwierdzenie-publiczne';
+---
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#087f53" />
+  <title>Potwierdź rezerwację | Przydaś</title>
+  <link rel="icon" href="/przydas-mark.svg" type="image/svg+xml" />
+</head>
+<body>
+  <main class="card" id="app" data-api={apiUrl}>
+    <section class="state"><span class="spinner" aria-hidden="true"></span><h1>Wczytuję ustalenia…</h1><p>Za chwilę zobaczysz szczegóły rezerwacji do potwierdzenia.</p></section>
+  </main>
+  <script>
+    const app = document.getElementById('app');
+    const api = app?.dataset.api || '';
+    const token = new URLSearchParams(location.search).get('t') || '';
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    const labels = {
+      title:'Wydarzenie', rodzaj_wydarzenia:'Rodzaj wydarzenia', termin:'Termin', adres:'Adres',
+      pakiet:'Pakiet', atrakcje:'Atrakcje / zakres', liczba_dzieci:'Liczba dzieci / uczestników',
+      wiek_dzieci:'Wiek dzieci', solenizant:'Solenizant', osoba_do_kontaktu:'Osoba do kontaktu',
+      telefon_kontaktowy:'Telefon kontaktowy', email_kontaktowy:'E-mail kontaktowy', kwota:'Kwota',
+      zadatek_wymagany:'Zadatek wymagany', zadatek_kwota:'Kwota zadatku',
+      faktura_wymagana:'Faktura wymagana', sposob_platnosci:'Sposób płatności'
+    };
+    function state(title, text, ok=false) {
+      app.innerHTML = `<section class="state">${ok?'<div class="okmark">✓</div>':''}<h1>${esc(title)}</h1><p>${esc(text)}</p></section>`;
+    }
+    async function load() {
+      if (!/^[A-Za-z0-9_-]{30,120}$/.test(token)) return state('Ten link jest nieprawidłowy lub wygasł','Skontaktuj się z organizatorem, aby otrzymać nową prośbę o potwierdzenie.');
+      try {
+        const res = await fetch(`${api}?t=${encodeURIComponent(token)}`, {headers:{Accept:'application/json'}, cache:'no-store'});
+        const data = await res.json().catch(()=>({}));
+        if (!res.ok || !data.ok) return state(data.status==='potwierdzone'?'Rezerwacja jest potwierdzona':'Ten link nie jest już aktywny', data.status==='potwierdzone'?'Dziękujemy. Ostateczne potwierdzenie zostało zapisane.':'Skontaktuj się z organizatorem, aby otrzymać aktualny link.', data.status==='potwierdzone');
+        if (data.status === 'potwierdzone') return state('Rezerwacja jest potwierdzona','Dziękujemy. Ostateczne potwierdzenie zostało zapisane.',true);
+        const rows = Object.entries(data.display || {}).filter(([,v])=>v!==null&&v!==undefined&&String(v).trim()!=='').map(([k,v])=>`<div class="row"><small>${esc(labels[k]||k)}</small><strong>${esc(v)}</strong></div>`).join('');
+        app.innerHTML = `<section class="head"><span class="pill">Ostateczne potwierdzenie</span><h1>Sprawdź i potwierdź ustalenia</h1><p>Poniżej widzisz dokładną wersję ustaleń przesłaną przez organizatora. Jeśli cokolwiek się zmieniło, nie potwierdzaj tej wersji. Skontaktuj się z organizatorem, a po aktualizacji otrzymasz nową prośbę.</p></section><section class="details">${rows}</section><form class="actions" id="form"><label class="consent"><input id="accepted" type="checkbox" required><span><strong>Potwierdzam wszystkie powyższe ustalenia.</strong><br>${esc(data.confirmation_statement||'Potwierdzam, że wszystkie powyższe dane, warunki i ustalenia są zgodne z aktualnymi ustaleniami dotyczącymi tej rezerwacji. Akceptuję je jako podstawę realizacji wydarzenia. Wszelkie późniejsze zmiany wymagają ponownego potwierdzenia.')}</span></label><button id="submit" type="submit" disabled>Potwierdzam wszystkie powyższe ustalenia</button><p class="note">Po zatwierdzeniu zapisujemy datę potwierdzenia, treść oświadczenia oraz dokładną wersję danych widoczną powyżej. Każda późniejsza zmiana wymaga nowej prośby o potwierdzenie.</p></form>`;
+        const checkbox=document.getElementById('accepted'), button=document.getElementById('submit'), form=document.getElementById('form');
+        checkbox.addEventListener('change',()=>button.disabled=!checkbox.checked);
+        form.addEventListener('submit',async(e)=>{
+          e.preventDefault(); if(!checkbox.checked)return;
+          button.disabled=true; button.innerHTML='<span class="button-spinner"></span>Zapisywanie potwierdzenia…';
+          try {
+            const r=await fetch(api,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({token,statement_accepted:true})});
+            const d=await r.json().catch(()=>({}));
+            if(!r.ok||!d.ok) throw new Error(d.message||'Nie udało się zapisać potwierdzenia.');
+            state('Rezerwacja potwierdzona','Dziękujemy. Ostateczne potwierdzenie zostało zapisane.',true);
+            history.replaceState({},'',location.pathname);
+          } catch(err) {
+            button.disabled=false; button.textContent='Spróbuj ponownie';
+            let p=form.querySelector('.form-error'); if(!p){p=document.createElement('p');p.className='form-error';form.appendChild(p)} p.textContent=err?.message||'Nie udało się zapisać potwierdzenia.';
+          }
+        });
+      } catch { state('Nie udało się wczytać potwierdzenia','Sprawdź połączenie z internetem i spróbuj ponownie za chwilę.'); }
+    }
+    load();
+  </script>
+</body>
+</html>
+<style is:global>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#273244;background:#f3f8f5}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:22px}.card{width:min(620px,100%);background:#fff;border:1px solid #dfe7e3;border-radius:18px;box-shadow:0 18px 50px rgba(15,23,42,.08);overflow:hidden}.head{padding:28px 26px 12px;text-align:center}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#eaf7f0;color:#087f53;font-size:12px;font-weight:800}h1{font-size:25px;line-height:1.25;margin:14px 0 7px;color:#162033}.head p,.state p{margin:0;color:#687588;font-size:14px;line-height:1.55}.details{margin:14px 26px 0;border:1px solid #e1ebe5;border-radius:12px;overflow:hidden}.row{padding:11px 14px;border-bottom:1px solid #edf2ef}.row:last-child{border-bottom:0}.row small{display:block;color:#8a96a6;font-size:10px;font-weight:800;text-transform:uppercase}.row strong{display:block;margin-top:3px;color:#344054;font-size:13px;line-height:1.5}.actions{padding:22px 26px 28px;text-align:center}.actions button{width:100%;min-height:48px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:10px;background:#159447;color:#fff;font-weight:850;font-size:14px;cursor:pointer}.actions button:disabled{opacity:.55;cursor:not-allowed}.consent{margin:0 0 14px;padding:14px;display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:flex-start;border:1px solid #d9e6df;border-radius:11px;background:#f8fbf9;text-align:left;cursor:pointer}.consent input{width:18px;height:18px;margin:1px 0 0;accent-color:#159447}.consent span{color:#344054;font-size:12px;line-height:1.55}.consent strong{color:#162033}.note{margin:12px 0 0;color:#8a96a6;font-size:11px;line-height:1.5}.state{padding:38px 26px;text-align:center}.okmark{width:58px;height:58px;margin:0 auto 14px;display:grid;place-items:center;border-radius:50%;background:#eaf7f0;color:#159447;font-size:28px;font-weight:900}.spinner,.button-spinner{display:inline-block;border-radius:50%;border:3px solid #dce9e1;border-top-color:#159447;animation:spin .8s linear infinite}.spinner{width:34px;height:34px}.button-spinner{width:17px;height:17px;border-width:2px;border-color:rgba(255,255,255,.35);border-top-color:#fff}.form-error{margin:12px 0 0;color:#b42318;font-size:12px}.state .spinner+h1{margin-top:18px}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:640px){body{padding:12px}.card{border-radius:14px}.head{padding:22px 18px 10px}.details{margin:12px 18px 0}.actions{padding:18px}.state{padding:30px 18px}h1{font-size:22px}}
+</style>
