@@ -102,6 +102,8 @@ jobs:
           grep -q '14 dni' dist/regulamin/index.html
           grep -q 'obowiązku zapłaty' dist/regulamin/index.html
           grep -q '/umowa-powierzenia' dist/regulamin/index.html
+          grep -q 'Wersja 2026-09-04.1' dist/regulamin/index.html
+          grep -q 'Wersja 2026-09-04.1' dist/umowa-powierzenia/index.html
           grep -q 'art. 28 RODO' dist/umowa-powierzenia/index.html
           grep -q 'udokumentowane polecenie' dist/umowa-powierzenia/index.html
           grep -q 'podprocesor' dist/umowa-powierzenia/index.html

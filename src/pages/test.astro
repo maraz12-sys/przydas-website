@@ -3,6 +3,7 @@ const supabaseUrl = 'https://jyzajgbgkqlczjpoxxzt.supabase.co';
 const supabasePublishableKey = 'sb_publishable_SV-ZydWdkMyxBNIZGx557Q_TQ8jhNFp';
 const termsVersion = '2026-09-04.1';
 const privacyVersion = '2.0';
+const dpaVersion = '2026-09-04.1';
 ---
 <!doctype html>
 <html lang="pl">
@@ -133,7 +134,7 @@ const privacyVersion = '2.0';
       </nav>
     </footer>
 
-    <script define:vars={{ supabaseUrl, supabasePublishableKey, termsVersion, privacyVersion }} is:inline>
+    <script define:vars={{ supabaseUrl, supabasePublishableKey, termsVersion, privacyVersion, dpaVersion }} is:inline>
       (() => {
         const form = document.querySelector('#trial-form');
         const success = document.querySelector('[data-success]');
@@ -257,6 +258,7 @@ const privacyVersion = '2.0';
                   legal_acknowledged_at: acknowledgedAt,
                   terms_version: termsVersion,
                   privacy_version: privacyVersion,
+                  dpa_version: dpaVersion,
                 },
               }),
             });

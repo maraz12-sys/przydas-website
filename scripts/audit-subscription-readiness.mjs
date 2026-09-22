@@ -25,13 +25,14 @@ check(trial.includes('sb_publishable_'), 'Trial page does not use a publishable 
 check(!trial.includes('service_role'), 'Trial page must never contain a service-role credential');
 check(trial.includes("przydas_selfservice_trial: true"), 'Self-service trial metadata flag missing');
 check(trial.includes("legal_acknowledged: true"), 'Legal acknowledgement metadata missing');
-const legacyLegalVersion = trial.includes("terms_version: legalVersion") && trial.includes("privacy_version: legalVersion");
-const splitLegalVersions = trial.includes("terms_version: termsVersion") && trial.includes("privacy_version: privacyVersion");
-check(legacyLegalVersion || splitLegalVersions, 'Legal document version metadata missing');
-if (splitLegalVersions) {
-  check(trial.includes("const termsVersion = '2026-09-04.1'"), 'Terms version constant mismatch');
-  check(trial.includes("const privacyVersion = '2.0'"), 'Privacy version constant mismatch');
-}
+const splitLegalVersions =
+  trial.includes("terms_version: termsVersion") &&
+  trial.includes("privacy_version: privacyVersion") &&
+  trial.includes("dpa_version: dpaVersion");
+check(splitLegalVersions, 'Legal document version metadata missing');
+check(trial.includes("const termsVersion = '2026-09-04.1'"), 'Terms version constant mismatch');
+check(trial.includes("const privacyVersion = '2.0'"), 'Privacy version constant mismatch');
+check(trial.includes("const dpaVersion = '2026-09-04.1'"), 'DPA version constant mismatch');
 check(trial.includes('href="/regulamin"'), 'Terms link missing');
 check(trial.includes('href="/polityka-prywatnosci"'), 'Privacy link missing');
 check(trial.includes('href="/umowa-powierzenia"'), 'Data-processing agreement link missing');
