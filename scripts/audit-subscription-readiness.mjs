@@ -30,7 +30,7 @@ const splitLegalVersions =
   trial.includes("privacy_version: privacyVersion") &&
   trial.includes("dpa_version: dpaVersion");
 check(splitLegalVersions, 'Legal document version metadata missing');
-check(trial.includes("const termsVersion = '2026-09-04.1'"), 'Terms version constant mismatch');
+check(trial.includes("const termsVersion = '2026-09-26.1'"), 'Terms version constant mismatch');
 check(trial.includes("const privacyVersion = '2.0'"), 'Privacy version constant mismatch');
 check(trial.includes("const dpaVersion = '2026-09-04.1'"), 'DPA version constant mismatch');
 check(trial.includes('href="/regulamin"'), 'Terms link missing');
@@ -52,5 +52,6 @@ console.log(JSON.stringify({
   selfService: true,
   emailConfirmation: true,
   paymentRequiredForTrial: false,
-  p24Connected: false,
+  payuSelected: true,
+  payuConnected: false,
 }, null, 2));

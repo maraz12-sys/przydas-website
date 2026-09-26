@@ -82,7 +82,8 @@ jobs:
           grep -q 'Zadania zespołu, garderoba i checklisty materiałowe' dist/index.html
           grep -q 'Szanse sprzedażowe: potencjalne stałe współprace i imprezy prywatne' dist/index.html
           grep -q 'W przygotowaniu' dist/index.html
-          grep -q '60 dni BIZNES za 0 zł' dist/index.html
+          grep -q '30 dni BIZNES za 0 zł dla każdej nowej firmy' dist/index.html
+          ! grep -Rqi 'pierwsze 10\|pierwszych 10\|60 dni BIZNES' dist/index.html dist/test/index.html dist/regulamin/index.html
           grep -q 'Chcę uruchomić bezpłatny test' dist/index.html
           ! grep -q 'Publiczny start dla nowych firm jest kolejnym krokiem' dist/index.html
 
@@ -97,12 +98,11 @@ jobs:
 
           # Contract/legal release gates.
           grep -q 'Uruchomienie Okresu próbnego nie powoduje automatycznego przejścia na płatną Subskrypcję' dist/regulamin/index.html
-          grep -q 'pierwsze 10 kwalifikujących się nowych Organizacji' dist/regulamin/index.html
-          grep -q '8 września 2026' dist/regulamin/index.html
+          grep -q 'Każda nowa Organizacja otrzymuje 30 dni' dist/regulamin/index.html
           grep -q '14 dni' dist/regulamin/index.html
           grep -q 'obowiązku zapłaty' dist/regulamin/index.html
           grep -q '/umowa-powierzenia' dist/regulamin/index.html
-          grep -q 'Wersja 2026-09-04.1' dist/regulamin/index.html
+          grep -q 'Wersja 2026-09-26.1' dist/regulamin/index.html
           grep -q 'Wersja 2026-09-04.1' dist/umowa-powierzenia/index.html
           grep -q 'art. 28 RODO' dist/umowa-powierzenia/index.html
           grep -q 'udokumentowane polecenie' dist/umowa-powierzenia/index.html

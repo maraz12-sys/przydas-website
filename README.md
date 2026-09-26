@@ -49,6 +49,10 @@ Strona sprzedaje rezultat, nie liczbę funkcji:
 
 Nie publikujemy niezweryfikowanych statystyk ani fikcyjnego social proof. Kalkulator pokazuje wyłącznie porównanie wartości sprzedaży do ceny abonamentu i zawiera wyraźne zastrzeżenie, że nie jest prognozą zysku.
 
+Każda nowa firma otrzymuje 30 dni pakietu BIZNES bez opłat. Wskaźnik „do 80% oszczędności czasu” wymaga pomiaru na rzeczywistych procesach przed publikacją.
+
+Wybranym dostawcą płatności dla przyszłej integracji jest PayU. Wybór dostawcy nie oznacza, że płatności lub automatyczne odnowienia są już aktywne.
+
 ## Release gate
 
 Workflow `.github/workflows/website-ci.yml` przy każdym pushu i pull requeście:

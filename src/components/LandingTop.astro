@@ -40,6 +40,7 @@ const problems = [
 
 const capabilities = [
   ['Rezerwacje bez szukania', 'Termin, klient, ustalenia, status i szczegóły wydarzenia w jednym miejscu.'],
+  ['Przenieś obecne rezerwacje bez przepisywania', 'Zaimportuj listę rezerwacji z kalendarza, sprawdź rozpoznane dane i uzupełnij tylko to, czego brakuje.'],
   ['Formularz dla klienta bez przepisywania', 'Wysyłasz link, klient uzupełnia dane, Ty je weryfikujesz, a przed wydarzeniem Przydaś może automatycznie poprosić go o ostateczne potwierdzenie szczegółów.'],
   ['Zespół bez setek wiadomości', 'Dyspozycyjność, przypisania, potwierdzenia, zadania i odpowiedzialność są widoczne od razu.'],
   ['Braki zanim staną się problemem', 'System przypomina o rzeczach, których nie warto trzymać w głowie.'],
@@ -145,18 +146,18 @@ const audiences = [
     <h1>Mniej pilnowania.<br /><span>Więcej czasu na firmę.</span></h1>
     <p class="hero-lead">
       Przydaś łączy rezerwacje, formularze dla klientów, kalendarz, zespół, braki, rozliczenia i dane po realizacji.
-      Zamiast prowadzić firmę w Messengerze, notatkach i arkuszach, pracujesz w jednym procesie, który oszczędza czas, ogranicza straty i pomaga wracać do klientów.
+      Zamiast szukać ustaleń w Messengerze, arkuszach i folderach, prowadzisz zlecenie w jednym miejscu. Zespół wie, kiedy i co ma zrobić, a Ty odzyskujesz czas dla siebie, rodziny i rozwoju firmy.
     </p>
 
     <div class="hero-actions">
-      <a class="button button-primary" href="#start">Wypróbuj 30 dni za 0 zł <span>→</span></a>
+      <a class="button button-primary" href="/test">Wypróbuj 30 dni za 0 zł <span>→</span></a>
       <a class="button button-secondary" href="#jak-dziala">Zobacz cały proces <span>↓</span></a>
     </div>
 
     <div class="hero-benefits" aria-label="Najważniejsze korzyści">
       <span>✓ mniej ręcznej pracy</span>
       <span>✓ mniej kosztownych braków</span>
-      <span>✓ więcej szans na powroty klientów</span>
+      <span>✓ jasne rozliczenia i spokojniejszy start</span>
     </div>
   </div>
 
@@ -414,7 +415,7 @@ const audiences = [
 
 <div class="mobile-cta" aria-label="Szybki dostęp do bezpłatnego testu">
   <span><strong>Przydaś</strong><small>30 dni BIZNES za 0 zł</small></span>
-  <a href="#start">Wypróbuj →</a>
+  <a href="/test">Wypróbuj →</a>
 </div>
 
 <script is:inline>
