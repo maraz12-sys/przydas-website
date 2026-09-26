@@ -137,6 +137,12 @@ const HOLDING_HEADERS = {
 
 export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+    if (url.hostname === 'www.xn--przyda-8ib.pl') {
+      url.hostname = 'xn--przyda-8ib.pl';
+      return Response.redirect(url.toString(), 308);
+    }
+
     if (String(env.PRELAUNCH_MODE || "").toLowerCase() === "true") {
       return new Response(HOLDING_PAGE, {
         status: 200,
