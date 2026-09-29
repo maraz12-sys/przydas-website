@@ -5,6 +5,8 @@ import LegalLayout from '../layouts/LegalLayout.astro';
   title="Bezpieczeństwo danych"
   description="Jak Przydaś ogranicza ryzyko dla kont, danych Organizacji, plików i dostępu do informacji."
   eyebrow="Bezpieczeństwo bez marketingowych obietnic"
+  updated="29.09.2026"
+  version="2.1"
 >
   <div class="callout"><strong>Najważniejsze</strong><p>Żaden system internetowy nie daje „zera ryzyka”. Przydaś stosuje warstwowe zabezpieczenia i zasadę ograniczonego dostępu, a krytyczne mechanizmy są testowane także po stronie backendu, niezależnie od tego, co jest widoczne w interfejsie.</p></div>
 
@@ -22,26 +24,30 @@ import LegalLayout from '../layouts/LegalLayout.astro';
   <p>Połączenia z publiczną stroną i aplikacją odbywają się przez HTTPS. Pliki wymagające autoryzacji są przechowywane w prywatnych obszarach i udostępniane przez mechanizmy sprawdzające dostęp, w tym czasowe odnośniki tam, gdzie jest to właściwe.</p>
   <p>Sam fakt posiadania adresu lub identyfikatora zasobu nie powinien wystarczać do odczytu danych należących do innej Organizacji.</p>
 
-  <h2>4. Konta, hasła i urządzenia</h2>
+  <h2>4. Płatności kartą</h2>
+  <p>Dane karty są wprowadzane bezpośrednio w bezpiecznym formularzu PayU (Secure Form) ładowanym z infrastruktury PayU. Przydaś nie odbiera ani nie zapisuje pełnego numeru karty ani kodu CVV/CVC. Po udanym zapisaniu karty PayU posługuje się tokenem płatniczym; w bazie Przydasia przechowujemy jedynie dane potrzebne do obsługi Subskrypcji, takie jak zamaskowany numer karty, termin ważności i zabezpieczony skrót identyfikatora tokenu.</p>
+  <p>Pierwsza płatność rozpoczynająca cykl wymaga obecności użytkownika i może wymagać uwierzytelnienia 3D Secure. Kolejne obciążenia wykonywane są wyłącznie dla aktywnej zgody na płatności cykliczne. Odwołanie zgody blokuje przyszłe obciążenia po stronie Przydasia.</p>
+
+  <h2>5. Konta, hasła i urządzenia</h2>
   <p>Przydaś korzysta z uwierzytelniania, mechanizmu zaufanych urządzeń i dodatkowego potwierdzenia w operacjach, które tego wymagają. Reset hasła unieważnia wcześniejsze potwierdzenia zaufania i sesje objęte tym mechanizmem. Użytkownik powinien jednocześnie chronić skrzynkę e-mail, urządzenie i dane logowania.</p>
 
-  <h2>5. Uprawnienia Planu nie są tylko elementem interfejsu</h2>
+  <h2>6. Uprawnienia Planu nie są tylko elementem interfejsu</h2>
   <p>Dostęp do funkcji zależnych od Planu jest sprawdzany również po stronie backendu dla krytycznych operacji. Ukrycie przycisku nie jest traktowane jako wystarczające zabezpieczenie przed użyciem funkcji spoza aktywnego Planu.</p>
 
-  <h2>6. Eksport, kopie i odtwarzanie</h2>
+  <h2>7. Eksport, kopie i odtwarzanie</h2>
   <p>Kopia danych Organizacji dostępna w aplikacji jest eksportem określonych danych biznesowych. Nie należy utożsamiać jej z pełną techniczną kopią całej infrastruktury ani z kopią wszystkich plików w prywatnych zasobach.</p>
   <p>Mechanizmy eksportu, retencji, plików i odtwarzania są od siebie rozdzielone. Klient powinien pobierać ważne eksporty zgodnie z potrzebami swojej działalności i własną polityką ciągłości działania.</p>
 
-  <h2>7. Sejf dokumentów i dane wysokiego ryzyka</h2>
+  <h2>8. Sejf dokumentów i dane wysokiego ryzyka</h2>
   <p>Sejf dokumentów zapewnia bardziej ograniczony dostęp i rejestrowanie wybranych operacji niż zwykłe obszary plików. Nie zmienia to obowiązków Klienta wynikających z RODO i innych przepisów – umieszczenie dokumentu w Sejfie nie tworzy podstawy prawnej do jego przetwarzania.</p>
   <p>Do zwykłych modułów nie należy wprowadzać PESEL, informacji z KRK, pełnych dokumentów tożsamości, danych zdrowotnych ani innych danych wysokiego ryzyka bez rzeczywistej potrzeby i właściwej podstawy prawnej. Przydaś nie powinien być traktowany jako system antywirusowy; pliki z nieznanego źródła należy weryfikować przed otwarciem.</p>
 
-  <h2>8. Dostęp administracyjny</h2>
+  <h2>9. Dostęp administracyjny</h2>
   <p>Dostęp administracyjny powinien być wykorzystywany wyłącznie w uzasadnionych sytuacjach, np. do obsługi incydentu, wykonania obowiązku prawnego lub rozwiązania problemu technicznego, i ograniczony do zakresu potrzebnego do realizacji danego celu.</p>
 
-  <h2>9. Testy i zmiany bezpieczeństwa</h2>
+  <h2>10. Testy i zmiany bezpieczeństwa</h2>
   <p>Zabezpieczenia mogą być aktualizowane wraz z rozwojem produktu, zmianą zagrożeń i infrastruktury. Przed wdrożeniami produkcyjnymi stosujemy testy regresyjne obejmujące m.in. kontrolę dostępu, krytyczne funkcje backendowe i wybrane scenariusze negatywne.</p>
 
-  <h2>10. Zgłoszenie incydentu</h2>
+  <h2>11. Zgłoszenie incydentu</h2>
   <p>Jeżeli zauważysz podejrzane logowanie, możliwy wyciek danych, nieprawidłowy dostęp albo inną sytuację bezpieczeństwa, napisz na <a href="mailto:bezpieczenstwo@xn--przyda-8ib.pl">bezpieczenstwo@przydaś.pl</a>. W zgłoszeniu nie przesyłaj hasła, kodu jednorazowego ani danych karty płatniczej.</p>
 </LegalLayout>
