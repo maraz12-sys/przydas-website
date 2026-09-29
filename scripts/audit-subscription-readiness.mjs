@@ -6,6 +6,8 @@ const finalSections = read('src/components/FinalSections.astro');
 const trial = read('src/pages/test.astro');
 const privacy = read('src/pages/polityka-prywatnosci.astro');
 const providers = read('src/pages/podprocesorzy.astro');
+const terms = read('src/pages/regulamin.astro');
+const security = read('src/pages/bezpieczenstwo.astro');
 
 const failures = [];
 const check = (condition, message) => { if (!condition) failures.push(message); };
@@ -32,7 +34,7 @@ const splitLegalVersions =
   trial.includes("privacy_version: privacyVersion") &&
   trial.includes("dpa_version: dpaVersion");
 check(splitLegalVersions, 'Legal document version metadata missing');
-check(trial.includes("const termsVersion = '2026-09-26.1'"), 'Terms version constant mismatch');
+check(trial.includes("const termsVersion = '2026-09-29.1'"), 'Terms version constant mismatch');
 check(trial.includes("const privacyVersion = '2.1'"), 'Privacy version constant mismatch');
 check(trial.includes("const dpaVersion = '2026-09-04.1'"), 'DPA version constant mismatch');
 check(trial.includes('href="/regulamin"'), 'Terms link missing');
@@ -43,6 +45,8 @@ check(trial.includes('Bez karty') || trial.includes('bez podawania karty'), 'No-
 check(privacy.includes('PayU S.A.') && privacy.includes('odrębny administrator'), 'Privacy policy does not disclose PayU role');
 check(privacy.includes('nie otrzymuje pełnego numeru karty') && privacy.includes('CVV/CVC'), 'Privacy policy does not explain card data handling');
 check(providers.includes('PayU S.A.') && providers.includes('odrębny administrator'), 'Provider page does not disclose PayU role');
+check(terms.includes('PayU S.A.') && terms.includes('czas nieokreślony') && terms.includes('Plan i płatności'), 'Terms do not describe PayU recurring subscription');
+check(security.includes('Secure Form') && security.includes('CVV/CVC'), 'Security page does not explain PayU card handling');
 
 if (failures.length) {
   console.error('SUBSCRIPTION READINESS AUDIT FAILED');
