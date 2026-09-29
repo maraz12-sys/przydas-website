@@ -4,6 +4,8 @@ const read = (path) => fs.readFileSync(path, 'utf8');
 const packages = read('src/components/PackagesSection.astro');
 const finalSections = read('src/components/FinalSections.astro');
 const trial = read('src/pages/test.astro');
+const privacy = read('src/pages/polityka-prywatnosci.astro');
+const providers = read('src/pages/podprocesorzy.astro');
 
 const failures = [];
 const check = (condition, message) => { if (!condition) failures.push(message); };
@@ -31,13 +33,16 @@ const splitLegalVersions =
   trial.includes("dpa_version: dpaVersion");
 check(splitLegalVersions, 'Legal document version metadata missing');
 check(trial.includes("const termsVersion = '2026-09-26.1'"), 'Terms version constant mismatch');
-check(trial.includes("const privacyVersion = '2.0'"), 'Privacy version constant mismatch');
+check(trial.includes("const privacyVersion = '2.1'"), 'Privacy version constant mismatch');
 check(trial.includes("const dpaVersion = '2026-09-04.1'"), 'DPA version constant mismatch');
 check(trial.includes('href="/regulamin"'), 'Terms link missing');
 check(trial.includes('href="/polityka-prywatnosci"'), 'Privacy link missing');
 check(trial.includes('href="/umowa-powierzenia"'), 'Data-processing agreement link missing');
 check(trial.includes('/auth/v1/signup'), 'Supabase Auth signup call missing');
 check(trial.includes('Bez karty') || trial.includes('bez podawania karty'), 'No-card trial message missing');
+check(privacy.includes('PayU S.A.') && privacy.includes('odrębny administrator'), 'Privacy policy does not disclose PayU role');
+check(privacy.includes('nie otrzymuje pełnego numeru karty') && privacy.includes('CVV/CVC'), 'Privacy policy does not explain card data handling');
+check(providers.includes('PayU S.A.') && providers.includes('odrębny administrator'), 'Provider page does not disclose PayU role');
 
 if (failures.length) {
   console.error('SUBSCRIPTION READINESS AUDIT FAILED');
