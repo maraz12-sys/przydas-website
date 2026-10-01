@@ -8,6 +8,8 @@ const privacy = read('src/pages/polityka-prywatnosci.astro');
 const providers = read('src/pages/podprocesorzy.astro');
 const terms = read('src/pages/regulamin.astro');
 const security = read('src/pages/bezpieczenstwo.astro');
+const contact = read('src/pages/kontakt.astro');
+const paymentInfo = read('src/pages/platnosci.astro');
 
 const failures = [];
 const check = (condition, message) => { if (!condition) failures.push(message); };
@@ -34,7 +36,7 @@ const splitLegalVersions =
   trial.includes("privacy_version: privacyVersion") &&
   trial.includes("dpa_version: dpaVersion");
 check(splitLegalVersions, 'Legal document version metadata missing');
-check(trial.includes("const termsVersion = '2026-09-29.1'"), 'Terms version constant mismatch');
+check(trial.includes("const termsVersion = '2026-10-01.1'"), 'Terms version constant mismatch');
 check(trial.includes("const privacyVersion = '2.1'"), 'Privacy version constant mismatch');
 check(trial.includes("const dpaVersion = '2026-09-04.1'"), 'DPA version constant mismatch');
 check(trial.includes('href="/regulamin"'), 'Terms link missing');
@@ -47,6 +49,12 @@ check(privacy.includes('nie otrzymuje pełnego numeru karty') && privacy.include
 check(providers.includes('PayU S.A.') && providers.includes('odrębny administrator'), 'Provider page does not disclose PayU role');
 check(terms.includes('PayU S.A.') && terms.includes('czas nieokreślony') && terms.includes('Plan i płatności'), 'Terms do not describe PayU recurring subscription');
 check(security.includes('Secure Form') && security.includes('CVV/CVC'), 'Security page does not explain PayU card handling');
+check(terms.includes('+48 731 350 127') && contact.includes('+48 731 350 127'), 'PayU contact phone missing');
+check(terms.includes('nie później niż w ciągu 1 dnia roboczego'), 'PayU fulfilment time missing from terms');
+check(terms.includes('14 dni') && terms.includes('ul. Boczna 23, 86-031 Osielsko'), 'Withdrawal/contact address incomplete');
+check(terms.includes('nie udziela odrębnej gwarancji handlowej'), 'Warranty/after-sales statement missing');
+check(paymentInfo.includes('START') && paymentInfo.includes('ZESPÓŁ') && paymentInfo.includes('BIZNES'), 'Payment information page does not list plans');
+check(paymentInfo.includes('Plan i płatności') && paymentInfo.includes('Zamawiam i płacę'), 'Payment information page does not explain the checkout path');
 
 if (failures.length) {
   console.error('SUBSCRIPTION READINESS AUDIT FAILED');
