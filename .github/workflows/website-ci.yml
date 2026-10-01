@@ -39,6 +39,7 @@ jobs:
           test -s dist/potwierdzenie-rezerwacji/index.html
           test -s dist/kontakt/index.html
           test -s dist/regulamin/index.html
+          test -s dist/platnosci/index.html
           test -s dist/polityka-prywatnosci/index.html
           test -s dist/cookies/index.html
           test -s dist/podprocesorzy/index.html
@@ -96,13 +97,25 @@ jobs:
           grep -q 'Władysława Jagiełły 6' dist/kontakt/index.html
           grep -q 'Boczna 23' dist/kontakt/index.html
 
+          # PayU website compliance gates.
+          grep -q '+48 731 350 127' dist/kontakt/index.html
+          grep -q '+48 731 350 127' dist/regulamin/index.html
+          grep -q 'nie później niż w ciągu 1 dnia roboczego' dist/regulamin/index.html
+          grep -q 'nie udziela odrębnej gwarancji handlowej' dist/regulamin/index.html
+          grep -q 'Płatności i PayU' dist/platnosci/index.html
+          grep -q 'Zamawiam i płacę' dist/platnosci/index.html
+          grep -q 'START' dist/platnosci/index.html
+          grep -q 'ZESPÓŁ' dist/platnosci/index.html
+          grep -q 'BIZNES' dist/platnosci/index.html
+          grep -q 'platnosci' dist/sitemap.xml
+
           # Contract/legal release gates.
           grep -q 'Uruchomienie Okresu próbnego nie powoduje automatycznego przejścia na płatną Subskrypcję' dist/regulamin/index.html
           grep -q 'Każda nowa Organizacja otrzymuje 30 dni' dist/regulamin/index.html
           grep -q '14 dni' dist/regulamin/index.html
           grep -q 'obowiązku zapłaty' dist/regulamin/index.html
           grep -q '/umowa-powierzenia' dist/regulamin/index.html
-          grep -q 'Wersja 2026-09-29.1' dist/regulamin/index.html
+          grep -q 'Wersja 2026-10-01.1' dist/regulamin/index.html
           grep -q 'Wersja 2026-09-04.1' dist/umowa-powierzenia/index.html
           grep -q 'art. 28 RODO' dist/umowa-powierzenia/index.html
           grep -q 'udokumentowane polecenie' dist/umowa-powierzenia/index.html
