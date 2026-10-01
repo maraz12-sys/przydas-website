@@ -120,6 +120,7 @@ const securityFaq = [
       <strong>Prawo i dane</strong>
       <a href="/regulamin">Regulamin</a>
       <a href="/polityka-prywatnosci">Polityka prywatności</a>
+      <a href="/platnosci">Płatności i PayU</a>
       <a href="/cookies">Cookies i pamięć urządzenia</a>
       <a href="/podprocesorzy">Podprocesorzy</a>
       <a href="/bezpieczenstwo">Bezpieczeństwo danych</a>
@@ -130,6 +131,7 @@ const securityFaq = [
     <div><span>Sprzedaż</span><a href="mailto:sprzedaz@xn--przyda-8ib.pl">sprzedaz@przydaś.pl</a></div>
     <div><span>Wsparcie</span><a href="mailto:wsparcie@xn--przyda-8ib.pl">wsparcie@przydaś.pl</a></div>
     <div><span>RODO / incydenty</span><a href="mailto:bezpieczenstwo@xn--przyda-8ib.pl">bezpieczenstwo@przydaś.pl</a></div>
+    <div><span>Telefon</span><a href="tel:+48731350127">+48 731 350 127</a></div>
   </div>
 
   <div class="complete-footer-shell footer-bottom-new">
@@ -175,12 +177,13 @@ const securityFaq = [
   .footer-column strong { margin-bottom:4px; color:#fff; font-size:12px; }
   .footer-column a { color:#99aaa2; font-size:11px; text-decoration:none; }
   .footer-column a:hover { color:#fff; }
-  .footer-contact-strip { padding:18px 0; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; border-top:1px solid #203028; border-bottom:1px solid #203028; }
+  .footer-contact-strip { padding:18px 0; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; border-top:1px solid #203028; border-bottom:1px solid #203028; }
   .footer-contact-strip div { display:flex; flex-direction:column; gap:2px; }
   .footer-contact-strip span { color:#708279; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }
   .footer-contact-strip a { color:#cbd7d1; font-size:11px; text-decoration:none; }
   .footer-bottom-new { min-height:74px; display:flex; align-items:center; justify-content:space-between; gap:20px; color:#667970; font-size:10px; }
   @media (max-width:960px) {
+    .footer-contact-strip { grid-template-columns:repeat(2,1fr); }
     .legal-hub-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
     .security-faq { grid-template-columns:1fr; gap:24px; }
     .footer-top { grid-template-columns:1.4fr repeat(2,1fr); }
