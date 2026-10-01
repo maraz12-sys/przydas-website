@@ -98,8 +98,8 @@ jobs:
           grep -q 'Boczna 23' dist/kontakt/index.html
 
           # PayU website compliance gates.
-          grep -q '+48 731 350 127' dist/kontakt/index.html
-          grep -q '+48 731 350 127' dist/regulamin/index.html
+          grep -q '+48 791 910 817' dist/kontakt/index.html
+          grep -q '+48 791 910 817' dist/regulamin/index.html
           grep -q 'nie później niż w ciągu 1 dnia roboczego' dist/regulamin/index.html
           grep -q 'nie udziela odrębnej gwarancji handlowej' dist/regulamin/index.html
           grep -q 'Płatności i PayU' dist/platnosci/index.html
