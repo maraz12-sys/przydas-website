@@ -55,6 +55,8 @@ check(terms.includes('14 dni') && terms.includes('ul. Boczna 23, 86-031 Osielsko
 check(terms.includes('nie udziela odrębnej gwarancji handlowej'), 'Warranty/after-sales statement missing');
 check(paymentInfo.includes('START') && paymentInfo.includes('ZESPÓŁ') && paymentInfo.includes('BIZNES'), 'Payment information page does not list plans');
 check(paymentInfo.includes('Plan i płatności') && paymentInfo.includes('Zamawiam i płacę'), 'Payment information page does not explain the checkout path');
+check(paymentInfo.includes('nie ma kosztów wysyłki ani dostawy'), 'Payment information page does not explain delivery/shipping costs');
+check(paymentInfo.includes('Wymagania techniczne') && paymentInfo.includes('JavaScript'), 'Digital service technical requirements missing');
 
 if (failures.length) {
   console.error('SUBSCRIPTION READINESS AUDIT FAILED');
