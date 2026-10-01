@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Audit production dependencies
-        run: npm audit --omit=dev --audit-level=high
+        run: npm audit --audit-level=low
 
       - name: Build landing page
         run: npm run build
@@ -38,6 +38,8 @@ jobs:
           test -s dist/formularz/index.html
           test -s dist/potwierdzenie-rezerwacji/index.html
           test -s dist/kontakt/index.html
+          test -s dist/eksport-danych/index.html
+          test -s dist/legal/2026-10-01.3/regulamin.html
           test -s dist/regulamin/index.html
           test -s dist/platnosci/index.html
           test -s dist/polityka-prywatnosci/index.html
@@ -117,8 +119,8 @@ jobs:
           grep -q '14 dni' dist/regulamin/index.html
           grep -q 'obowiązku zapłaty' dist/regulamin/index.html
           grep -q '/umowa-powierzenia' dist/regulamin/index.html
-          grep -q 'Wersja 2026-10-01.2' dist/regulamin/index.html
-          grep -q 'Wersja 2026-09-04.1' dist/umowa-powierzenia/index.html
+          grep -q 'Wersja 2026-10-01.3' dist/regulamin/index.html
+          grep -q 'Wersja 2026-10-01.3' dist/umowa-powierzenia/index.html
           grep -q 'art. 28 RODO' dist/umowa-powierzenia/index.html
           grep -q 'udokumentowane polecenie' dist/umowa-powierzenia/index.html
           grep -q 'podprocesor' dist/umowa-powierzenia/index.html

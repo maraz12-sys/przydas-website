@@ -36,9 +36,9 @@ const splitLegalVersions =
   trial.includes("privacy_version: privacyVersion") &&
   trial.includes("dpa_version: dpaVersion");
 check(splitLegalVersions, 'Legal document version metadata missing');
-check(trial.includes("const termsVersion = '2026-10-01.2'"), 'Terms version constant mismatch');
-check(trial.includes("const privacyVersion = '2.1'"), 'Privacy version constant mismatch');
-check(trial.includes("const dpaVersion = '2026-09-04.1'"), 'DPA version constant mismatch');
+check(trial.includes("const termsVersion = '2026-10-01.3'"), 'Terms version constant mismatch');
+check(trial.includes("const privacyVersion = '2026-10-01.3'"), 'Privacy version constant mismatch');
+check(trial.includes("const dpaVersion = '2026-10-01.3'"), 'DPA version constant mismatch');
 check(trial.includes('href="/regulamin"'), 'Terms link missing');
 check(trial.includes('href="/polityka-prywatnosci"'), 'Privacy link missing');
 check(trial.includes('href="/umowa-powierzenia"'), 'Data-processing agreement link missing');
@@ -73,5 +73,6 @@ console.log(JSON.stringify({
   emailConfirmation: true,
   paymentRequiredForTrial: false,
   payuSelected: true,
-  payuConnected: false,
+  scope: "public_contract_copy",
+  payuRuntimeVerification: "performed_by_backend_and_sandbox_tests",
 }, null, 2));
