@@ -102,6 +102,8 @@ jobs:
           grep -q '+48 791 910 817' dist/regulamin/index.html
           grep -q 'nie później niż w ciągu 1 dnia roboczego' dist/regulamin/index.html
           grep -q 'nie udziela odrębnej gwarancji handlowej' dist/regulamin/index.html
+          grep -q 'Dodatkowe wymagania finalizacji płatnego zamówienia' dist/regulamin/index.html
+          grep -q 'Warunki finalizacji zakupu' dist/platnosci/index.html
           grep -q 'Płatności i PayU' dist/platnosci/index.html
           grep -q 'Zamawiam i płacę' dist/platnosci/index.html
           grep -q 'START' dist/platnosci/index.html
@@ -115,7 +117,7 @@ jobs:
           grep -q '14 dni' dist/regulamin/index.html
           grep -q 'obowiązku zapłaty' dist/regulamin/index.html
           grep -q '/umowa-powierzenia' dist/regulamin/index.html
-          grep -q 'Wersja 2026-10-01.1' dist/regulamin/index.html
+          grep -q 'Wersja 2026-10-01.2' dist/regulamin/index.html
           grep -q 'Wersja 2026-09-04.1' dist/umowa-powierzenia/index.html
           grep -q 'art. 28 RODO' dist/umowa-powierzenia/index.html
           grep -q 'udokumentowane polecenie' dist/umowa-powierzenia/index.html
