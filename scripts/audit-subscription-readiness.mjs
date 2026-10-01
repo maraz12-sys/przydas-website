@@ -36,7 +36,7 @@ const splitLegalVersions =
   trial.includes("privacy_version: privacyVersion") &&
   trial.includes("dpa_version: dpaVersion");
 check(splitLegalVersions, 'Legal document version metadata missing');
-check(trial.includes("const termsVersion = '2026-10-01.1'"), 'Terms version constant mismatch');
+check(trial.includes("const termsVersion = '2026-10-01.2'"), 'Terms version constant mismatch');
 check(trial.includes("const privacyVersion = '2.1'"), 'Privacy version constant mismatch');
 check(trial.includes("const dpaVersion = '2026-09-04.1'"), 'DPA version constant mismatch');
 check(trial.includes('href="/regulamin"'), 'Terms link missing');
@@ -57,6 +57,7 @@ check(paymentInfo.includes('START') && paymentInfo.includes('ZESPÓŁ') && payme
 check(paymentInfo.includes('Plan i płatności') && paymentInfo.includes('Zamawiam i płacę'), 'Payment information page does not explain the checkout path');
 check(paymentInfo.includes('nie ma kosztów wysyłki ani dostawy'), 'Payment information page does not explain delivery/shipping costs');
 check(paymentInfo.includes('Wymagania techniczne') && paymentInfo.includes('JavaScript'), 'Digital service technical requirements missing');
+check(terms.includes('Dodatkowe wymagania finalizacji płatnego zamówienia') && paymentInfo.includes('Warunki finalizacji zakupu'), 'PayU checkout restrictions/additional requirements disclosure missing');
 
 if (failures.length) {
   console.error('SUBSCRIPTION READINESS AUDIT FAILED');
