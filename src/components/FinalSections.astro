@@ -28,8 +28,8 @@ const comparisonSections = [
       ['Tworzenie i zarządzanie zespołem', '✓', '✓', '✓'],
       ['Zbiorczy widok zespołu', '✓', '✓', '✓'],
       ['Stanowiska i przypisywanie stanowisk', '—', '✓', '✓'],
-      ['Zadania dla członków zespołu', '—', '—', '✓'],
-      ['Garderoba i informacje pracownicze', '—', '—', '✓'],
+      ['Zadania dla członków zespołu', '—', '✓', '✓'],
+      ['Garderoba i informacje pracownicze', '—', '✓', '✓'],
       ['Rozliczenia pracowników i naliczanie wypłat', '—', '—', '✓'],
     ],
   },
@@ -37,9 +37,10 @@ const comparisonSections = [
     title: 'Przydasie — wiedza i narzędzia',
     rows: [
       ['Notatnik', '✓', '✓', '✓'],
+      ['TO-DO prywatne', '✓', '✓', '✓'],
       ['Współdzielone notatki', '—', '✓', '✓'],
-      ['Standardy, instrukcje, TODO i przydatne linki', '—', '✓', '✓'],
-      ['Checklisty', '—', '—', '✓'],
+      ['Standardy, instrukcje i przydatne linki', '—', '✓', '✓'],
+      ['Checklisty', '—', '✓', '✓'],
       ['Generator formułek', '—', '—', '✓'],
       ['Podwykonawcy', '—', '—', '✓'],
       ['Asystent AI', '—', '—', 'W przygotowaniu'],
@@ -48,7 +49,9 @@ const comparisonSections = [
   {
     title: 'Magazyn',
     rows: [
-      ['Dostęp do Magazynu', '—', 'Do 3 kategorii', 'Bez limitu'],
+      ['Podstawowy Magazyn: kategorie, pozycje i stany', '—', 'Bez limitu', 'Bez limitu'],
+      ['Historia operacji magazynowych', '—', '—', '✓'],
+      ['Inwentaryzacje', '—', '—', '✓'],
     ],
   },
   {
@@ -56,7 +59,7 @@ const comparisonSections = [
     rows: [
       ['Podstawowy panel: liczba i wartość rezerwacji, kwoty do zapłaty', '✓', '✓', '✓'],
       ['Pełna lista rezerwacji i dostosowanie tabeli', '—', '✓', '✓'],
-      ['Oznaczanie faktur', '—', '✓', '✓'],
+      ['Oznaczanie faktur', '✓', '✓', '✓'],
       ['Rozliczenia pracowników według własnych stawek', '—', '—', '✓'],
       ['Gotówka, wypłaty i historia rozliczeń pracowników', '—', '—', '✓'],
       ['Eksport danych do Excela', '—', '—', '✓'],
@@ -106,7 +109,7 @@ const comparisonOutcomes = [
     plan: 'ZESPÓŁ',
     price: '149 zł / mies.',
     label: 'Gdy najbardziej boli brak czasu',
-    text: 'Stanowiska, pełne powiadomienia, ankiety, prywatne TODO i podstawowe statystyki zdejmują z właściciela dużą część codziennego pilnowania ludzi.',
+    text: 'Stanowiska, zadania, garderoba, pełne powiadomienia i Magazyn zdejmują z właściciela dużą część codziennego pilnowania ludzi.',
   },
   {
     plan: 'BIZNES',
@@ -142,7 +145,7 @@ const faq = [
   },
   {
     q: 'Co dostaję za 249 zł w pakiecie BIZNES?',
-    a: 'BIZNES jest dla firmy, która chce zdjąć z właściciela pracę finansową i wykorzystać dane do dalszej sprzedaży. Obejmuje m.in. naliczanie wynagrodzeń pracowników według własnych stawek, obsługę gotówki i historii wypłat, checklisty materiałowe i zakupowe, zaawansowane statystyki, przypomnienia o powrotach klientów, nielimitowany Magazyn i eksport danych.',
+    a: 'BIZNES jest dla firmy, która chce zdjąć z właściciela pracę finansową i wykorzystać dane do dalszej sprzedaży. Obejmuje m.in. naliczanie wynagrodzeń pracowników według własnych stawek, obsługę gotówki i historii wypłat, checklisty materiałowe i zakupowe, Zaawansowany Magazyn z historią operacji i inwentaryzacjami, zaawansowane statystyki, przypomnienia o powrotach klientów i eksport danych.',
   },
   {
     q: 'Jak Przydaś pomaga wracać do byłych klientów?',
