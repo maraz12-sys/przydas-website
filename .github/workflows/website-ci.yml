@@ -86,7 +86,7 @@ jobs:
           # Commercial truth gates.
           grep -q 'Magazyn bez limitu kategorii' dist/index.html
           ! grep -q 'Magazyn do 5 kategorii' dist/index.html
-          grep -q 'Zadania zespołu, garderoba i checklisty materiałowe' dist/index.html
+          grep -q 'Stanowiska, zadania, garderoba i współdzielona wiedza zespołu' dist/index.html
           grep -q 'Szanse sprzedażowe: potencjalne stałe współprace i imprezy prywatne' dist/index.html
           grep -q 'W przygotowaniu' dist/index.html
           grep -q '30 dni BIZNES za 0 zł dla każdej nowej firmy' dist/index.html
