@@ -84,7 +84,7 @@ jobs:
           grep -q 'X-Robots-Tag: noindex' dist/_headers
 
           # Commercial truth gates.
-          grep -q 'Magazyn do 3 kategorii' dist/index.html
+          grep -q 'Magazyn bez limitu kategorii' dist/index.html
           ! grep -q 'Magazyn do 5 kategorii' dist/index.html
           grep -q 'Zadania zespołu, garderoba i checklisty materiałowe' dist/index.html
           grep -q 'Szanse sprzedażowe: potencjalne stałe współprace i imprezy prywatne' dist/index.html
