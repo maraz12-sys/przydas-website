@@ -1,0 +1,47 @@
+name: Repair locked website dependency security
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/repair-dependency-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-website-security-lock
+  cancel-in-progress: false
+
+jobs:
+  audit-build-and-commit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.12.0'
+          cache: npm
+      - name: Repair vulnerable versions without changing package ranges
+        run: npm audit fix --package-lock-only --ignore-scripts
+      - name: Reinstall using repaired locked versions
+        run: npm ci
+      - name: Verify dependency advisories are resolved
+        run: npm audit --audit-level=low
+      - name: Verify site compiles and output exists
+        run: |
+          npm run build
+          test -s dist/formularz/index.html
+          grep -F 'wireEventCategoryDependencies' dist/formularz/index.html
+      - name: Commit only tested lockfile changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "fix(security): patch locked dependencies for website and build validation"
+            git push origin main
+          fi
