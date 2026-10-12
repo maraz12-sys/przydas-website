@@ -35,6 +35,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          set -x
 
           test -s dist/index.html
           test -s dist/404.html
