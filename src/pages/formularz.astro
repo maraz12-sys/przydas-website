@@ -73,6 +73,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       .field{display:grid;align-content:start;gap:7px;min-width:0}
       .field.field-wide{grid-column:1/-1}
       .field[hidden]{display:none!important}
+      .category-filter-wrap{min-width:0}.category-filter-wrap.field-wide{grid-column:1/-1}.category-filter-wrap[hidden]{display:none!important}
       .field>span{display:flex;align-items:center;gap:5px;color:#34453c;font-size:12px;font-weight:780}
       .field-hint{margin-top:-1px;color:#7b8a82;font-size:10px;line-height:1.5}
       .field em{font-style:normal;color:var(--danger);font-weight:900}
@@ -250,7 +251,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       };
       successAction.addEventListener('click',()=>showState('Formularz wysłany','Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji. Wysłanie formularza nie oznacza potwierdzenia rezerwacji — otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.',true));
 
-      const renderField = (field,hasInvoiceToggle=false) => {
+      const renderRawField = (field,hasInvoiceToggle=false) => {
         const key=esc(field.key),label=esc(fieldLabels[field.key]||field.label||field.key),required=field.required===true?' required':'',mark=field.required===true?' <em>*</em>':'';
         const wide=wideKeys.has(field.key)||field.type==='textarea'?' field-wide':'';
         const invoiceDependent=hasInvoiceToggle&&invoiceDependentKeys.has(field.key);
@@ -265,6 +266,33 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         if(timeSlotKeys.has(field.key)) return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><select name="${key}"${required}><option value="">Wybierz godzinę</option>${timeOptions.map(value=>`<option value="${value}">${value}</option>`).join('')}</select>${hint}</label>`;
         const allowed=['date','email','tel','number','text','time','datetime-local']; const type=field.type==='datetime'?'datetime-local':(allowed.includes(field.type)?field.type:'text');
         return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><input type="${type}" name="${key}"${required}${placeholder}${type==='email'?' autocomplete="email"':''}${type==='tel'?' autocomplete="tel"':''}>${hint}</label>`;
+      };
+      const renderField = (field,hasInvoiceToggle=false) => {
+        const html=renderRawField(field,hasInvoiceToggle);
+        const categories=Array.isArray(field?.rodzaje_wydarzen_nazwy)?field.rodzaje_wydarzen_nazwy:[];
+        const ids=Array.isArray(field?.rodzaje_wydarzen_ids)?field.rodzaje_wydarzen_ids:[];
+        if(field?.custom!==true||!ids.length)return html;
+        const wide=field.type==='textarea'?' field-wide':'';
+        return `<div class="category-filter-wrap${wide}" data-event-categories="${esc(JSON.stringify(categories))}" hidden>${html}</div>`;
+      };
+      const wireEventCategoryDependencies = form => {
+        const eventControl=form.elements.namedItem('rodzaj_wydarzenia');
+        const wrappers=Array.from(form.querySelectorAll('[data-event-categories]'));
+        if(!wrappers.length)return;
+        const normalize=value=>String(value||'').trim().normalize('NFKC').toLocaleLowerCase('pl-PL');
+        const sync=()=>{
+          const selected=normalize(eventControl?.value);
+          for(const wrapper of wrappers){
+            let names=[];
+            try{names=JSON.parse(wrapper.dataset.eventCategories||'[]')}catch{}
+            const visible=Boolean(selected&&Array.isArray(names)&&names.some(name=>normalize(name)===selected));
+            wrapper.hidden=!visible;
+            for(const control of wrapper.querySelectorAll('input,textarea,select'))control.disabled=!visible;
+          }
+        };
+        eventControl?.addEventListener('change',sync);
+        eventControl?.addEventListener('input',sync);
+        sync();
       };
       const wireInvoiceDependencies = form => {
         const toggle=form.elements.namedItem('faktura_wymagana');
@@ -298,6 +326,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         card.innerHTML=`<header class="head"><span class="organization">${esc(data.organization_name||'Nasz zespół')}</span><h1>${esc(data.heading||'Formularz rezerwacyjny')}</h1><div class="meta">${data.expires_at?`<span>Link ważny do ${esc(fmtDate(data.expires_at))}</span>`:''}<span>Dane trafiają bezpośrednio do naszego zespołu</span></div></header><div class="form-body"><div class="process-note"><strong>Jak wygląda dalszy proces?</strong><span>${esc(data.process_text||'Uzupełnij i wyślij formularz. Zweryfikujemy dane, a po zaakceptowaniu rezerwacji otrzymasz potwierdzenie na podany adres e-mail. Jeżeli coś będzie wymagało doprecyzowania/uzupełnienia skontaktujemy się z Tobą.')}</span><div class="process-warning">${esc(data.process_warning||'Pamiętaj! Wysłanie formularza nie oznacza jeszcze potwierdzenia rezerwacji.')}</div></div><div class="form-intro"><div><strong>Informacje o wydarzeniu</strong></div><span class="required-note">* pola wymagane</span></div><form id="reservation-form">${fields.map(field=>renderField(field,hasInvoiceToggle)).join('')}<div id="form-error" class="error-wrap" aria-live="polite"></div><div class="actions"><div class="actions-copy">Przed wysłaniem możesz jeszcze sprawdzić wszystkie wpisane informacje.</div><button class="submit" type="submit">Wyślij formularz →</button></div></form></div>`;
         const form=document.getElementById('reservation-form');
         wireInvoiceDependencies(form);
+        wireEventCategoryDependencies(form);
         wireTimeDefaults(form);
         form.addEventListener('submit',submitForm);
       };
@@ -308,7 +337,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         const answers={};
         for(const field of (formData?.fields||[])){
           const input=form.elements.namedItem(field.key); if(!input)continue;
-          if(input.disabled&&invoiceDependentKeys.has(field.key)){answers[field.key]='';continue;}
+          if(input.disabled){if(invoiceDependentKeys.has(field.key))answers[field.key]='';continue;}
           answers[field.key]=field.type==='checkbox'?Boolean(input.checked):String(input.value||'').trim();
         }
         button.disabled=true;button.textContent='Wysyłanie…';errorBox.innerHTML='';
