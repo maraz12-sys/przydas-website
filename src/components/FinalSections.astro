@@ -325,6 +325,7 @@ const faq = [
 
 <section class="final-cta-section" id="start">
   <div class="shell final-cta-box">
+    <img class="final-brand-spark" src="/ornament-spark.svg" width="96" height="96" alt="" aria-hidden="true" loading="lazy" decoding="async" />
     <div>
       <span class="final-kicker" data-selected-plan-label>30 dni BIZNES za 0 zł dla każdej nowej firmy.</span>
       <h2>Sprawdź Przydasia na własnej firmie, zanim zapłacisz.</h2>
@@ -340,26 +341,6 @@ const faq = [
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="shell footer-main">
-    <a href="#top" class="footer-brand" aria-label="Przydaś — strona główna">
-      <span class="footer-mark"><img src="/przydas-mark.svg" alt="" /></span>
-      <span><strong>Przydaś</strong><small>System dla branży animacyjnej</small></span>
-    </a>
-    <nav aria-label="Nawigacja w stopce">
-      <a href="#korzysci">Korzyści</a>
-      <a href="#jak-dziala">Jak działa</a>
-      <a href="#cennik">Cennik</a>
-      <a href="#porownanie">Porównanie</a>
-      <a href="#faq">FAQ</a>
-      <a href="https://app.xn--przyda-8ib.pl/">Logowanie</a>
-    </nav>
-  </div>
-  <div class="shell footer-bottom">
-    <span>© 2026 Przydaś</span>
-    <span>Mniej pilnowania. Więcej czasu na firmę.</span>
-  </div>
-</footer>
 
 <script type="application/ld+json" set:html={JSON.stringify({
   '@context': 'https://schema.org',
@@ -430,7 +411,10 @@ const faq = [
   .faq-item p { margin: 0; padding: 0 21px 20px; color: #66756d; font-size: 13px; line-height: 1.62; }
 
   .final-cta-section { padding: 64px 0; background: #fff; }
-  .final-cta-box { padding: 54px; border-radius: 30px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 50px; align-items: center; color: #f8fbf9; background: linear-gradient(135deg, #056b45, #087f53); box-shadow: 0 24px 60px rgba(8,127,83,.2); }
+  .final-brand-spark { position: absolute; z-index: 0; right: 20px; top: 12px; width: 38px; height: 38px; opacity: .25; filter: brightness(0) invert(1); pointer-events: none; user-select: none; }
+  .final-cta-box > :not(.final-brand-spark) { position: relative; z-index: 1; }
+  @media (max-width: 760px) { .final-brand-spark { width: 26px; right: 15px; top: 10px; } }
+  .final-cta-box { position: relative; overflow: hidden; padding: 54px; border-radius: 30px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 50px; align-items: center; color: #f8fbf9; background: linear-gradient(135deg, #056b45, #087f53); box-shadow: 0 24px 60px rgba(8,127,83,.2); }
   .final-kicker { display: inline-block; margin-bottom: 16px; color: #d9f7e8; font-size: 12px; font-weight: 850; }
   .final-cta-box h2 { max-width: 760px; margin-bottom: 16px; font-size: clamp(38px, 4vw, 56px); line-height: 1.01; letter-spacing: -.05em; }
   .final-cta-box p { max-width: 720px; margin: 0; color: #e8f7ef; font-size: 15px; line-height: 1.6; }
@@ -440,24 +424,12 @@ const faq = [
   .final-secondary { color: #fff; border: 1px solid rgba(255,255,255,.48); background: rgba(255,255,255,.08); }
   .final-actions small { margin-top: 3px; color: #e1f2e8; font-size: 10px; line-height: 1.45; text-align: center; }
 
-  .site-footer { padding: 48px 0 26px; color: #c0cec6; background: #101914; }
-  .footer-main { padding-bottom: 38px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
-  .footer-brand { display: flex; align-items: center; gap: 11px; color: #fff; }
-  .footer-mark { width: 31px; height: 31px; border-radius: 9px; overflow: hidden; display: grid; place-items: center; }
-  .footer-mark img { width: 31px; height: 31px; display: block; }
-  .footer-brand > span:last-child { display: grid; gap: 3px; }
-  .footer-brand strong { font-size: 18px; }
-  .footer-brand small { color: #a9b8af; font-size: 9px; }
-  .footer-main nav { display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; font-weight: 700; }
-  .footer-main nav a:hover { color: #8ee8be; }
-  .footer-bottom { padding-top: 22px; border-top: 1px solid #26352d; display: flex; justify-content: space-between; gap: 24px; color: #a9b8af; font-size: 10px; }
 
   @media (max-width: 900px) {
     .comparison-outcomes { grid-template-columns: 1fr; }
     .trust-grid { grid-template-columns: 1fr; }
     .onboarding-box, .faq-shell, .final-cta-box { grid-template-columns: 1fr; }
     .faq-head { position: static; }
-    .footer-main { align-items: flex-start; flex-direction: column; }
   }
 
   @media (max-width: 640px) {
@@ -469,7 +441,6 @@ const faq = [
     .onboarding-box, .final-cta-box { padding: 27px; }
     .final-cta-box h2 { font-size: 36px; }
     .final-actions .button { width: 100%; }
-    .footer-bottom { flex-direction: column; }
   }
 
   .comparison-details { margin: 0; }

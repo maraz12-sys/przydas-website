@@ -1,8 +1,9 @@
 <section class="showcase-section" id="jak-wyglada">
   <div class="shell showcase-shell">
+    <img class="showcase-brand-wave" src="/ornament-wave.svg" width="220" height="72" alt="" aria-hidden="true" loading="lazy" decoding="async" />
     <div class="showcase-head">
-      <span class="showcase-eyebrow">Przydaś w codziennej pracy</span>
-      <h2>Zobacz, jak Przydaś wygląda w codziennej pracy.</h2>
+      <span class="showcase-eyebrow">Przydaś. W codziennej pracy</span>
+      <h2>Zobacz, jak wygląda Przydaś.</h2>
       <p>
         Poniżej zobaczysz, jak w jednym miejscu łączą się najważniejsze obszary firmy —
         od kalendarza i rezerwacji aż po rozliczenia, statystyki i powroty klientów.
@@ -65,7 +66,7 @@
     </article>
 
     <div class="showcase-proof">
-      <span class="showcase-proof-icon">P</span>
+      <span class="showcase-proof-icon"><img src="/przydas-mark.svg" width="24" height="24" alt="" aria-hidden="true" loading="lazy" /></span>
       <div>
         <strong>Najważniejsze obszary codziennej pracy w jednym miejscu.</strong>
         <span>Od rezerwacji po rozliczenie i ponowny kontakt — bez przekopywania kilku narzędzi.</span>
@@ -85,7 +86,10 @@
     border-bottom: 1px solid #e6eee9;
   }
 
-  .showcase-shell { max-width: 1240px; }
+  .showcase-shell { max-width: 1240px; position: relative; }
+  .showcase-brand-wave { position: absolute; top: -49px; right: 7px; width: 124px; height: auto; opacity: .74; pointer-events: none; user-select: none; }
+  .showcase-proof-icon img { display: block; width: 24px; height: 24px; }
+  @media (max-width: 920px) { .showcase-brand-wave { display: none; } }
 
   .showcase-head {
     max-width: 820px;
