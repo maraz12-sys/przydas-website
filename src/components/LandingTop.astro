@@ -116,9 +116,9 @@ const audiences = [
 
 <header class="site-header">
   <div class="shell nav-wrap">
-    <a href="#top" class="brand" aria-label="Przydaś — strona główna">
+    <a href="#top" class="brand" aria-label="Przydaś. — strona główna">
       <span class="brand-mark" aria-hidden="true"><img src="/przydas-mark.svg" alt="" /></span>
-      <span>Przydaś</span>
+      <span>Przydaś.</span>
     </a>
 
     <nav class="nav-links" aria-label="Nawigacja główna">
@@ -162,6 +162,7 @@ const audiences = [
   </div>
 
   <div class="hero-visual" aria-label="Przykładowy panel Przydasia">
+    <img class="hero-brand-rays" src="/ornament-rays.svg" width="110" height="90" alt="" aria-hidden="true" decoding="async" />
     <div class="app-window hero-app">
       <div class="app-topbar">
         <div class="app-topbar-title"><span class="status-dot"></span> Dzisiaj w firmie</div>
@@ -414,7 +415,7 @@ const audiences = [
 </section>
 
 <div class="mobile-cta" aria-label="Szybki dostęp do bezpłatnego testu">
-  <span><strong>Przydaś</strong><small>30 dni BIZNES za 0 zł</small></span>
+  <span><strong>Przydaś.</strong><small>30 dni BIZNES za 0 zł</small></span>
   <a href="/test">Wypróbuj →</a>
 </div>
 
@@ -489,7 +490,7 @@ const audiences = [
   }
   .nav-wrap { min-height: 82px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 22px; }
   .brand { display: inline-flex; align-items: center; gap: 10px; width: fit-content; font-size: 22px; font-weight: 850; letter-spacing: -.025em; }
-  .brand-mark { width: 33px; height: 33px; border-radius: 10px; overflow: hidden; display: grid; place-items: center; box-shadow: 0 8px 18px rgba(20,72,48,.08); }
+  .brand-mark { width: 33px; height: 33px; display: grid; place-items: center; }
   .brand-mark img { display: block; width: 33px; height: 33px; }
   .nav-links { display: flex; align-items: center; gap: 27px; font-size: 14px; font-weight: 680; }
   .nav-links a, .login-link { transition: color .18s ease; }
@@ -513,6 +514,7 @@ const audiences = [
   .hero-benefits span { display: inline-flex; align-items: center; gap: 6px; }
 
   .hero-visual { position: relative; }
+  .hero-brand-rays { position: absolute; z-index: 1; width: 68px; height: auto; top: -48px; right: -24px; pointer-events: none; user-select: none; }
   .visual-glow { position: absolute; z-index: -1; inset: 12% 0 -7% 10%; background: radial-gradient(circle at center, rgba(8,127,83,.17), rgba(8,127,83,0) 65%); filter: blur(10px); }
   .app-window { overflow: hidden; border: 1px solid #d9e8df; border-radius: 25px; background: #fff; box-shadow: var(--shadow); }
   .hero-app { transform: perspective(1200px) rotateY(-1deg) rotateX(.35deg); }
@@ -717,6 +719,7 @@ const audiences = [
     .mobile-cta a { padding: 11px 13px; border-radius: 11px; color: #fff; background: var(--green); font-size: 11px; font-weight: 820; }
   }
 
+  @media (max-width: 920px) { .hero-brand-rays { display: none; } }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
