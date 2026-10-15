@@ -141,7 +141,9 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         .state{min-height:330px;padding:36px 20px}.state h2{font-size:23px}.success-dialog{padding:28px 20px 22px}.success-action{width:100%}
       }
       @media(max-width:420px){.secure-label span{display:none}.head h1{font-size:28px}.organization{font-size:10px}}
-    </style>
+    /* PRZYDAS_PUBLIC_DATE_CLICK_20261015 */
+      .field input[type="date"],.field input[type="date"]::-webkit-calendar-picker-indicator{cursor:pointer}
+      </style>
   </head>
   <body>
     <main class="page-shell">
@@ -294,6 +296,45 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         eventControl?.addEventListener('input',sync);
         sync();
       };
+      // Packages come from the per-organization event-type mapping.
+      const wirePackageDependencies = (form,fields) => {
+        const eventControl=form.elements.namedItem('rodzaj_wydarzenia');
+        const packageControl=form.elements.namedItem('pakiet');
+        const packageField=fields.find(field=>field.key==='pakiet');
+        const mapping=packageField?.optionsByEvent;
+        if(!packageControl||packageControl.tagName!=='SELECT'||!mapping||typeof mapping!=='object')return;
+        const norm=value=>String(value||'').trim().normalize('NFKC').toLocaleLowerCase('pl-PL');
+        const sync=()=>{
+          const selected=norm(eventControl?.value);
+          const match=Object.entries(mapping).find(([name])=>norm(name)===selected);
+          const allowed=eventControl?(match&&Array.isArray(match[1])?match[1]:[]):(Array.isArray(packageField.options)?packageField.options:[]);
+          const previous=packageControl.value;
+          packageControl.replaceChildren();
+          const blank=document.createElement('option');
+          blank.value='';
+          blank.textContent=eventControl&&!selected?'Najpierw wybierz rodzaj wydarzenia':allowed.length?'Wybierz pakiet':'Brak pakietów dla tego rodzaju wydarzenia';
+          packageControl.appendChild(blank);
+          for(const value of allowed){
+            const option=document.createElement('option');
+            option.value=String(value); option.textContent=String(value);
+            packageControl.appendChild(option);
+          }
+          packageControl.value=allowed.includes(previous)?previous:'';
+          packageControl.disabled=Boolean(eventControl&&!selected);
+        };
+        eventControl?.addEventListener('change',sync);
+        eventControl?.addEventListener('input',sync);
+        sync();
+      };
+      // Open the native date picker from the whole input, including mobile Safari.
+      const wireDatePickers = form => {
+        form.addEventListener('click',event=>{
+          const input=event.target?.closest?.('input[type="date"]');
+          if(!input||input.disabled||input.readOnly)return;
+          try{if(typeof input.showPicker==='function')input.showPicker();}
+          catch{input.focus();}
+        });
+      };
       const wireInvoiceDependencies = form => {
         const toggle=form.elements.namedItem('faktura_wymagana');
         if(!toggle)return;
@@ -327,6 +368,8 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         const form=document.getElementById('reservation-form');
         wireInvoiceDependencies(form);
         wireEventCategoryDependencies(form);
+        wirePackageDependencies(form,fields);
+        wireDatePickers(form);
         wireTimeDefaults(form);
         form.addEventListener('submit',submitForm);
       };
