@@ -1,0 +1,22 @@
+name: Validate Animilandia birthday landing
+on:
+  push:
+    branches: [animilandia-urodziny]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check PHP syntax
+        run: find animilandia-urodziny -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Check server behavior
+        run: php tests/core.php && php tests/plugin.php
+      - name: Check browser script syntax
+        run: node --check animilandia-urodziny/assets/landing.js
+      - name: Check independent page output
+        run: php tests/render.php > /tmp/animilandia-landing.html && python3 tools/check_html.py /tmp/animilandia-landing.html
+      - name: Build plugin install archive
+        run: python3 tools/build_zip.py

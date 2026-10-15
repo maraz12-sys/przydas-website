@@ -1,64 +1,47 @@
-# Przydaś — website
+# Animilandia — niezależny landing urodzinowy
 
-Landing page systemu Przydaś dla firm animacyjnych.
+Landing działa jako mała wtyczka na istniejącym WordPressie Animilandii w cyber_Folks. Nie wymaga ChatGPT Sites, konta ChatGPT dla odwiedzających, Cloudflare D1 ani logowania przez OpenAI. Zapytania są przechowywane w bazie WordPressa i dostępne dla administratora w menu **Urodziny**.
 
-## Stack
+## Jednorazowe uruchomienie
 
-- Astro 7
-- statyczny build do `dist/`
-- Cloudflare Workers Static Assets
-- GitHub Actions do walidacji buildu
+1. WordPress → Wtyczki → Dodaj wtyczkę → Wyślij wtyczkę na serwer. Wgraj `Animilandia_Urodziny_1.0.0.zip` i aktywuj.
+2. Od razu działa adres `https://animilandia.pl/urodziny-z-animatorem/`.
+3. W cyber_Folks ustaw subdomenę `urodziny.animilandia.pl` tak, aby jej katalog dokumentów wskazywał na **ten sam katalog instalacji WordPressa**, co animilandia.pl. Włącz SSL dla subdomeny. Nie instaluj drugiego WordPressa.
+4. Zamiast wcześniejszego CNAME do Sites użyj wskazania na serwer cyber_Folks, zgodnego z konfiguracją usługi. Potwierdź DNS i HTTPS przed przełączeniem reklamy.
+5. Wyślij jedno oznaczone zapytanie testowe; sprawdź zapis w panelu i realne doręczenie wiadomości e-mail.
 
-## Lokalnie
+Wtyczka nie zmienia istniejącej podstrony `/urodziny/`, motywu ani podstawowej strony głównej. Obsługuje tylko `/urodziny-z-animatorem/` i główny adres subdomeny `urodziny.animilandia.pl`.
 
-```bash
-npm install
-npm run dev
-```
+## Aktualizacje z czatu
 
-Build produkcyjny:
+Kod: wydzielona gałąź `animilandia-urodziny` w publicznym repozytorium `maraz12-sys/przydas-website`. Gałąź jest osobnym drzewem plików landingu; produkcyjna gałąź Przydasia nie jest zmieniana. Po edycji i testach publikowany jest manifest `release.json`, który wskazuje konkretny, niezmienny commit źródeł.
 
-```bash
-npm run build
-```
+Wtyczka sprawdza manifest co 5 minut za pomocą WP-Cron i aktualizuje wyłącznie siebie standardowym mechanizmem aktualizacji wtyczek WordPressa. WP-Cron zależy od ruchu na stronie; przy małym ruchu lub wyłączonym WP-Cron aktualizacja nastąpi później. Docelowo można uruchamiać WP-Cron z harmonogramu hostingu.
 
-## Struktura
+W **Urodziny → Ustawienia i aktualizacje** można wyłączyć automatyczne aktualizacje, zmienić odbiorcę powiadomień i sprawdzić ostatni status. Jeżeli WordPress blokuje modyfikacje plików lub wymaga FTP, aktualizacja zostaje wstrzymana i panel pokazuje przyczynę. Działanie aktualizacji trzeba potwierdzić na realnym hostingu przed traktowaniem wdrożenia jako zakończonego.
 
-- `src/pages/index.astro` — dokument, SEO i składanie strony
-- `src/components/LandingTop.astro` — hero, problemy, korzyści, cykl wydarzenia i segmentacja
-- `src/components/PackagesSection.astro` — wartość, kalkulator, ceny i pakiety
-- `src/components/FinalSections.astro` — porównanie, zaufanie, FAQ i finalne CTA
-- `src/pages/404.astro` — własna strona 404
-- `public/robots.txt` + `public/sitemap.xml` — indeksowanie domeny produkcyjnej
-- `public/_headers` — nagłówki bezpieczeństwa oraz `noindex` dla podglądów `workers.dev`
-- `wrangler.jsonc` — routing statycznych assetów i obsługa 404
+## Dane i poczta
 
-## Domena
+Domyślny odbiorca: `animilandia@gmail.com`. Wysyłka korzysta z `wp_mail()` i ustawień poczty istniejącego WordPressa. Status `accepted` oznacza przyjęcie wiadomości przez mechanizm wysyłkowy, nie potwierdzone doręczenie. Zgłoszenie jest zapisywane przed wysyłką, więc błąd poczty nie usuwa zgłoszenia.
 
-Produkcja: `https://xn--przyda-8ib.pl/` (`przydaś.pl`).
+Prywatne tabele z prefiksem WordPressa: `al_birthday_inquiries`, `al_birthday_limits`. Panel i eksport CSV wymagają uprawnień administratora; formularz ma walidację serwera, podpisane tokeny, limit zapytań, honeypot i ochronę przed duplikatami. Dane nie są wysyłane do ChatGPT. Zdjęcia i ilustracje pakietów korzystają z istniejących mediów na animilandia.pl. Czcionki są ładowane z Google Fonts, jak w obecnej identyfikacji; można je lokalnie dołączyć w kolejnej wersji.
 
-Podgląd `workers.dev` nie powinien trafiać do indeksu wyszukiwarek. Canonical, sitemap i robots wskazują domenę produkcyjną.
+## Pliki do prostych zmian
 
-## Zasady komunikacji
+- `animilandia-urodziny/packages.json`: nazwy, ceny, czas, opisy, ilustracje i atrakcje wszystkich pakietów.
+- `animilandia-urodziny/template.html`: treści i układ strony.
+- `animilandia-urodziny/assets/landing.css`: wygląd i wersja mobilna.
+- `animilandia-urodziny/assets/landing.js`: interakcje i formularz.
+- `animilandia-urodziny/includes/`: zapis, powiadomienia, panel i aktualizacje.
 
-Strona sprzedaje rezultat, nie liczbę funkcji:
+## Wydanie i kontrola
 
-- START — porządek,
-- ZESPÓŁ — czas właściciela,
-- BIZNES — kontrola wyniku i praca z klientem po realizacji.
+1. Zwiększ wersję w nagłówku wtyczki i stałej `VERSION` w pliku głównym.
+2. Uruchom testy i kontrole składni PHP oraz JavaScript.
+3. Utwórz commit kodu na gałęzi landingu.
+4. Dopiero po testach zapisz `release.json` z wersją oraz dokładnym SHA tego commita.
+5. Utwórz oddzielny commit manifestu. Manifest nie może wskazywać gałęzi, dowolnego URL ani innego repozytorium.
 
-Nie publikujemy niezweryfikowanych statystyk ani fikcyjnego social proof. Kalkulator pokazuje wyłącznie porównanie wartości sprzedaży do ceny abonamentu i zawiera wyraźne zastrzeżenie, że nie jest prognozą zysku.
+Do powrotu do poprzedniego zachowania przygotuj nowe wydanie z poprzednim kodem i wyższą wersją. Wtyczka nie wykonuje automatycznych downgrade'ów.
 
-Każda nowa firma otrzymuje 30 dni pakietu BIZNES bez opłat. Wskaźnik „do 80% oszczędności czasu” wymaga pomiaru na rzeczywistych procesach przed publikacją.
-
-Wybranym dostawcą płatności dla przyszłej integracji jest PayU. Wybór dostawcy nie oznacza, że płatności lub automatyczne odnowienia są już aktywne.
-
-## Release gate
-
-Workflow `.github/workflows/website-ci.yml` przy każdym pushu i pull requeście:
-
-1. wykonuje produkcyjny build Astro,
-2. sprawdza wygenerowany `index.html` i `404.html`,
-3. pilnuje kluczowych komunikatów sprzedażowych,
-4. sprawdza canonical i dane strukturalne,
-5. waliduje `robots.txt`, `sitemap.xml` oraz `_headers`.
+Instalator ZIP: `python3 tools/build_zip.py`. Testy: `php tests/core.php` oraz `node --check animilandia-urodziny/assets/landing.js`. Pliki PHP sprawdź także poleceniem `php -l`.

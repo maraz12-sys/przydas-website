@@ -1,0 +1,130 @@
+[
+  {
+    "id": "tradycyjny",
+    "name": "Pakiet Tradycyjny",
+    "price": 600,
+    "hours": 2,
+    "image": "https://animilandia.pl/wp-content/uploads/2025/06/ChatGPT-Image-24-cze-2025-03_03_19-768x768.png",
+    "color": "blue",
+    "eyebrow": "Dobry początek",
+    "description": "Wspólna zabawa, wielkie bańki i mnóstwo dziecięcej energii.",
+    "features": [
+      "Gry integracyjne i zabawy drużynowe",
+      "Budowanie wielkich konstrukcji",
+      "Giga bańki mydlane",
+      "Brokatowe tatuaże i figury balonowe"
+    ]
+  },
+  {
+    "id": "vip",
+    "name": "VIPowskie Party",
+    "price": 990,
+    "hours": 3,
+    "image": "https://animilandia.pl/wp-content/uploads/2025/06/ChatGPT-Image-24-cze-2025-02_35_44-768x768.png",
+    "color": "pink",
+    "eyebrow": "Jeszcze więcej atrakcji",
+    "description": "Dłuższe świętowanie i urodzinowy efekt WOW.",
+    "features": [
+      "Wszystkie atrakcje Pakietu Tradycyjnego",
+      "Piniata — wzór do ustalenia",
+      "Wata cukrowa",
+      "Zamykanie w bańce lub bańki ogniowe"
+    ]
+  },
+  {
+    "id": "stitch",
+    "name": "Stitchowe Party",
+    "price": 1100,
+    "hours": 3,
+    "image": "https://animilandia.pl/wp-content/uploads/2025/06/ChatGPT-Image-24-cze-2025-02_15_49-768x768.png",
+    "color": "yellow",
+    "eyebrow": "Hawajski klimat",
+    "description": "Ulubiony bohater, tropikalne kolory i przygoda pełna aloha!",
+    "features": [
+      "Pakiet Tradycyjny i 2 animatorów",
+      "Maskotka Stitch i tematyczna piniata",
+      "Naszyjnik dla każdego i taniec hula",
+      "Warsztaty: łapacze snów, breloki lub torby"
+    ]
+  },
+  {
+    "id": "minecraft",
+    "name": "Minecraftowe Budowanie",
+    "price": 1100,
+    "hours": 3,
+    "image": "https://animilandia.pl/wp-content/uploads/2025/06/ChatGPT-Image-24-cze-2025-02_27_37-768x768.png",
+    "color": "green",
+    "eyebrow": "Dla małych budowniczych",
+    "description": "Kwadratowy świat, wielka wyobraźnia i wspólne tworzenie.",
+    "features": [
+      "Pakiet Tradycyjny i 2 animatorów",
+      "Maskotka Steve i piniata Minecraft",
+      "Figurka Minecraft dla każdego dziecka",
+      "Budowanie wioski i tematyczne warsztaty"
+    ]
+  },
+  {
+    "id": "laboratorium",
+    "name": "Mroźne Laboratorium",
+    "price": 700,
+    "hours": 2,
+    "image": "https://animilandia.pl/wp-content/uploads/2025/06/ChatGPT-Image-24-cze-2025-02_31_35-768x768.png",
+    "color": "blue",
+    "eyebrow": "Małe wielkie odkrycia",
+    "description": "Mroźna mgła i eksperymenty, w których dzieci biorą udział.",
+    "features": [
+      "Wszystkie atrakcje Pakietu Tradycyjnego",
+      "Zabawy i eksperymenty z suchym lodem",
+      "Mroźna mgła i bańki mydlane",
+      "Opowieści o reakcjach i odkryciach"
+    ]
+  },
+  {
+    "id": "glutki",
+    "name": "Laboratorium Glutków",
+    "price": 750,
+    "hours": 2,
+    "image": "https://animilandia.pl/wp-content/uploads/2025/06/ChatGPT-Image-24-cze-2025-02_47_38-768x768.png",
+    "color": "green",
+    "eyebrow": "Kreatywne ręce do dzieła",
+    "description": "Kolory, dodatki i własny glutek do zabrania do domu.",
+    "features": [
+      "Wszystkie atrakcje Pakietu Tradycyjnego",
+      "Własny glutek dla każdego dziecka",
+      "Różnorodne dodatki do glutków",
+      "Ozdabianie pojemników na swoje dzieła"
+    ]
+  },
+  {
+    "id": "magiczne",
+    "name": "Magiczne Urodziny",
+    "price": 1450,
+    "hours": 2,
+    "image": "https://animilandia.pl/wp-content/uploads/2025/06/ChatGPT-Image-24-cze-2025-02_52_10-768x768.png",
+    "color": "pink",
+    "eyebrow": "Abrakadabra!",
+    "description": "Interaktywny pokaz iluzji, śmiech i magia na wyciągnięcie ręki.",
+    "features": [
+      "Wszystkie atrakcje Pakietu Tradycyjnego",
+      "30–40 minut interaktywnego pokazu iluzji",
+      "Dzieci aktywnie uczestniczą w pokazie",
+      "Specjalna sztuczka w wykonaniu jubilata"
+    ]
+  },
+  {
+    "id": "banki",
+    "name": "Bańkowe Urodziny",
+    "price": 1450,
+    "hours": 2,
+    "image": "https://animilandia.pl/wp-content/uploads/2026/03/ChatGPT-Image-5-mar-2026-00_24_23-768x768.png",
+    "color": "blue",
+    "eyebrow": "Świat zamknięty w bańce",
+    "description": "Bańki dymne, ogniowe, pianowe i wspólne odkrywanie ich tajemnic.",
+    "features": [
+      "Wszystkie atrakcje Pakietu Tradycyjnego",
+      "30–40 minut pokazu z udziałem dzieci",
+      "Bańki dymne, ogniowe i pianowe",
+      "Bańkowe warsztaty i sztuczka jubilata"
+    ]
+  }
+]
