@@ -309,7 +309,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
           const selected=normalize(eventControl?.value);
           const choices=field.package_choices.filter(item=>{
             const categories=Array.isArray(item?.event_types)?item.event_types:[];
-            return !eventControl||(Boolean(selected)&&(!categories.length||categories.some(name=>normalize(name)===selected)));
+            return !eventControl||(Boolean(selected)&&((item.restricted!==true&&!categories.length)||categories.some(name=>normalize(name)===selected)));
           });
           const previous=packageControl.value;
           const prompt=eventControl&&!selected?'Najpierw wybierz rodzaj wydarzenia':'Wybierz pakiet';
