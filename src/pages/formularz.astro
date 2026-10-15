@@ -88,6 +88,9 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         box-shadow:0 1px 2px rgba(26,62,43,.025);
       }
       .field input,.field select{height:50px;padding:0 14px}
+      .field input:is([type="date"],[type="datetime-local"]){position:relative;min-width:0;cursor:pointer}
+      .field input:is([type="date"],[type="datetime-local"])::-webkit-calendar-picker-indicator{position:absolute;inset:0;width:100%;height:100%;padding:0;margin:0;opacity:0;cursor:pointer}
+      .field input:is([type="date"],[type="datetime-local"]):focus-visible{outline:2px solid var(--green);outline-offset:2px}
       .field textarea{min-height:126px;padding:13px 14px;resize:vertical;line-height:1.55}
       .field input::placeholder,.field textarea::placeholder{color:#a2aea8}
       .field input:hover,.field textarea:hover,.field select:hover{border-color:#adcbc0}
@@ -262,6 +265,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         if(field.key==='sposob_platnosci') return `<div class="field field-wide choice-field"><span>${label}${mark}</span><div class="choice-options" role="radiogroup" aria-label="${label}">${paymentOptions.map((option,index)=>`<label class="choice-option"><input type="radio" name="${key}" value="${option.value}"${field.required===true&&index===0?' required':''}><span>${option.label}</span></label>`).join('')}</div><small class="field-hint">Wybierz jedną opcję.</small></div>`;
         if(field.type==='checkbox') return `<label class="field check${dependentClass}"${dependentAttrs}><input type="checkbox" name="${key}"><span>${label}${mark}</span></label>`;
         if(field.type==='textarea') return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><textarea name="${key}"${required}${placeholder}></textarea>${hint}</label>`;
+        if(field.key==='pakiet') return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><select name="${key}" data-package-select="true"${required}><option value="">Wybierz najpierw rodzaj wydarzenia</option></select><small class="field-hint">Pakiety są filtrowane według rodzaju wydarzenia wybranego powyżej.</small></label>`;
         if(field.type==='select') return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><select name="${key}"${required}><option value="">Wybierz</option>${(Array.isArray(field.options)?field.options:[]).map(value=>`<option value="${esc(value)}">${esc(value)}</option>`).join('')}</select>${hint}</label>`;
         if(timeSlotKeys.has(field.key)) return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><select name="${key}"${required}><option value="">Wybierz godzinę</option>${timeOptions.map(value=>`<option value="${value}">${value}</option>`).join('')}</select>${hint}</label>`;
         const allowed=['date','email','tel','number','text','time','datetime-local']; const type=field.type==='datetime'?'datetime-local':(allowed.includes(field.type)?field.type:'text');
@@ -293,6 +297,43 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         eventControl?.addEventListener('change',sync);
         eventControl?.addEventListener('input',sync);
         sync();
+      };
+
+      const wirePackageDependencies = (form,packages) => {
+        const packageControl=form.querySelector('[data-package-select="true"]');
+        if(!packageControl)return;
+        const eventControl=form.elements.namedItem('rodzaj_wydarzenia');
+        const rows=Array.isArray(packages)?packages:[];
+        const normalize=value=>String(value||'').trim().normalize('NFKC').toLocaleLowerCase('pl-PL');
+        const sync=(preserveValue=false)=>{
+          const selected=normalize(eventControl?.value);
+          const previous=preserveValue?packageControl.value:'';
+          const available=rows.filter(row=>{
+            const names=Array.isArray(row?.rodzaje_wydarzen_nazwy)?row.rodzaje_wydarzen_nazwy:[];
+            return (!eventControl||selected)&&(!names.length||names.some(name=>normalize(name)===selected));
+          });
+          const placeholder=!eventControl||selected
+            ? (available.length?'Wybierz pakiet':'Brak pakietów dla tego rodzaju')
+            : 'Wybierz najpierw rodzaj wydarzenia';
+          packageControl.replaceChildren(new Option(placeholder,''));
+          for(const row of available){
+            const value=String(row?.value||'').trim(),label=String(row?.label||value).trim();
+            if(!value||!label)continue;
+            packageControl.add(new Option(label,value));
+          }
+          if(previous&&available.some(row=>String(row?.value||'')===previous))packageControl.value=previous;
+        };
+        eventControl?.addEventListener('change',()=>sync(false));
+        eventControl?.addEventListener('input',()=>sync(false));
+        sync(true);
+      };
+      const wireDatePickerHitbox = form => {
+        for(const input of form.querySelectorAll('input[type="date"],input[type="datetime-local"]')){
+          input.addEventListener('click',()=>{
+            try{if(typeof input.showPicker==='function')input.showPicker();}
+            catch{input.focus();}
+          });
+        }
       };
       const wireInvoiceDependencies = form => {
         const toggle=form.elements.namedItem('faktura_wymagana');
@@ -327,6 +368,8 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         const form=document.getElementById('reservation-form');
         wireInvoiceDependencies(form);
         wireEventCategoryDependencies(form);
+        wirePackageDependencies(form,data.packages);
+        wireDatePickerHitbox(form);
         wireTimeDefaults(form);
         form.addEventListener('submit',submitForm);
       };
