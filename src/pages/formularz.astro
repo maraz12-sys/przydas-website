@@ -310,7 +310,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
           const previous=preserveValue?packageControl.value:'';
           const available=rows.filter(row=>{
             const names=Array.isArray(row?.rodzaje_wydarzen_nazwy)?row.rodzaje_wydarzen_nazwy:[];
-            return (!eventControl||selected)&&(!names.length||names.some(name=>normalize(name)===selected));
+            return (!eventControl||selected)&&(!row.restricted||names.some(name=>normalize(name)===selected));
           });
           const placeholder=!eventControl||selected
             ? (available.length?'Wybierz pakiet':'Brak pakietów dla tego rodzaju')
