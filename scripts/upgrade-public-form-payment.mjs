@@ -29,13 +29,13 @@ replaceOnce(
 
 replaceOnce(
   "        <p>Formularz został przekazany organizatorowi. Oczekuj na potwierdzenie rezerwacji.</p>\n        <small>Wysłanie formularza nie oznacza jeszcze potwierdzenia terminu.</small>",
-  "        <p>Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji.</p>\n        <small><strong>Pamiętaj!</strong> Wysłanie formularza nie oznacza potwierdzenia rezerwacji — otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.</small>",
+  "        <p>Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji.</p>\n        <small><strong>Pamiętaj!</strong> Wysłanie formularza nie oznacza jeszcze potwierdzenia rezerwacji. Organizator sprawdzi dane i osobno potwierdzi ustalenia.</small>",
   'client-facing success modal copy',
 );
 
 replaceOnce(
   "      successAction.addEventListener('click',()=>showState('Formularz wysłany','Formularz został przekazany organizatorowi. Oczekuj na potwierdzenie rezerwacji.',true));",
-  "      successAction.addEventListener('click',()=>showState('Formularz wysłany','Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji. Wysłanie formularza nie oznacza potwierdzenia rezerwacji — otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.',true));",
+  "      successAction.addEventListener('click',()=>showState('Formularz wysłany','Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji. Wysłanie formularza nie oznacza jeszcze potwierdzenia rezerwacji. Organizator sprawdzi dane i osobno potwierdzi ustalenia.',true));",
   'client-facing success state copy',
 );
 
