@@ -37,11 +37,11 @@ const comparisonSections = [
     title: 'Przydasie — wiedza i narzędzia',
     rows: [
       ['Notatnik', '✓', '✓', '✓'],
-      ['TO-DO prywatne', '✓', '✓', '✓'],
+      ['Prywatna lista zadań', '✓', '✓', '✓'],
       ['Współdzielone notatki', '—', '✓', '✓'],
       ['Standardy, instrukcje i przydatne linki', '—', '✓', '✓'],
       ['Checklisty', '—', '✓', '✓'],
-      ['Generator formułek', '—', '—', '✓'],
+      ['Szablony wiadomości', '—', '—', '✓'],
       ['Podwykonawcy', '—', '—', '✓'],
       ['Asystent AI', '—', '—', 'W przygotowaniu'],
     ],
@@ -197,22 +197,9 @@ const faq = [
       </p>
     </div>
 
-    <div class="comparison-outcomes">
-      {comparisonOutcomes.map((item, index) => (
-        <article class:list={['comparison-outcome', index === 1 && 'comparison-outcome-team', index === 2 && 'comparison-outcome-business']}>
-          <div class="comparison-outcome-top">
-            <span>{item.plan}</span>
-            <small>{item.price}</small>
-          </div>
-          <strong>{item.label}</strong>
-          <p>{item.text}</p>
-        </article>
-      ))}
-    </div>
-
     <div class="comparison-accordion" aria-label="Zakres funkcji w pakietach START, ZESPÓŁ i BIZNES">
       {comparisonSections.map((section, index) => (
-        <details class="comparison-group" open={index === 0}>
+        <details class="comparison-group">
           <summary class="comparison-group-summary">
             <span>
               <strong>{section.title}</strong>
@@ -265,44 +252,9 @@ const faq = [
   })();
 </script>
 
-<section class="trust-section">
-  <div class="shell">
-    <div class="section-head trust-head">
-      <span class="eyebrow-text">Po co kolejny system?</span>
-      <h2>Bo ten nie wymaga tłumaczenia, jak działa firma animacyjna.</h2>
-      <p>
-        Przydaś działa wokół tego, co dzieje się naprawdę: klient dzwoni, termin wpada do kalendarza, trzeba zebrać ludzi,
-        przygotować realizację, zamknąć rozliczenie i nie zgubić klienta po wszystkim.
-      </p>
-    </div>
 
-    <div class="trust-grid">
-      {trustItems.map(([title, text], index) => (
-        <article class="trust-card">
-          <span>{String(index + 1).padStart(2, '0')}</span>
-          <h3>{title}</h3>
-          <p>{text}</p>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
 
-<section class="onboarding-section">
-  <div class="shell onboarding-box">
-    <div class="onboarding-copy">
-      <span class="eyebrow-text">System ma oszczędzać czas także na starcie</span>
-      <h2>Bez wdrożenia na pół sezonu.</h2>
-      <p>Ustawiasz organizację, importujesz obecne rezerwacje, dodajesz zespół i zaczynasz pracować w jednym miejscu.</p>
-    </div>
-    <div class="onboarding-steps">
-      <article><span>01</span><div><strong>Zaczynasz od pełnego BIZNES</strong><p>Przez 30 dni testujesz cały dostępny zakres bez opłat, a pakiet wybierasz dopiero później.</p></div></article>
-      <article><span>02</span><div><strong>Ustawiasz firmę</strong><p>Konfigurujesz dane i formularze potrzebne do obsługi wydarzeń.</p></div></article>
-      <article><span>03</span><div><strong>Importujesz rezerwacje</strong><p>Wczytujesz kalendarz, sprawdzasz dane i uzupełniasz brakujące informacje.</p></div></article>
-      <article><span>04</span><div><strong>Zapraszasz zespół</strong><p>Każdy dostaje własne konto i widzi terminy, zadania oraz informacje potrzebne do pracy.</p></div></article>
-    </div>
-  </div>
-</section>
+
 
 <section class="faq-section" id="faq">
   <div class="shell faq-shell">

@@ -131,7 +131,7 @@ const audiences = [
 
     <div class="nav-actions">
       <a class="login-link" href="https://app.xn--przyda-8ib.pl/">Zaloguj się</a>
-      <a class="button button-primary button-small" href="#cennik">Zobacz pakiety <span>→</span></a>
+      <a class="button button-primary button-small" href="/test">Wypróbuj bezpłatnie <span>→</span></a>
     </div>
   </div>
 </header>
@@ -143,7 +143,7 @@ const audiences = [
       System stworzony dla firm animacyjnych
     </div>
 
-    <h1>Mniej pilnowania<br /><span>Więcej zarabiania</span></h1>
+    <h1>Mniej pilnowania<br /><span>Więcej czasu na firmę</span></h1>
     <p class="hero-lead">
       Przydaś łączy rezerwacje, formularze dla klientów, kalendarz, zespół, braki, rozliczenia i dane po realizacji.
       Zamiast szukać ustaleń w Messengerze, arkuszach i folderach, prowadzisz zlecenie w jednym miejscu. Zespół wie, kiedy i co ma zrobić, a Ty odzyskujesz czas dla siebie, rodziny i rozwoju firmy.
@@ -151,7 +151,7 @@ const audiences = [
 
     <div class="hero-actions">
       <a class="button button-primary" href="/test">Wypróbuj 30 dni za 0 zł <span>→</span></a>
-      <a class="button button-secondary" href="#jak-dziala">Zobacz cały proces <span>↓</span></a>
+      <a class="button button-secondary" href="#jak-dziala">Zobacz aplikację <span>↓</span></a>
     </div>
 
     <div class="hero-benefits" aria-label="Najważniejsze korzyści">
@@ -161,7 +161,7 @@ const audiences = [
     </div>
   </div>
 
-  <div class="hero-visual" aria-label="Przykładowy panel Przydasia">
+  <div class="hero-visual" aria-label="Ilustracja sposobu organizacji pracy"><p class="illustration-label">Ilustracja działania systemu · przykładowe dane</p>
     <img class="hero-brand-rays" src="/ornament-rays.svg" width="110" height="90" alt="" aria-hidden="true" decoding="async" />
     <div class="app-window hero-app">
       <div class="app-topbar">
@@ -256,163 +256,16 @@ const audiences = [
     <div class="section-transition">
       <strong>Jeżeli system nie oszczędza Ci realnej pracy, to jest tylko kolejnym narzędziem. Przydaś ma właśnie tę pracę zdejmować.</strong>
       <span class="transition-line"></span>
-      <a href="#funkcje" aria-label="Przejdź do funkcji">→</a>
+      <a href="#jak-dziala" aria-label="Zobacz działanie aplikacji">→</a>
     </div>
   </div>
 </section>
 
-<section class="solution-section" id="funkcje">
-  <div class="shell">
-    <div class="section-head section-head-narrow">
-      <span class="eyebrow-text">Wszystko w jednym miejscu</span>
-      <h2>To, czego dziś pilnujesz ręcznie, zamieniasz w proces.</h2>
-      <p>
-        Przydaś prowadzi zlecenie od rezerwacji do danych po realizacji. Dzięki temu mniej rzeczy zależy od pamięci właściciela
-        i od tego, czy ktoś odnalazł właściwą wiadomość na Messengerze.
-      </p>
-    </div>
 
-    <div class="solution-grid">
-      <div class="product-preview">
-        <div class="preview-head">
-          <div><span class="status-dot"></span> Przydaś · jedno miejsce</div>
-          <span class="ready-chip">✓ proces zamiast pamięci</span>
-        </div>
-        <div class="preview-content">
-          <div class="preview-events">
-            <div class="preview-label">Plan pracy <span>wszystko w jednym miejscu</span></div>
-            <div class="mini-event active"><strong>Rezerwacja</strong><span>klient · termin · ustalenia</span></div>
-            <div class="mini-event"><strong>Przygotowanie</strong><span>zespół · zadania · braki</span></div>
-            <div class="mini-event"><strong>Po realizacji</strong><span>rozliczenie · feedback · klient</span></div>
-          </div>
-          <div class="preview-team">
-            <div class="preview-label">Status</div>
-            <div class="team-row"><span class="team-dot strong"></span> Dane kompletne</div>
-            <div class="team-row"><span class="team-dot strong"></span> Zespół gotowy</div>
-            <div class="team-row"><span class="team-dot pale"></span> 1 kontakt później</div>
-          </div>
-        </div>
-      </div>
 
-      <div class="capabilities">
-        {capabilities.map(([title, text]) => (
-          <article class="capability">
-            <span class="capability-icon">✓</span>
-            <div>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </div>
-          </article>
-        ))}
-        <a class="button button-secondary capability-cta" href="#jak-dziala">Zobacz krok po kroku <span>→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="lifecycle-section" id="jak-dziala">
-  <div class="shell">
-    <div class="section-head lifecycle-head">
-      <span class="eyebrow-text">Wydarzenie to nie tylko dzień realizacji</span>
-      <h2>Przed wydarzeniem porządek.<br />Po wydarzeniu rozliczenie i wiedza.</h2>
-      <p>
-        Większość narzędzi pomaga zapisać termin. Przydaś ma obsłużyć cały cykl: przygotowanie, realizację,
-        zamknięcie finansowe, analizę i kolejny kontakt z klientem.
-      </p>
-    </div>
 
-    <div class="phase-block before-phase">
-      <div class="phase-header">
-        <div>
-          <span class="phase-kicker">PRZED WYDARZENIEM</span>
-          <h3>Najpierw zdejmujesz chaos operacyjny.</h3>
-        </div>
-      </div>
-      <div class="phase-grid phase-grid-three">
-        {beforeEvent.map((step) => (
-          <article class="lifecycle-card">
-            <span class="step-number">{step.no}</span>
-            <h4>{step.title}</h4>
-            <p>{step.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
 
-    <div class="phase-bridge" aria-hidden="true">
-      <span>REALIZACJA</span>
-    </div>
-
-    <div class="phase-block after-phase">
-      <div class="phase-header">
-        <div>
-          <span class="phase-kicker">PO WYDARZENIU · ROZLICZENIE I DANE</span>
-          <h3>Wydarzenie się kończy. Wartość danych dopiero zaczyna rosnąć.</h3>
-        </div>
-      </div>
-      <div class="phase-grid phase-grid-four">
-        {afterEvent.map((step) => (
-          <article class="lifecycle-card post-event">
-            <span class="step-number">{step.no}</span>
-            <h4>{step.title}</h4>
-            <p>{step.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-
-    <div class="business-value">
-      <div class="business-value-copy">
-        <span class="eyebrow-text">Nie zgadujesz — widzisz</span>
-        <h3>Z każdego wydarzenia zostaje coś więcej niż zdjęcia.</h3>
-        <p>
-          Zlecenia budują historię klientów, rozliczenia i statystyki. Z czasem widzisz, które źródła dają najlepszych klientów,
-          na czym zarabiasz i do kogo warto odezwać się ponownie.
-        </p>
-      </div>
-      <div class="stats-demo" aria-label="Przykładowe informacje biznesowe">
-        <div class="stat-box"><span>Wynik okresu</span><strong>W jednym widoku</strong><em>przychody i koszty</em></div>
-        <div class="stat-box"><span>Źródła zleceń</span><strong>Porównywalne</strong><em>wiesz, co dowozi klientów</em></div>
-        <div class="stat-box wide"><span>Klienci po realizacji</span><strong>Nie znikają w archiwum</strong><em>historia współpracy zostaje w systemie</em></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="audience-section" id="dla-kogo">
-  <div class="shell">
-    <div class="section-head audience-head">
-      <span class="eyebrow-text">Trzy etapy rozwoju firmy</span>
-      <h2>Który opis brzmi najbardziej jak Twoja firma?</h2>
-      <p>
-        Pakiet nie powinien wynikać z liczby efektownych funkcji. Powinien odpowiadać na etap, na którym jesteś dziś:
-        od porządkowania podstaw, przez zarządzanie zespołem, po świadome pilnowanie wyniku i klientów.
-      </p>
-    </div>
-
-    <div class="audience-grid">
-      {audiences.map((audience, index) => (
-        <article class:list={['audience-card', index === 1 && 'audience-card-featured', index === 2 && 'audience-card-business']}>
-          <div class="audience-top">
-            <span class="audience-plan">{audience.plan}</span>
-            <span class="audience-eyebrow">{audience.eyebrow}</span>
-          </div>
-          <h3>{audience.title}</h3>
-          <p>{audience.text}</p>
-          <strong class="audience-result">{audience.result}</strong>
-        </article>
-      ))}
-    </div>
-
-    <div class="audience-cta">
-      <div>
-        <strong>Najlepszy pakiet to ten, który usuwa dzisiejszy problem.</strong>
-        <span>Niżej zobaczysz ceny, policzysz skalę kosztu i porównasz zakres bez kupowania systemu na wyrost.</span>
-      </div>
-      <a class="button button-primary" href="#cennik">Przejdź do cen <span>→</span></a>
-    </div>
-  </div>
-</section>
 
 <div class="mobile-cta" aria-label="Szybki dostęp do bezpłatnego testu">
   <span><strong>Przydaś.</strong><small>30 dni BIZNES za 0 zł</small></span>
@@ -675,7 +528,8 @@ const audiences = [
     .nav-wrap { min-height: 70px; }
     .brand { font-size: 19px; }
     .brand-mark, .brand-mark img { width: 28px; height: 28px; }
-    .login-link { display: none; }
+    .nav-actions { gap: 7px; flex-wrap: wrap; justify-content: flex-end; }
+    .login-link { display: inline-flex; min-height: 40px; align-items: center; font-size: 12px; padding: 0 6px; }
     .button-small { min-height: 40px; padding-inline: 13px; font-size: 12px; }
     .hero { min-height: auto; padding: 46px 0 58px; gap: 40px; }
     .visual-glow { display: none; }
@@ -725,4 +579,5 @@ const audiences = [
     *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
     .hero-app { transform: none; }
   }
+.illustration-label{margin:0 0 10px;color:#52645a;font-size:12px;text-align:center}
 </style>

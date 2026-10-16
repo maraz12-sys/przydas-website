@@ -32,11 +32,6 @@ const dpaVersion = '2026-10-01.3';
           Po potwierdzeniu adresu e-mail Przydaś sam utworzy Twoją firmę i włączy pełny pakiet BIZNES na 30 dni.
           Test jest dostępny dla każdej nowej firmy. Bez karty i bez automatycznego przejścia na płatny abonament.
         </p>
-        <div class="benefits" aria-label="Najważniejsze zasady okresu próbnego">
-          <div><b>30 dni</b><span>pełnego BIZNES</span></div>
-          <div><b>0 zł</b><span>bez podawania karty</span></div>
-          <div><b>Każda firma</b><span>bez limitu miejsc</span></div>
-        </div>
         <div class="selected-plan" data-selected-plan hidden>
           <span>Po teście interesuje Cię</span>
           <strong data-selected-plan-text></strong>
@@ -312,7 +307,7 @@ const dpaVersion = '2026-10-01.3';
   a { color: inherit; }
   .topbar { max-width: 1180px; margin: 0 auto; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
   .brand { display: inline-flex; align-items: center; gap: 11px; color: #14231b; text-decoration: none; }
-  .brand-mark { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: #087f53; }
+  .brand-mark { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: #fff; border: 1px solid #cfddd5; }
   .brand-mark img { width: 27px; height: 27px; }
   .brand strong, .brand small { display: block; }
   .brand strong { font-size: 19px; letter-spacing: -.03em; }
@@ -369,6 +364,8 @@ const dpaVersion = '2026-10-01.3';
     h1 { font-size: clamp(40px, 10vw, 58px); }
   }
   @media (max-width: 560px) {
+    h1 { font-size: 34px; margin: 14px 0; }
+    .hero-copy > p { font-size: 15px; line-height: 1.5; }
     .topbar { padding: 18px 16px; }
     .brand small { display: none; }
     main { width: min(100% - 24px, 1180px); margin-bottom: 44px; }

@@ -57,7 +57,8 @@ jobs:
           test -s dist/_headers
 
           grep -q 'Mniej pilnowania' dist/index.html
-          grep -q 'Program kosztuje' dist/index.html
+          grep -q 'Więcej czasu na firmę' dist/index.html
+          test -s dist/przydas-share.png
           grep -q 'START' dist/index.html
           grep -q 'ZESPÓŁ' dist/index.html
           grep -q 'BIZNES' dist/index.html

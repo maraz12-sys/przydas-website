@@ -17,7 +17,7 @@ const plans = [
       'Podstawowe powiadomienia i braki',
       'Tworzenie i zarządzanie zespołem',
       'Podstawowy panel rozliczeń',
-      'Prywatne TODO i oznaczanie faktur',
+      'Prywatna lista zadań i oznaczanie faktur',
     ],
   },
   {
@@ -58,7 +58,7 @@ const plans = [
       'Checklisty materiałowe i braki materiałowo-rozliczeniowe',
       'Przypomnienia o ponownym kontakcie z klientami',
       'Zaawansowany Magazyn i eksport danych do Excela',
-      'Integracje fakturowe — wkrótce dostępne',
+      'Integracje fakturowe — w przygotowaniu (niedostępne)',
       'Zaawansowane statystyki i analityka',
     ],
   },
@@ -67,41 +67,6 @@ const plans = [
 
 <section class="packages-section" id="wartosc" data-billing="monthly">
   <div class="shell packages-shell">
-    <div class="value-intro">
-      <div class="value-intro-copy">
-        <span class="eyebrow-text">Każda stała opłata ma dawać konkretną wartość</span>
-        <h2>Program kosztuje. Chaos też.</h2>
-        <p>
-          Cenę Przydasia warto porównać nie z „darmowym Excelem”, ale z czasem właściciela, pomyłkami, zakupami na ostatnią chwilę
-          i okazjami sprzedażowymi, które przepadają, gdy dane o kliencie znikają po realizacji.
-        </p>
-      </div>
-
-      <div class="value-grid" aria-label="Gdzie Przydaś może tworzyć wartość">
-        <article class="value-card">
-          <span class="value-icon">01</span>
-          <strong>Odzyskujesz czas</strong>
-          <p>Mniej szukania ustaleń, wiadomości do zespołu, ręcznych przypomnień i liczenia wypłat z kilku różnych miejsc.</p>
-        </article>
-        <article class="value-card">
-          <span class="value-icon">02</span>
-          <strong>Ograniczasz straty</strong>
-          <p>Braki, zadania, materiały i rozliczenia wychodzą wcześniej — zanim zamienią się w kosztowną akcję na ostatnią chwilę.</p>
-        </article>
-        <article class="value-card value-card-accent">
-          <span class="value-icon">03</span>
-          <strong>Nie zapominasz o dobrych klientach</strong>
-          <p>Historia zleceń zostaje w jednym miejscu, a przypomnienia mogą pomóc wrócić z kontaktem przed kolejną okazją.</p>
-        </article>
-        <article class="value-card">
-          <span class="value-icon">04</span>
-          <strong>Wiesz, co działa</strong>
-          <p>Rozliczenia i statystyki pomagają porównywać wydarzenia, źródła klientów i działania, które warto rozwijać.</p>
-        </article>
-      </div>
-    </div>
-
-
     <div class="section-head packages-head" id="cennik">
       <span class="eyebrow-text">3 poziomy zamiast systemu na wyrost</span>
       <h2>Wybierz zakres dopasowany do etapu firmy.</h2>
@@ -171,7 +136,7 @@ const plans = [
             <summary>Co dostajesz <span aria-hidden="true">+</span></summary>
             <ul class="package-list">
               {plan.bullets.map((bullet) => (
-                <li><span>✓</span><b>{bullet}</b></li>
+                <li><span aria-hidden="true">{bullet.includes("w przygotowaniu") ? "○" : "✓"}</span><b>{bullet}</b></li>
               ))}
             </ul>
           </details>
