@@ -1,0 +1,56 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import Addition from './FakturowoProvider.astro';
+---
+<LegalLayout draft
+  title="Podprocesorzy i dostawcy"
+  description="Aktualna lista głównych dostawców infrastruktury i podprocesorów Przydasia."
+  eyebrow="RODO · infrastruktura"
+  updated="18.10.2026"
+  version="2026-10-18.preview"
+>
+  <div class="callout"><strong>Projekt aktualizacji z 18 października 2026 r.</strong><p>Lista opisuje głównych dostawców, którzy mogą mieć dostęp do danych osobowych albo uczestniczą w ich technicznym przetwarzaniu. Szczegółowy zakres zależy od używanej funkcji Przydasia.</p></div>
+
+  <h2>Główni dostawcy i podprocesorzy</h2>
+  <table>
+    <thead><tr><th>Dostawca</th><th>Zakres</th><th>Lokalizacja / transfer</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Supabase, Inc.</strong></td>
+        <td>Baza danych, uwierzytelnianie, API, funkcje backendowe i przechowywanie plików. Podstawowe dane produkcyjnego projektu Przydasia są utrzymywane w wybranym regionie europejskim.</td>
+        <td>Dostawca z USA; korzystamy z europejskiego regionu danych podstawowych. Dla operacji objętych transferem zastosowanie mają mechanizmy określone w umowie powierzenia dostawcy, w tym właściwe klauzule transferowe, jeżeli są wymagane.</td>
+      </tr>
+      <tr>
+        <td><strong>WEWEB SAS</strong><br />Francja</td>
+        <td>Warstwa aplikacji i interfejs użytkownika Przydasia.</td>
+        <td>Podmiot z EOG. Dalsze przetwarzanie przez dostawców WeWeb podlega zasadom jego umowy powierzenia i listy podprocesorów.</td>
+      </tr>
+      <tr>
+        <td><strong>Cloudflare, Inc.</strong></td>
+        <td>DNS, ochrona ruchu, bezpieczeństwo i dostarczanie publicznej strony internetowej.</td>
+        <td>Dostawca z USA o globalnej infrastrukturze. Transfery są zabezpieczane mechanizmami przewidzianymi w jego DPA, w tym odpowiednimi mechanizmami z rozdziału V RODO, gdy mają zastosowanie.</td>
+      </tr>
+      <tr>
+        <td><strong>Plus Five Five, Inc. (Resend)</strong></td>
+        <td>Poczta transakcyjna, np. zaproszenia, powiadomienia i wiadomości związane z formularzami.</td>
+        <td>USA. Resend informuje, że dane klienta mogą być przechowywane w USA; transfer jest objęty mechanizmami wskazanymi w jego DPA, w szczególności standardowymi klauzulami umownymi i - w odpowiednim zakresie - EU-US Data Privacy Framework.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Płatności</h2>
+  <p><strong>PayU S.A.</strong>, ul. Grunwaldzka 186, 60-166 Poznań, KRS 0000274399, NIP 7792308495, obsługuje płatności kartą oraz tokenizację wykorzystywaną do automatycznego odnawiania Subskrypcji. W zakresie świadczenia usługi płatniczej PayU działa jako <strong>odrębny administrator danych osobowych</strong>, a nie jako podprocesor Danych Klienta przechowywanych w Organizacji.</p>
+  <p>Zakres danych przekazywanych do PayU jest ograniczony do informacji potrzebnych do płatności i jej bezpieczeństwa, m.in. adresu e-mail płatnika, technicznego identyfikatora Klienta/Organizacji, kwoty, waluty, opisu Subskrypcji, identyfikatora zamówienia oraz wymaganych danych technicznych, w tym adresu IP. Pełny numer karty i kod CVV/CVC są obsługiwane przez bezpieczny formularz PayU i nie trafiają do systemu Przydasia.</p>
+
+  <Addition />
+  <h2>Ogólna zgoda na podprocesorów</h2>
+  <p>Jeżeli Przydaś przetwarza Dane Klienta jako podmiot przetwarzający, zasady korzystania z dalszych podmiotów przetwarzających określa <a href="/podglad-prawny/umowa-powierzenia/">Umowa powierzenia</a>. Klient udziela w niej ogólnego upoważnienia do korzystania z podprocesorów niezbędnych do świadczenia Usługi.</p>
+  <p>Każde zamierzone dodanie albo zastąpienie podprocesora mającego dostęp do Danych Klienta będzie komunikowane aktywnym Klientom na trwałym nośniku co najmniej 14 dni przed dopuszczeniem podprocesora do danych, tak aby Klient mógł zgłosić uzasadniony sprzeciw dotyczący ochrony danych. Sama aktualizacja technicznego dostawcy, który nie uzyskuje dostępu do Danych Klienta, nie musi stanowić zmiany podprocesora.</p>
+
+  <h2>Transfery poza EOG</h2>
+  <p>Transfer poza Europejski Obszar Gospodarczy odbywa się wyłącznie, jeżeli istnieje właściwa podstawa z rozdziału V RODO. Może to być w szczególności decyzja stwierdzająca odpowiedni stopień ochrony, standardowe klauzule umowne lub inny prawnie dopuszczalny mechanizm, uzupełniony dodatkowymi środkami, gdy wymaga tego ocena ryzyka.</p>
+  <p>Informacje o stosowanym mechanizmie albo możliwość uzyskania kopii odpowiednich zabezpieczeń można uzyskać na <a href="mailto:bezpieczenstwo@xn--przyda-8ib.pl">bezpieczenstwo@przydaś.pl</a>, z zastrzeżeniem ochrony informacji poufnych.</p>
+
+  <h2>Aktualizacje listy</h2>
+  <p>Lista jest aktualizowana wraz ze zmianą usług mających wpływ na przetwarzanie danych. Nie oznacza to, że każdy wymieniony dostawca otrzymuje wszystkie kategorie danych - zakres jest ograniczony do funkcji, które realizuje.</p>
+</LegalLayout>
