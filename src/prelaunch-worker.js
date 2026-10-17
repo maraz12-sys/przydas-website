@@ -6,7 +6,7 @@ const HOLDING_PAGE = `<!doctype html>
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <meta name="theme-color" content="#087f53" />
     <meta name="color-scheme" content="light" />
-    <title>Przydaś — już za chwilę startujemy</title>
+    <title>Przydaś - już za chwilę startujemy</title>
     <link rel="icon" href="/przydas-mark.svg" type="image/svg+xml" />
     <style>
       :root {
