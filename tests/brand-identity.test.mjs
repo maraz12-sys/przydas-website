@@ -19,7 +19,7 @@ test('every visible logo placement uses the shared mark, and the brand label inc
   assert.match(header,/<span>Przydaś\.<\/span>/);
   assert.match(legalFooter,/<strong>Przydaś\.<\/strong>/);
   assert.match(showcase,/showcase-proof-icon"><img src="\/przydas-mark\.svg"/);
-  assert.match(home,/<title>Przydaś\. —/);
+  assert.match(home,/<title>Przydaś\. -/);
   assert.match(home,/'?name"?: "Przydaś\."/);
   assert.equal(final.includes('<footer class="site-footer">'),false);
   assert.equal(home.includes('.site-footer { display: none'),false);

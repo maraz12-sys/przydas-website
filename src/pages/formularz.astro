@@ -150,7 +150,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
   <body>
     <main class="page-shell">
       <div class="topbar">
-        <a class="brand" href="/" aria-label="Przydaś — strona główna"><img src="/przydas-mark.svg" alt="" /><strong>Przydaś</strong></a>
+        <a class="brand" href="/" aria-label="Przydaś - strona główna"><img src="/przydas-mark.svg" alt="" /><strong>Przydaś</strong></a>
         <div class="secure-label"><span>Bezpieczny formularz wydarzenia</span></div>
       </div>
       <section class="form-card" id="card">
@@ -164,7 +164,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         <div class="success-icon">✓</div>
         <h2 id="success-title">Formularz wysłany pomyślnie</h2>
         <p>Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji.</p>
-        <small><strong>Pamiętaj!</strong> Wysłanie formularza nie oznacza potwierdzenia rezerwacji — otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.</small>
+        <small><strong>Pamiętaj!</strong> Wysłanie formularza nie oznacza potwierdzenia rezerwacji - otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.</small>
         <button class="success-action" id="success-action" type="button">Gotowe</button>
       </div>
     </div>
@@ -188,7 +188,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         pakiet:'Nazwa wybranego pakietu',
         atrakcje:'Opisz ustalony zakres lub atrakcje',
         liczba_dzieci:'np. 20',
-        wiek_dzieci:'np. 5–8 lat',
+        wiek_dzieci:'np. 5-8 lat',
         solenizant:'Imię i wiek',
         typ_klienta:'np. osoba prywatna, firma, szkoła',
         kontrahent_nazwa:'Nazwa firmy lub instytucji',
@@ -253,7 +253,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         document.body.classList.add('modal-open');
         requestAnimationFrame(()=>successAction.focus());
       };
-      successAction.addEventListener('click',()=>showState('Formularz wysłany','Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji. Wysłanie formularza nie oznacza potwierdzenia rezerwacji — otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.',true));
+      successAction.addEventListener('click',()=>showState('Formularz wysłany','Dziękujemy za przesłanie danych. Oczekuj na potwierdzenie rezerwacji. Wysłanie formularza nie oznacza potwierdzenia rezerwacji - otrzymasz je w osobnym e-mailu po zatwierdzeniu przez nas danych.',true));
 
       const renderRawField = (field,hasInvoiceToggle=false) => {
         const key=esc(field.key),label=esc(fieldLabels[field.key]||field.label||field.key),required=field.required===true?' required':'',mark=field.required===true?' <em>*</em>':'';
@@ -355,7 +355,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       };
       const renderForm = data => {
         formData=data;
-        if(data.completed){showState('Formularz został już przekazany',data.message||'Wszystko jest zapisane — nie musisz nic więcej robić.',true);return;}
+        if(data.completed){showState('Formularz został już przekazany',data.message||'Wszystko jest zapisane - nie musisz nic więcej robić.',true);return;}
         const fields=orderFields(Array.isArray(data.fields)?data.fields:[]);
         const hasInvoiceToggle=fields.some(field=>field?.key==='faktura_wymagana');
         card.innerHTML=`<header class="head"><span class="organization">${esc(data.organization_name||'Nasz zespół')}</span><h1>${esc(data.heading||'Formularz rezerwacyjny')}</h1><div class="meta">${data.expires_at?`<span>Link ważny do ${esc(fmtDate(data.expires_at))}</span>`:''}<span>Dane trafiają bezpośrednio do naszego zespołu</span></div></header><div class="form-body"><div class="process-note"><strong>Jak wygląda dalszy proces?</strong><span>${esc(data.process_text||'Uzupełnij i wyślij formularz. Zweryfikujemy dane, a po zaakceptowaniu rezerwacji otrzymasz potwierdzenie na podany adres e-mail. Jeżeli coś będzie wymagało doprecyzowania/uzupełnienia skontaktujemy się z Tobą.')}</span><div class="process-warning">${esc(data.process_warning||'Pamiętaj! Wysłanie formularza nie oznacza jeszcze potwierdzenia rezerwacji.')}</div></div><div class="form-intro"><div><strong>Informacje o wydarzeniu</strong></div><span class="required-note">* pola wymagane</span></div><form id="reservation-form">${fields.map(field=>renderField(field,hasInvoiceToggle)).join('')}<div id="form-error" class="error-wrap" aria-live="polite"></div><div class="actions"><div class="actions-copy">Przed wysłaniem możesz jeszcze sprawdzić wszystkie wpisane informacje.</div><button class="submit" type="submit">Wyślij formularz →</button></div></form></div>`;

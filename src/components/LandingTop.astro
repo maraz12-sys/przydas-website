@@ -4,7 +4,7 @@ const problems = [
     no: '01',
     title: 'Informacje są wszędzie',
     text: 'Kalendarz, Messenger, notatki i arkusze. Jedno zlecenie potrafi żyć w kilku miejscach naraz, a przed eventem zaczyna się szukanie: gdzie był adres, która wersja ustaleń jest aktualna i kto to ostatnio zmieniał.',
-    loss: 'Przydaś zbiera rezerwację, klienta, ustalenia i status w jednym procesie — mniej szukania, przepisywania i pomyłek.',
+    loss: 'Dane klienta, termin i ustalenia znajdziesz przy rezerwacji. Nie musisz zbierać ich z kilku rozmów.',
   },
   {
     no: '02',
@@ -16,7 +16,7 @@ const problems = [
     no: '03',
     title: 'Braki wychodzą wtedy, gdy robi się nerwowo',
     text: 'Materiał, informacja od klienta, obsada albo rozliczenie przypominają o sobie na ostatnią chwilę, kiedy nie ma już przestrzeni na spokojne poprawki.',
-    loss: 'Przydaś pokazuje braki wcześniej i prowadzi do miejsca, w którym trzeba poprawić dane — zamiast liczyć na pamięć właściciela.',
+    loss: 'Przydaś pokazuje, czego brakuje, i prowadzi do miejsca, w którym możesz to uzupełnić.',
   },
   {
     no: '04',
@@ -34,7 +34,7 @@ const problems = [
     no: '06',
     title: 'Rozliczenia pracowników zabierają wieczory',
     text: 'Godziny, dojazdy, przygotowanie, kilometry i gotówka wracają w wiadomościach, arkuszach i notatkach. Im większy zespół, tym więcej ręcznego liczenia i sprawdzania.',
-    loss: 'Pracownik uzupełnia dane z realizacji, a Przydaś stosuje Twoje stawki, liczy należność i zachowuje historię wypłat — Ty kontrolujesz wynik zamiast składać go z wielu rozmów.',
+    loss: 'Przydaś wylicza należność na podstawie danych z realizacji i Twoich stawek. Sprawdzasz rozliczenie, zatwierdzasz je i masz dostęp do historii wypłat.',
   },
 ];
 
@@ -52,11 +52,11 @@ const beforeEvent = [
   {
     no: '01',
     title: 'Przyjmujesz rezerwację',
-    text: 'Najważniejsze dane klienta i wydarzenia od początku trafiają do jednego procesu.',
+    text: 'Zapisujesz termin, dane klienta i ustalenia przy rezerwacji.',
   },
   {
     no: '02',
-    title: 'System zbiera gotowość',
+    title: 'Sprawdzasz obsadę i przygotowania',
     text: 'Dyspozycyjność, przypisania, potwierdzenia i braki nie wymagają ciągłego przekopywania wiadomości.',
   },
   {
@@ -75,7 +75,7 @@ const afterEvent = [
   {
     no: '05',
     title: 'Przydaś wylicza wynagrodzenie',
-    text: 'Animator uzupełnia czas, dojazd, przygotowanie, kilometry i pobraną gotówkę. System wylicza należność według Twoich stawek — Ty sprawdzasz i zatwierdzasz.',
+    text: 'Przydaś wylicza wynagrodzenie na podstawie czasu pracy, dodatków i stawek ustawionych w firmie. Ty sprawdzasz i zatwierdzasz rozliczenie.',
   },
   {
     no: '06',
@@ -101,7 +101,7 @@ const audiences = [
     plan: 'ZESPÓŁ',
     eyebrow: 'Masz ludzi i za dużo pilnowania',
     title: 'Odzyskaj czas właściciela',
-    text: 'Dla firmy, w której dyspozycyjność, potwierdzenia, zadania i codzienna komunikacja zespołu zaczynają zabierać realne godziny.',
+    text: 'Dla firmy, w której dyspozycyjność, potwierdzenia, zadania i codzienna komunikacja zespołu zabierają coraz więcej czasu.',
     result: 'Efekt: mniej wiadomości i mniej ręcznego koordynowania.',
   },
   {
@@ -116,7 +116,7 @@ const audiences = [
 
 <header class="site-header">
   <div class="shell nav-wrap">
-    <a href="#top" class="brand" aria-label="Przydaś. — strona główna">
+    <a href="#top" class="brand" aria-label="Przydaś. - strona główna">
       <span class="brand-mark" aria-hidden="true"><img src="/przydas-mark.svg" alt="" /></span>
       <span>Przydaś.</span>
     </a>
@@ -227,7 +227,7 @@ const audiences = [
 <section class="proof-strip" aria-label="Założenia Przydasia">
   <div class="shell proof-strip-inner">
     <strong>Jeden system do codziennej pracy firmy animacyjnej.</strong>
-    <span>Przydaś porządkuje realny cykl firmy animacyjnej: rezerwacja → zespół → realizacja → rozliczenie → klient → dane.</span>
+    <span>Od rezerwacji do rozliczenia: rezerwacja → zespół → realizacja → rozliczenie → klient → dane.</span>
   </div>
 </section>
 
@@ -237,8 +237,8 @@ const audiences = [
       <span class="eyebrow-text">Dlaczego warto</span>
       <h2>Przydaś rozwiązuje problemy, które codziennie zjadają czas właściciela.</h2>
       <p>
-        Nie chodzi o kolejną listę funkcji. Chodzi o mniej telefonów, mniej pilnowania ludzi, mniej przepisywania danych,
-        mniej nerwowych braków przed realizacją i mniej wieczorów spędzonych nad rozliczeniami.
+        Sprawdzasz terminy, zbierasz zespół i rozliczasz wydarzenia w jednym miejscu.
+        Mniej czasu zajmuje Ci szukanie ustaleń, dopytywanie pracowników i przepisywanie danych.
       </p>
     </div>
 
@@ -254,7 +254,7 @@ const audiences = [
     </div>
 
     <div class="section-transition">
-      <strong>Jeżeli system nie oszczędza Ci realnej pracy, to jest tylko kolejnym narzędziem. Przydaś ma właśnie tę pracę zdejmować.</strong>
+      <strong>Sprawdź, co Przydaś może ułatwić w Twojej codziennej pracy.</strong>
       <span class="transition-line"></span>
       <a href="#funkcje" aria-label="Przejdź do funkcji">→</a>
     </div>
@@ -265,7 +265,7 @@ const audiences = [
   <div class="shell">
     <div class="section-head section-head-narrow">
       <span class="eyebrow-text">Wszystko w jednym miejscu</span>
-      <h2>To, czego dziś pilnujesz ręcznie, zamieniasz w proces.</h2>
+      <h2>Rezerwacje, zespół i rozliczenia w jednym miejscu.</h2>
       <p>
         Przydaś prowadzi zlecenie od rezerwacji do danych po realizacji. Dzięki temu mniej rzeczy zależy od pamięci właściciela
         i od tego, czy ktoś odnalazł właściwą wiadomość na Messengerze.
@@ -276,14 +276,14 @@ const audiences = [
       <div class="product-preview">
         <div class="preview-head">
           <div><span class="status-dot"></span> Przydaś · jedno miejsce</div>
-          <span class="ready-chip">✓ proces zamiast pamięci</span>
+          <span class="ready-chip">✓ ustalenia pod ręką</span>
         </div>
         <div class="preview-content">
           <div class="preview-events">
             <div class="preview-label">Plan pracy <span>wszystko w jednym miejscu</span></div>
             <div class="mini-event active"><strong>Rezerwacja</strong><span>klient · termin · ustalenia</span></div>
             <div class="mini-event"><strong>Przygotowanie</strong><span>zespół · zadania · braki</span></div>
-            <div class="mini-event"><strong>Po realizacji</strong><span>rozliczenie · feedback · klient</span></div>
+            <div class="mini-event"><strong>Po realizacji</strong><span>rozliczenie · opinia · klient</span></div>
           </div>
           <div class="preview-team">
             <div class="preview-label">Status</div>
@@ -316,8 +316,8 @@ const audiences = [
       <span class="eyebrow-text">Wydarzenie to nie tylko dzień realizacji</span>
       <h2>Przed wydarzeniem porządek.<br />Po wydarzeniu rozliczenie i wiedza.</h2>
       <p>
-        Większość narzędzi pomaga zapisać termin. Przydaś ma obsłużyć cały cykl: przygotowanie, realizację,
-        zamknięcie finansowe, analizę i kolejny kontakt z klientem.
+        Przygotowujesz zespół i potrzebne materiały, a po wydarzeniu zamykasz rozliczenie.
+        Historia zlecenia zostaje przy kliencie i pomaga przy kolejnej współpracy.
       </p>
     </div>
 
@@ -325,7 +325,7 @@ const audiences = [
       <div class="phase-header">
         <div>
           <span class="phase-kicker">PRZED WYDARZENIEM</span>
-          <h3>Najpierw zdejmujesz chaos operacyjny.</h3>
+          <h3>Ustalasz szczegóły i przygotowujesz zespół.</h3>
         </div>
       </div>
       <div class="phase-grid phase-grid-three">
@@ -347,7 +347,7 @@ const audiences = [
       <div class="phase-header">
         <div>
           <span class="phase-kicker">PO WYDARZENIU · ROZLICZENIE I DANE</span>
-          <h3>Wydarzenie się kończy. Wartość danych dopiero zaczyna rosnąć.</h3>
+          <h3>Rozliczasz wydarzenie i zachowujesz ustalenia.</h3>
         </div>
       </div>
       <div class="phase-grid phase-grid-four">
@@ -363,8 +363,8 @@ const audiences = [
 
     <div class="business-value">
       <div class="business-value-copy">
-        <span class="eyebrow-text">Nie zgadujesz — widzisz</span>
-        <h3>Z każdego wydarzenia zostaje coś więcej niż zdjęcia.</h3>
+        <span class="eyebrow-text">Statystyki Twojej firmy</span>
+        <h3>Sprawdzasz wyniki i historię współpracy.</h3>
         <p>
           Zlecenia budują historię klientów, rozliczenia i statystyki. Z czasem widzisz, które źródła dają najlepszych klientów,
           na czym zarabiasz i do kogo warto odezwać się ponownie.
@@ -372,7 +372,7 @@ const audiences = [
       </div>
       <div class="stats-demo" aria-label="Przykładowe informacje biznesowe">
         <div class="stat-box"><span>Wynik okresu</span><strong>W jednym widoku</strong><em>przychody i koszty</em></div>
-        <div class="stat-box"><span>Źródła zleceń</span><strong>Porównywalne</strong><em>wiesz, co dowozi klientów</em></div>
+        <div class="stat-box"><span>Źródła zleceń</span><strong>Porównywalne</strong><em>wiesz, skąd przychodzą klienci</em></div>
         <div class="stat-box wide"><span>Klienci po realizacji</span><strong>Nie znikają w archiwum</strong><em>historia współpracy zostaje w systemie</em></div>
       </div>
     </div>
@@ -385,8 +385,8 @@ const audiences = [
       <span class="eyebrow-text">Trzy etapy rozwoju firmy</span>
       <h2>Który opis brzmi najbardziej jak Twoja firma?</h2>
       <p>
-        Pakiet nie powinien wynikać z liczby efektownych funkcji. Powinien odpowiadać na etap, na którym jesteś dziś:
-        od porządkowania podstaw, przez zarządzanie zespołem, po świadome pilnowanie wyniku i klientów.
+        Wybierz zakres potrzebny Twojej firmie: rezerwacje i podstawową organizację,
+        pracę zespołu albo rozliczenia i statystyki.
       </p>
     </div>
 
@@ -406,8 +406,8 @@ const audiences = [
 
     <div class="audience-cta">
       <div>
-        <strong>Najlepszy pakiet to ten, który usuwa dzisiejszy problem.</strong>
-        <span>Niżej zobaczysz ceny, policzysz skalę kosztu i porównasz zakres bez kupowania systemu na wyrost.</span>
+        <strong>Porównaj funkcje i wybierz potrzebny zakres.</strong>
+        <span>Niżej znajdziesz ceny oraz szczegółowe porównanie pakietów.</span>
       </div>
       <a class="button button-primary" href="#cennik">Przejdź do cen <span>→</span></a>
     </div>
