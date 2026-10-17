@@ -5,6 +5,7 @@ const {
   eyebrow = 'Dokumenty Przydasia',
   updated = '04.09.2026',
   version = '2.0',
+  draft = false,
 } = Astro.props;
 ---
 <!doctype html>
@@ -13,7 +14,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={draft ? 'noindex, nofollow, noarchive' : 'index, follow'} />
     <meta name="theme-color" content="#087f53" />
     <title>{title} | Przydaś</title>
     <link rel="icon" href="/przydas-mark.svg" type="image/svg+xml" />
@@ -35,6 +36,7 @@ const {
     </header>
 
     <main class="legal-shell legal-main">
+      {draft && <aside class="draft-notice"><strong>Projekt do sprawdzenia. Nie obowiązuje.</strong><p>Treść wymaga zatwierdzenia i osobnej publikacji. Nie zastępuje dokumentów zaakceptowanych przez użytkowników.</p><a href="/podglad-prawny/przeglad/">Wszystkie przygotowane zmiany</a></aside>}
       <div class="legal-hero">
         <span>{eyebrow}</span>
         <h1>{title}</h1>
@@ -73,6 +75,7 @@ const {
 </html>
 
 <style is:global>
+  .draft-notice{padding:20px;border:2px solid #087f53;border-radius:16px;margin-bottom:30px;background:#edf8f2}.draft-notice p{margin:8px 0;font-size:14px}.draft-notice a{font-size:14px}
   :root { --green:#087f53; --dark:#10201a; --muted:#66756e; --line:#dfe8e3; --soft:#f4f8f6; }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }

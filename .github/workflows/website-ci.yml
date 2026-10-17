@@ -31,6 +31,14 @@ jobs:
       - name: Build landing page
         run: npm run build
 
+      - name: Verify legal drafts stay out of production and build separately
+        run: |
+          test ! -d dist/podglad-prawny
+          test -s dist/form-privacy.mjs
+          LEGAL_PREVIEW=1 npm run build -- --outDir dist-legal-preview
+          test -s dist-legal-preview/podglad-prawny/przeglad/index.html
+          grep -q 'Nie obowiązuje' dist-legal-preview/podglad-prawny/umowa-powierzenia/index.html
+
       - name: Validate generated site
         shell: bash
         run: |
