@@ -4,10 +4,11 @@ import Privacy from '../../legal-drafts/polityka-prywatnosci.astro';
 import Providers from '../../legal-drafts/podprocesorzy.astro';
 import Payments from '../../legal-drafts/platnosci.astro';
 import Overview from '../../legal-drafts/przeglad.astro';
+import Terms from '../../legal-drafts/regulamin.astro';
 export function getStaticPaths(){
-  return process.env.LEGAL_PREVIEW==='1'?['przeglad','umowa-powierzenia','polityka-prywatnosci','podprocesorzy','platnosci'].map(document=>({params:{document}})):[];
+  return process.env.LEGAL_PREVIEW==='1'?['przeglad','umowa-powierzenia','polityka-prywatnosci','podprocesorzy','platnosci','regulamin'].map(document=>({params:{document}})):[];
 }
-const docs={'przeglad':Overview,'umowa-powierzenia':Dpa,'polityka-prywatnosci':Privacy,'podprocesorzy':Providers,'platnosci':Payments};
+const docs={'przeglad':Overview,'umowa-powierzenia':Dpa,'polityka-prywatnosci':Privacy,'podprocesorzy':Providers,'platnosci':Payments,'regulamin':Terms};
 const Document=docs[Astro.params.document];
 ---
 <Document />
