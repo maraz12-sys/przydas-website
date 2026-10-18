@@ -6,7 +6,7 @@ export function mountSurvey(container,{schema,eventLabel='',privacy=null,onSubmi
   const root=el('section','customer-survey'),heading=el('h2','',schema.title),form=el('form');form.noValidate=true;
   root.append(heading);
   if(eventLabel)root.append(el('p','cs-muted',eventLabel));
-  root.append(el('p','cs-copy',schema.intro),el('p','cs-notice','Ankieta nie jest anonimowa. Odpowiedzi zostaną powiązane z Twoją rezerwacją i będą widoczne dla osoby zarządzającej wydarzeniem. Nie wpisuj danych o zdrowiu ani innych wrażliwych informacji.'));
+  root.append(el('p','cs-copy',schema.intro),el('p','cs-notice','Ankieta nie jest anonimowa. Odpowiedzi zostaną powiązane z Twoją rezerwacją i będą widoczne dla osoby zarządzającej wydarzeniem.'));
   const update=()=>{
     const visible=new Set(visibleQuestions(schema,answers).map(q=>q.id));
     for(const [id,f] of fields){f.box.hidden=!visible.has(id);if(f.box.hidden){delete answers[id];for(const c of f.controls){c.removeAttribute('aria-invalid');if(c.type==='checkbox'||c.type==='radio')c.checked=false;else c.value='';}f.error.textContent='';}}
