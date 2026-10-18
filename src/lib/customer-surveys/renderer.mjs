@@ -9,7 +9,7 @@ export function mountSurvey(container,{schema,eventLabel='',privacy=null,onSubmi
   root.append(el('p','cs-copy',schema.intro),el('p','cs-notice','Ankieta nie jest anonimowa. Odpowiedzi zostaną powiązane z Twoją rezerwacją i będą widoczne dla osoby zarządzającej wydarzeniem. Nie wpisuj danych o zdrowiu ani innych wrażliwych informacji.'));
   const update=()=>{
     const visible=new Set(visibleQuestions(schema,answers).map(q=>q.id));
-    for(const [id,f] of fields){f.box.hidden=!visible.has(id);if(f.box.hidden){delete answers[id];for(const c of f.controls){if(c.type==='checkbox'||c.type==='radio')c.checked=false;else c.value='';}f.error.textContent='';}}
+    for(const [id,f] of fields){f.box.hidden=!visible.has(id);if(f.box.hidden){delete answers[id];for(const c of f.controls){c.removeAttribute('aria-invalid');if(c.type==='checkbox'||c.type==='radio')c.checked=false;else c.value='';}f.error.textContent='';}}
   };
   const prefix='cs-'+Math.random().toString(36).slice(2);
   for(const q of schema.questions){
@@ -37,15 +37,15 @@ export function mountSurvey(container,{schema,eventLabel='',privacy=null,onSubmi
   const status=el('p','cs-error');status.setAttribute('role','status');
   const submit=el('button','cs-primary',preview?'Sprawdź ankietę w podglądzie':'Wyślij odpowiedzi');submit.type='submit';form.append(status,submit);root.insertBefore(form,root.querySelector('.cs-privacy'));
   form.addEventListener('submit',async event=>{
-    event.preventDefault();if(busy||disposed)return;
+    event.preventDefault();if(busy||disposed)return;status.className='cs-error';
     const result=validateAnswers(schema,answers);
     for(const [id,f] of fields){f.error.textContent=result.errors[id]||'';f.controls.forEach(c=>c.setAttribute('aria-invalid',result.errors[id]?'true':'false'));}
     if(!result.ok){status.textContent='Sprawdź wyróżnione pola.';const first=[...fields.values()].find(f=>f.error.textContent);first?.controls[0]?.focus();return;}
-    if(preview){status.textContent='Podgląd: odpowiedzi są poprawne. Niczego nie zapisano ani nie wysłano.';return;}
-    busy=true;submit.disabled=true;submit.textContent='Zapisywanie…';status.textContent='';
+    if(preview){status.className='cs-success';status.textContent='Podgląd: odpowiedzi są poprawne. Niczego nie zapisano ani nie wysłano.';return;}
+    busy=true;for(const f of fields.values())for(const control of f.controls)control.disabled=true;form.setAttribute('aria-busy','true');submit.disabled=true;submit.textContent='Zapisywanie…';status.textContent='';
     try{await onSubmit(result.answers);if(disposed)return;form.replaceChildren(el('h3','','Dziękujemy za odpowiedź'),el('p','cs-copy',schema.thanks||'Twoja ankieta została zapisana.'));form.tabIndex=-1;form.focus();}
     catch(e){if(!disposed)status.textContent=e?.message||'Nie udało się zapisać odpowiedzi. Spróbuj ponownie.';}
-    finally{busy=false;submit.disabled=false;submit.textContent='Wyślij odpowiedzi';}
+    finally{busy=false;form.removeAttribute('aria-busy');for(const f of fields.values())for(const control of f.controls)control.disabled=false;submit.disabled=false;submit.textContent='Wyślij odpowiedzi';}
   });
   container.replaceChildren(root);update();
   return ()=>{disposed=true;root.remove();};
