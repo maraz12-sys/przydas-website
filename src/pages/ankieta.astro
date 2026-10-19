@@ -1,0 +1,21 @@
+---
+---
+<!doctype html>
+<html lang="pl">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><meta name="robots" content="noindex,nofollow,noarchive" /><meta name="referrer" content="no-referrer" /><title>Ankieta po wydarzeniu | Przydaś</title><link rel="icon" href="/przydas-mark.svg" type="image/svg+xml" /></head>
+<body><main><a class="brand" href="/" aria-label="Przydaś"><img src="/przydas-mark.svg" alt="" width="36" height="36" />Przydaś<span>.</span></a><div id="survey-host"><p role="status">Wczytywanie ankiety…</p></div><noscript>Włącz JavaScript, aby wypełnić ankietę.</noscript></main>
+<script>
+import {mountSurvey} from '../lib/customer-surveys/renderer.mjs';
+import '../lib/customer-surveys/survey.css';
+const host=document.getElementById('survey-host')!;
+const token=location.hash.slice(1);
+// Fragment tokens are not sent to hosting logs or referrers. Clear the address after reading.
+history.replaceState(null,'',location.pathname);
+const api='https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/ankieta-klienta-publiczna';
+async function call(action:string,answers?:Record<string,unknown>){const res=await fetch(api,{method:'POST',credentials:'omit',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token,...(answers?{answers}:{})}),signal:AbortSignal.timeout(20000)});const d=await res.json();if(!res.ok||!d.ok)throw new Error(d.message||'Nie udało się otworzyć ankiety. Spróbuj ponownie.');return d;}
+function note(text:string){const p=document.createElement('p');p.className='status-note';p.setAttribute('role','status');p.textContent=text;host.replaceChildren(p);}
+if(!/^[0-9a-f-]{36}\.[A-Za-z0-9_-]{43}$/.test(token))note('Otwórz ponownie link do ankiety z wiadomości e-mail.');
+else call('get').then(data=>{if(data.submitted){note(data.thanks||'Dziękujemy. Odpowiedź została już zapisana.');return}mountSurvey(host,{schema:data.definition,eventLabel:data.eventLabel,privacy:data.privacy,onSubmit:async answers=>{await call('submit',answers)}})}).catch(e=>note(e.message||'Nie udało się wczytać ankiety. Otwórz ponownie link z wiadomości.'));
+</script>
+<style is:global>html{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f3f8f5;color:#17251f}body{margin:0}main{max-width:860px;margin:30px auto;padding:0 16px 50px}.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;font-size:22px;font-weight:750;margin-bottom:24px}.brand span{color:#087f53;margin-left:-8px}.brand img{object-fit:contain}.status-note{padding:24px;border:1px solid #d8e5df;border-radius:14px;line-height:1.6}@media(prefers-color-scheme:dark){html{background:#0d1419;color:#edf3f7}.status-note{border-color:#354952}}</style>
+</body></html>
