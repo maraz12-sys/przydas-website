@@ -8,7 +8,8 @@ const comparisonSections = [
       ['Dyspozycyjność, przypisania i potwierdzanie udziału', '✓', '✓', '✓'],
       ['Dni kluczowe', '-', '✓', '✓'],
       ['Osoba odpowiedzialna za wydarzenie', '-', '✓', '✓'],
-      ['Ankieta po wydarzeniu', '-', '✓', '✓'],
+      ['Konfigurowalne ankiety animatorów po wydarzeniu', '-', '✓', '✓'],
+      ['Kontrola wypełnienia ankiet i historia odpowiedzi', '-', '✓', '✓'],
       ['Checklisty materiałowe i zakupowe przy wydarzeniu', '-', '-', '✓'],
     ],
   },
@@ -43,7 +44,6 @@ const comparisonSections = [
       ['Checklisty', '-', '✓', '✓'],
       ['Generator formułek', '-', '-', '✓'],
       ['Podwykonawcy', '-', '-', '✓'],
-      ['Asystent AI', '-', '-', 'W przygotowaniu'],
     ],
   },
   {
@@ -218,12 +218,13 @@ const faq = [
               <strong>{section.title}</strong>
               <small>{section.rows.length} {section.rows.length === 1 ? 'funkcja' : section.rows.length >= 2 && section.rows.length <= 4 ? 'funkcje' : 'funkcji'}</small>
             </span>
-            <b aria-hidden="true">+</b>
+            <b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg></b>
           </summary>
           <div class="comparison-group-body">
             <div class="comparison-table-wrap" role="region" aria-label={`Porównanie pakietów: ${section.title}`} tabindex="0">
               <table class="comparison-table comparison-table-compact">
                 <caption class="sr-only">{section.title} - porównanie pakietów START, ZESPÓŁ i BIZNES</caption>
+                <colgroup><col class="feature-column" /><col /><col /><col /></colgroup>
                 <thead>
                   <tr>
                     <th scope="col">Funkcja</th>
@@ -369,7 +370,9 @@ const faq = [
   .comparison-outcome p { margin: 0; color: #66756d; font-size: 13px; line-height: 1.55; }
   .comparison-mobile-hint { display: none; }
   .comparison-table-wrap { overflow-x: auto; border: 1px solid #dfe8e3; border-radius: 22px; background: #fff; box-shadow: 0 14px 38px rgba(30,74,53,.05); scrollbar-width: thin; scrollbar-color: #9acdb5 #f3f7f5; }
-  .comparison-table { width: 100%; min-width: 880px; border-collapse: collapse; font-size: 13px; }
+  .comparison-table { width: 100%; min-width: 880px; table-layout: fixed; border-collapse: collapse; font-size: 13px; }
+  .comparison-table col.feature-column { width: 43%; }
+  .comparison-table col:not(.feature-column) { width: 19%; }
   .comparison-table th, .comparison-table td { padding: 16px 18px; border-bottom: 1px solid #e7eeea; text-align: center; vertical-align: middle; }
   .comparison-table thead th:first-child, .comparison-table tbody th[scope='row'] { width: 43%; text-align: left; }
   .comparison-table tbody th[scope='row'] { color: #26372f; background: #fff; font-weight: 630; }
@@ -492,7 +495,8 @@ const faq = [
   .comparison-group-summary small { color: #738078; font-size: 10px; }
   .comparison-group-summary b { width: 32px; height: 32px; flex: 0 0 32px; border-radius: 10px; display: grid; place-items: center; color: #087f53; background: #e8f6ef; font-size: 20px; line-height: 1; transition: transform .18s ease; }
   .comparison-group[open] .comparison-group-summary { border-bottom: 1px solid #e2ebe6; background: #f5fbf8; }
-  .comparison-group[open] .comparison-group-summary b { transform: rotate(45deg); }
+  .comparison-group-summary b svg { width: 18px; height: 18px; }
+  .comparison-group[open] .comparison-group-summary b { transform: rotate(180deg); }
   .comparison-group-body { padding: 0; }
   .comparison-table-compact { margin: 0; }
   .comparison-table-compact thead th:first-child { min-width: 280px; }
