@@ -37,7 +37,7 @@ const splitLegalVersions =
   trial.includes("dpa_version: dpaVersion");
 check(splitLegalVersions, 'Legal document version metadata missing');
 check(trial.includes("const termsVersion = '2026-10-01.3'"), 'Terms version constant mismatch');
-check(trial.includes("const privacyVersion = '2026-10-21.1'"), 'Privacy version constant mismatch');
+check(trial.includes("const privacyVersion = '2026-10-21.2'"), 'Privacy version constant mismatch');
 check(trial.includes("const dpaVersion = '2026-10-01.3'"), 'DPA version constant mismatch');
 check(trial.includes('href="/regulamin"'), 'Terms link missing');
 check(trial.includes('href="/polityka-prywatnosci"'), 'Privacy link missing');
