@@ -10,7 +10,7 @@
     "audit:subscription": "node scripts/normalize-subscription-signup.mjs && node scripts/audit-subscription-readiness.mjs"
   },
   "dependencies": {
-    "astro": "7.3.2"
+    "astro": "7.3.3"
   },
   "engines": {
     "node": ">=22.19.0"

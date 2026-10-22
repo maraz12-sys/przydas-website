@@ -12,5 +12,5 @@ test('npm 10 lockfile contains the optional native runtime dependency records', 
     assert.ok(entry.integrity.startsWith('sha512-'));
     assert.equal(entry.optional, true);
   }
-  assert.equal(lock.packages[''].dependencies.astro, '7.3.2');
+  assert.equal(lock.packages[''].dependencies.astro, '7.3.3');
 });
