@@ -7,6 +7,9 @@ const comparisonSections = [
       ['Warstwowy kalendarz: osobne kalendarze, kolory i dostępy', '-', '-', '✓'],
       ['Dodawanie, edycja i duplikowanie rezerwacji', '✓', '✓', '✓'],
       ['Dyspozycyjność, przypisania i potwierdzanie udziału', '✓', '✓', '✓'],
+      ['Przegląd dnia', '-', '✓', '✓'],
+      ['Potwierdzenie rezerwacji przez klienta', '-', '✓', '✓'],
+      ['Linki i załączniki w rezerwacji', '-', '-', '✓'],
       ['Dni kluczowe', '-', '✓', '✓'],
       ['Osoba odpowiedzialna za wydarzenie', '-', '✓', '✓'],
       ['Konfigurowalne ankiety animatorów po wydarzeniu', '-', '✓', '✓'],
@@ -64,8 +67,8 @@ const comparisonSections = [
       ['Rozliczenia pracowników według własnych stawek', '-', '-', '✓'],
       ['Gotówka, wypłaty i historia rozliczeń pracowników', '-', '-', '✓'],
       ['Eksport danych do Excela', '-', '-', '✓'],
-      ['Fakturowo i Fakturownia — uzupełnianie faktury bez API', '-', '-', '✓'],
-        ['inFakt — dane z rezerwacji do ręcznego skopiowania (bez API)', '-', '-', '✓'],
+      ['Fakturowo i Fakturownia - uzupełnianie faktury bez API', '-', '✓', '✓'],
+        ['inFakt - dane z rezerwacji do ręcznego skopiowania (bez API)', '-', '✓', '✓'],
     ],
   },
   {
@@ -90,6 +93,8 @@ const comparisonSections = [
   {
     title: 'Ustawienia',
     rows: [
+      ['Integracje, w tym Kalendarz Google', '-', '✓', '✓'],
+      ['Komunikacja z klientem', '-', '✓', '✓'],
       ['Preferencje użytkownika', '✓', '✓', '✓'],
       ['Konfiguracja formularza rezerwacji', 'Częściowa', 'Pełna', 'Pełna'],
       ['Wymagania profilowe pracowników', '-', '✓', '✓'],
@@ -167,7 +172,7 @@ const faq = [
   },
   {
     q: 'Czy mogę później zmienić pakiet?',
-    a: 'Tak. Możesz zacząć od prostszego zakresu i przejść wyżej, kiedy pojawi się większy zespół, więcej wydarzeń albo potrzeba dokładniejszych rozliczeń i analiz.',
+    a: 'Tak. W Ustawieniach, w sekcji Plan i płatności, możesz przejść na wyższy pakiet także w trakcie opłaconego okresu. Dopłacasz proporcjonalną różnicę za pozostały czas. Data końca i cykl abonamentu pozostają bez zmian. Wyższy pakiet włącza się po potwierdzeniu płatności, a kolejne odnowienie kosztuje pełną cenę nowego pakietu, widoczną przed zakupem.',
   },
   {
     q: 'Czy każdy pracownik ma własne konto?',
