@@ -9,7 +9,8 @@ const comparisonSections = [
       ['Dyspozycyjność, przypisania i potwierdzanie udziału', '✓', '✓', '✓'],
       ['Przegląd dnia', '-', '✓', '✓'],
       ['Potwierdzenie rezerwacji przez klienta', '-', '✓', '✓'],
-      ['Linki i załączniki w rezerwacji', '-', '-', '✓'],
+      ['Formularze rezerwacyjne dla klientów: tworzenie i wysyłanie', '✓', '✓', '✓'],
+      ['Linki i załączniki w rezerwacji oraz w formularzu klienta', '-', '-', '✓'],
       ['Dni kluczowe', '-', '✓', '✓'],
       ['Osoba odpowiedzialna za wydarzenie', '-', '✓', '✓'],
       ['Konfigurowalne ankiety animatorów po wydarzeniu', '-', '✓', '✓'],
@@ -34,6 +35,8 @@ const comparisonSections = [
       ['Zbiorczy widok zespołu', '✓', '✓', '✓'],
       ['Stanowiska i przypisywanie stanowisk', '-', '✓', '✓'],
       ['Zadania dla członków zespołu', '-', '✓', '✓'],
+      ['Generator umów zlecenia', '-', '✓', '✓'],
+      ['Dodawanie dokumentów do Sejfu', '-', '✓', '✓'],
       ['Garderoba i informacje pracownicze', '-', '✓', '✓'],
       ['Rozliczenia pracowników i naliczanie wypłat', '-', '-', '✓'],
     ],
@@ -46,7 +49,7 @@ const comparisonSections = [
       ['Współdzielone notatki', '-', '✓', '✓'],
       ['Standardy, instrukcje i przydatne linki', '-', '✓', '✓'],
       ['Checklisty', '-', '✓', '✓'],
-      ['Generator formułek', '-', '-', '✓'],
+      ['Szablony wiadomości', '-', '-', '✓'],
       ['Podwykonawcy', '-', '-', '✓'],
     ],
   },
@@ -54,6 +57,7 @@ const comparisonSections = [
     title: 'Magazyn',
     rows: [
       ['Podstawowy Magazyn: kategorie, pozycje i stany', '-', 'Bez limitu', 'Bez limitu'],
+      ['Sprzęt rezerwowany i blokada podwójnej rezerwacji', '-', '✓', '✓'],
       ['Historia operacji magazynowych', '-', '-', '✓'],
       ['Inwentaryzacje', '-', '-', '✓'],
     ],
@@ -75,6 +79,7 @@ const comparisonSections = [
     title: 'Statystyki i klienci',
     rows: [
       ['Zbiorczy widok i podsumowanie miesięczne', '-', '✓', '✓'],
+      ['Ankiety klientów', '-', '✓', '✓'],
       ['Analiza ankiet po wydarzeniach', '-', '✓', '✓'],
       ['Przypomnienia o ponownym kontakcie z klientami', '-', '-', '✓'],
       ['Szanse sprzedażowe: potencjalne stałe współprace i imprezy prywatne', '-', '-', 'W przygotowaniu'],
@@ -136,7 +141,7 @@ const trustItems = [
 const faq = [
   {
     q: 'Jak działa bezpłatny okres próbny?',
-    a: 'Każda nowa firma otrzymuje 30 dni pełnego pakietu BIZNES bez opłat. Przed końcem okresu próbnego przypomnimy Ci o wyborze pakietu. Po 30 dniach wybierasz START, ZESPÓŁ albo BIZNES. Wybranie niższego pakietu nie usuwa danych. Ogranicza dostęp do funkcji spoza jego zakresu.',
+    a: 'Każda nowa firma otrzymuje 30 dni pełnego pakietu BIZNES bez opłat. Przed końcem okresu próbnego przypomnimy Ci o wyborze pakietu. Po 30 dniach wybierasz START, ZESPÓŁ albo BIZNES. Wybranie niższego pakietu nie usuwa danych. Ogranicza dostęp do funkcji spoza jego zakresu. Wcześniej zapisane dokumenty Sejfu pozostają dostępne zgodnie z uprawnieniami i terminami przechowywania. Załączniki już wysłane z formularzem klienta działają do terminu ich ważności.',
   },
   {
     q: 'Czy muszę ręcznie przepisywać dotychczasowe rezerwacje?',
