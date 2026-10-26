@@ -147,6 +147,10 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       }
       @media(max-width:420px){.secure-label span{display:none}.head h1{font-size:28px}.organization{font-size:10px}}
     .client-materials{margin:20px 0;padding:16px;border:1px solid #d7e5df;border-radius:12px;background:#f7faf8}.client-materials h2{font-size:16px;margin:0 0 10px}.client-materials ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}.client-materials li{display:flex;justify-content:space-between;align-items:center;gap:12px}.client-materials li div{display:grid;gap:4px;min-width:0}.client-materials strong{font-size:13px;overflow-wrap:anywhere}.client-materials small{font-size:12px;color:#64748b}.client-materials a,.client-materials button{font:inherit;font-size:13px;padding:9px 12px;border:1px solid #c9ddd1;border-radius:8px;color:#087f53;background:white;white-space:nowrap;cursor:pointer}.materials-error{color:#b42318;font-size:13px}.client-materials button:disabled{opacity:.5}@media(max-width:520px){.client-materials{padding:12px}.client-materials li{align-items:start;flex-direction:column}.client-materials a,.client-materials button{width:100%;box-sizing:border-box;text-align:center}}
+      .invoice-fields{grid-column:1/-1;min-width:0;margin:0;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--white)}
+      .invoice-fields legend{font-size:14px;font-weight:650;padding:0 5px}.invoice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}.invoice-fields .check{margin-top:14px}.invoice-fields [hidden],.invoice-fields[hidden]{display:none!important}.invoice-recipient{margin-top:14px;border-top:1px solid var(--line)}.invoice-recipient p{font-size:12px;line-height:1.5;color:var(--muted)}.invoice-fields input[aria-invalid=true]{outline:2px solid var(--danger);border-color:var(--danger)}
+      @media(max-width:600px){.invoice-grid{grid-template-columns:1fr}.invoice-fields{padding:12px}.invoice-fields input,.invoice-fields select{font-size:16px}}
+      @media(prefers-color-scheme:dark){:root{color-scheme:dark;--ink:#eef3f7;--muted:#afc2b8;--line:#40534b;--line-strong:#52685c;--white:#172820;--green-dark:#8be2b5;--danger:#ffb4aa;--danger-soft:#3c2323}html,body{background:#102019}.form-card,.head,.state{background:#172820}.head h1,.state h2,.field>span,.check span,.process-note strong{color:var(--ink)}.field input,.field select,.field textarea{background:#20392c;color:var(--ink)}.check,.check:hover,.process-note,.meta span,.required-note,.organization{background:#20392c;color:var(--muted)}.process-note .process-warning,.choice-option span{color:var(--ink)}.choice-option,.client-materials,.client-materials a,.client-materials button{background:#20392c}.success-dialog{background:#172820}.success-dialog h2,.success-dialog p{color:var(--ink)}}
     </style>
   </head>
   <body>
@@ -173,6 +177,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
 
     <script type="module" define:vars={{ apiUrl }}>
       import {renderPrivacyNotice} from "/form-privacy.mjs";
+      import {renderInvoiceFields,wireInvoiceFields,readInvoiceAnswers} from "/invoice-fields.mjs";
       const card = document.getElementById('card');
       const token = new URLSearchParams(window.location.search).get('t') || '';
       const successOverlay = document.getElementById('success-overlay');
@@ -276,7 +281,8 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         return `<label class="field${wide}${dependentClass}"${dependentAttrs}><span>${label}${mark}</span><input type="${type}" name="${key}"${required}${placeholder}${type==='email'?' autocomplete="email"':''}${type==='tel'?' autocomplete="tel"':''}>${hint}</label>`;
       };
       const renderField = (field,hasInvoiceToggle=false) => {
-        const html=renderRawField(field,hasInvoiceToggle);
+        if(hasInvoiceToggle&&invoiceDependentKeys.has(field.key))return '';
+        const html=renderRawField(field,hasInvoiceToggle)+(field.key==='faktura_wymagana'?renderInvoiceFields():'');
         const categories=Array.isArray(field?.rodzaje_wydarzen_nazwy)?field.rodzaje_wydarzen_nazwy:[];
         const ids=Array.isArray(field?.rodzaje_wydarzen_ids)?field.rodzaje_wydarzen_ids:[];
         if(field?.custom!==true||!ids.length)return html;
@@ -366,6 +372,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
         card.innerHTML=`<header class="head"><span class="organization">${esc(data.organization_name||'Nasz zespół')}</span><h1>${esc(data.heading||'Formularz rezerwacyjny')}</h1><div class="meta">${data.expires_at?`<span>Link ważny do ${esc(fmtDate(data.expires_at))}</span>`:''}<span>Dane trafiają bezpośrednio do naszego zespołu</span></div></header><div class="form-body"><div class="process-note"><strong>Jak wygląda dalszy proces?</strong><span>${esc(data.process_text||'Uzupełnij i wyślij formularz. Zweryfikujemy dane, a po zaakceptowaniu rezerwacji otrzymasz potwierdzenie na podany adres e-mail. Jeżeli coś będzie wymagało doprecyzowania/uzupełnienia skontaktujemy się z Tobą.')}</span><div class="process-warning">${esc(data.process_warning||'Pamiętaj! Wysłanie formularza nie oznacza jeszcze potwierdzenia rezerwacji.')}</div></div>${renderAssets(data.assets)}<div class="form-intro"><div><strong>Informacje o wydarzeniu</strong></div><span class="required-note">* pola wymagane</span></div><form id="reservation-form">${fields.map(field=>renderField(field,hasInvoiceToggle)).join('')}${renderPrivacyNotice(data.privacy_notice,data.organization_name)}<div id="form-error" class="error-wrap" aria-live="polite"></div><div class="actions"><div class="actions-copy">Przed wysłaniem możesz jeszcze sprawdzić wszystkie wpisane informacje.</div><button class="submit" type="submit">Wyślij formularz →</button></div></form></div>`;
         const form=document.getElementById('reservation-form');
         wireInvoiceDependencies(form);
+        wireInvoiceFields(form);
         wireEventCategoryDependencies(form);
         wirePackageDependencies(form);
         wireDatePickerAccess(form);
@@ -375,6 +382,8 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       const submitForm = async event => {
         event.preventDefault();
         const form=event.currentTarget,button=form.querySelector('.submit'),errorBox=document.getElementById('form-error');
+        let invoiceAnswers;
+        try{invoiceAnswers=readInvoiceAnswers(form)}catch(error){errorBox.innerHTML=`<div class="error">${esc(error.message)}</div>`;return;}
         if(!form.reportValidity()) return;
         const answers={};
         for(const field of (formData?.fields||[])){
@@ -382,6 +391,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
           if(input.disabled){if(invoiceDependentKeys.has(field.key))answers[field.key]='';continue;}
           answers[field.key]=field.type==='checkbox'?Boolean(input.checked):String(input.value||'').trim();
         }
+        Object.assign(answers,invoiceAnswers);
         button.disabled=true;button.textContent='Wysyłanie…';errorBox.innerHTML='';
         try{
           await callApi({action:'submit',token,answers});
