@@ -47,6 +47,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
       .brand img{width:38px;height:38px;display:block}
       .brand strong{font-size:20px;letter-spacing:-.025em}
+      .organization-brand img{display:block;max-width:min(240px,60vw);max-height:72px;object-fit:contain}.platform-footer{display:flex;align-items:center;justify-content:center;gap:6px;margin:14px auto 0;color:var(--muted);font-size:10px;text-decoration:none}.platform-footer img{width:18px;height:18px}.brand[hidden],.organization-brand[hidden],.platform-footer[hidden]{display:none}
       .secure-label{display:inline-flex;align-items:center;gap:8px;color:#607168;font-size:12px;font-weight:700}
       .secure-label::before{content:"✓";display:grid;place-items:center;width:22px;height:22px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:900}
       .form-card{overflow:hidden;border:1px solid rgba(201,219,208,.9);border-radius:24px;background:rgba(255,255,255,.96);box-shadow:0 28px 80px rgba(24,67,46,.10),0 3px 12px rgba(24,67,46,.04)}
@@ -157,12 +158,14 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
   <body>
     <main class="page-shell">
       <div class="topbar">
-        <a class="brand" href="/" aria-label="Przydaś - strona główna"><img src="/przydas-mark.svg" alt="" /><strong>Przydaś</strong></a>
+        <a id="platform-brand" class="brand" href="/" aria-label="Przydaś - strona główna"><img src="/przydas-mark.svg" alt="" /><strong>Przydaś</strong></a>
+        <span id="organization-brand" class="organization-brand" hidden><img id="organization-logo" alt="" referrerpolicy="no-referrer" /></span>
         <div class="secure-label"><span>Bezpieczny formularz wydarzenia</span></div>
       </div>
       <section class="form-card" id="card">
         <div class="state" id="loading"><div><div class="spinner"></div><h2>Ładujemy formularz</h2><p>Sprawdzamy link i przygotowujemy dane wydarzenia.</p></div></div>
       </section>
+      <a id="platform-footer" class="platform-footer" href="/" hidden><img src="/przydas-mark.svg" alt="" /><span>Przydaś</span></a>
       <p class="privacy">Dane z formularza trafiają bezpośrednio do firmy, z którą ustalasz wydarzenie, za pośrednictwem Przydasia. <a href="/polityka-prywatnosci/" target="_blank" rel="noopener">Prywatność usługi Przydaś</a>.</p>
     </main>
 
@@ -178,6 +181,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
 
     <script type="module" define:vars={{ apiUrl }}>
       import {renderPrivacyNotice} from "/form-privacy.mjs";
+      import {applyFormBranding} from "/form-logo.mjs";
       import {renderInvoiceFields,wireInvoiceFields,readInvoiceAnswers} from "/invoice-fields.mjs";
       const card = document.getElementById('card');
       const token = new URLSearchParams(window.location.search).get('t') || '';
@@ -367,6 +371,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
       card.addEventListener('click',async event=>{const button=event.target.closest?.('[data-asset-id]');if(!button)return;const errorBox=card.querySelector('.materials-error');button.disabled=true;button.textContent='Pobieranie…';errorBox.textContent='';try{const result=await callApi({action:'download',token,id:button.dataset.assetId});const a=document.createElement('a');a.href=result.url;a.rel='noopener noreferrer';a.download='';document.body.append(a);a.click();a.remove();}catch(e){errorBox.textContent=e.message||'Plik jest niedostępny.'}finally{button.disabled=false;button.textContent='Pobierz'}});
       const renderForm = data => {
         formData=data;
+        applyFormBranding(data,document);
         if(data.completed){showState('Formularz został już przekazany',data.message||'Wszystko jest zapisane - nie musisz nic więcej robić.',true);card.insertAdjacentHTML('beforeend',renderAssets(data.assets));card.insertAdjacentHTML('beforeend',renderPrivacyNotice(data.privacy_notice,data.organization_name));return;}
         const fields=orderFields(Array.isArray(data.fields)?data.fields:[]);
         const hasInvoiceToggle=fields.some(field=>field?.key==='faktura_wymagana');

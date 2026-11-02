@@ -150,6 +150,13 @@ export default {
       });
     }
 
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    if (url.pathname.replace(/\/$/, '') === '/formularz') {
+      const headers = new Headers(response.headers);
+      const policy = headers.get('Content-Security-Policy');
+      if (policy) headers.set('Content-Security-Policy', policy.replace(/img-src 'self' data:(?=;|$)/, "img-src 'self' data: https://jyzajgbgkqlczjpoxxzt.supabase.co"));
+      return new Response(response.body, {status:response.status, headers});
+    }
+    return response;
   },
 };
