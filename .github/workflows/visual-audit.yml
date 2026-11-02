@@ -53,6 +53,7 @@ jobs:
         shell: bash
         run: |
           cat > form-audit.mjs <<'EOF'
+          import assert from 'node:assert/strict';
           import { chromium } from 'playwright';
 
           const mockResponse = {
@@ -90,27 +91,39 @@ jobs:
             'Telefon kontaktowy',
             'E-mail kontaktowy',
             'Czy potrzebna jest faktura?',
-            'NIP',
-            'Dane do faktury',
             'Uwagi',
           ];
+
+          const baseOrder = expectedOrder.slice(0,-1);
+          const addressLabels = ['Ulica / miejscowość nabywcy','Numer budynku nabywcy','Numer lokalu nabywcy','Kod pocztowy nabywcy','Miejscowość nabywcy'];
+          const recipientLabels = ['Nazwa odbiorcy JST','NIP odbiorcy JST','Ulica / miejscowość odbiorcy JST','Numer budynku odbiorcy JST','Numer lokalu odbiorcy JST','Kod pocztowy odbiorcy JST','Miejscowość odbiorcy JST'];
+          const invoiceOrder = (buyerType,jst=false) => [...baseOrder,'Nabywca',...(buyerType==='person'?['Imię nabywcy','Nazwisko nabywcy']:['Nazwa nabywcy','NIP nabywcy']),...addressLabels,...(buyerType==='company'?['JST - osobny odbiorca (np. szkoła)']:[]),...(jst?recipientLabels:[]),'Uwagi'];
+          const field = (page,key) => page.locator('[name="invoice_'+key+'"]');
+          const visibleLabels = async page => (await page.locator('#reservation-form .field:visible > span').allTextContents()).map(text=>text.replace('*','').trim());
 
           const browser = await chromium.launch({ headless: true });
 
           async function preparePage(width, height) {
             const context = await browser.newContext({ viewport: { width, height }, locale: 'pl-PL' });
             const page = await context.newPage();
+            const submissions = [];
             await page.route('**/functions/v1/formularz-rezerwacyjny-publiczny', async route => {
-              let action = 'get';
-              try { action = JSON.parse(route.request().postData() || '{}').action || 'get'; } catch {}
+              const payload = JSON.parse(route.request().postData() || '{}'), action = payload.action || 'get';
               if (action === 'submit') {
+                submissions.push(payload);
                 return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok:true, submitted:true, message:'Formularz został przekazany organizatorowi.' }) });
               }
+              assert.equal(action,'get','Only the mocked form GET/submit may be requested');
               return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(mockResponse) });
             });
             await page.goto('http://127.0.0.1:4173/formularz/?t=PWYzYneFaA3YiafLu66v7Ualkc03Bm0PaA-PbmLB57k', { waitUntil: 'domcontentloaded' });
             await page.locator('#reservation-form').waitFor({ state: 'visible' });
-            return { context, page };
+            return { context, page, submissions };
+          }
+
+          async function assertVisibility(page,key,visible) {
+            assert.equal(await field(page,key).isVisible(),visible,key+' visibility');
+            assert.equal(await field(page,key).isEnabled(),visible,key+' enabled state');
           }
 
           async function auditLayout(width, height, output) {
@@ -121,7 +134,7 @@ jobs:
               const submit = document.querySelector('.submit');
               const head = document.querySelector('.head');
               const field = document.querySelector('.field');
-              const labels = Array.from(document.querySelectorAll('#reservation-form .field > span')).map(el => el.textContent.replace('*','').trim());
+              const labels = Array.from(document.querySelectorAll('#reservation-form .field > span')).filter(el=>el.getClientRects().length>0).map(el => el.textContent.replace('*','').trim());
               const processText = document.querySelector('.process-note')?.textContent.replace(/\s+/g,' ').trim() || '';
               const addressHint = document.querySelector('input[name="adres"]')?.parentElement?.querySelector('.field-hint')?.textContent.trim() || '';
               const startSelect = document.querySelector('select[name="godzina_start"]');
@@ -159,20 +172,28 @@ jobs:
             if (result.startTag!=='SELECT' || result.endTag!=='SELECT') throw new Error(`Godziny nie są listami wyboru: ${JSON.stringify(result)}`);
             if (result.timeValues.length!==49 || result.timeValues[1]!=='00:00' || result.timeValues[2]!=='00:30' || result.timeValues.at(-1)!=='23:30') throw new Error(`Lista godzin nie ma interwału 30 minut: ${JSON.stringify(result.timeValues)}`);
 
-            const invoiceToggle = page.locator('input[name="faktura_wymagana"]');
-            const nipWrapper = page.locator('[data-invoice-dependent="true"]').filter({ has: page.locator('input[name="faktura_nip"]') });
-            const invoiceDataWrapper = page.locator('[data-invoice-dependent="true"]').filter({ has: page.locator('textarea[name="faktura_dane"]') });
-            if (await nipWrapper.isVisible() || await invoiceDataWrapper.isVisible()) throw new Error('Pola faktury są widoczne przed zaznaczeniem faktury.');
+            const invoiceToggle=page.locator('input[name="faktura_wymagana"]');
+            assert.equal(await page.locator('#invoice-fields').isVisible(),false);
+            for(const key of ['buyerType','buyerName','buyerNip','buyerFirstName','recipientName'])assert.equal(await field(page,key).isDisabled(),true,key+' disabled before invoice selection');
             await invoiceToggle.check();
-            if (!(await nipWrapper.isVisible()) || !(await invoiceDataWrapper.isVisible())) throw new Error('Pola faktury nie pojawiają się po zaznaczeniu faktury.');
+            assert.deepEqual(await visibleLabels(page),invoiceOrder('company'),'Company visible order');
+            await assertVisibility(page,'buyerName',true);await assertVisibility(page,'buyerNip',true);await assertVisibility(page,'buyerFirstName',false);await assertVisibility(page,'recipientName',false);
+            await field(page,'buyerType').selectOption('person');
+            assert.deepEqual(await visibleLabels(page),invoiceOrder('person'),'Private buyer visible order');
+            await assertVisibility(page,'buyerName',false);await assertVisibility(page,'buyerNip',false);await assertVisibility(page,'buyerFirstName',true);await assertVisibility(page,'buyerLastName',true);await assertVisibility(page,'jst',false);await assertVisibility(page,'recipientName',false);
+            await field(page,'buyerType').selectOption('company');await field(page,'jst').check();
+            assert.deepEqual(await visibleLabels(page),invoiceOrder('company',true),'JST visible order');
+            for(const key of ['recipientName','recipientNip','recipientStreet','recipientBuilding','recipientUnit','recipientPostalCode','recipientCity'])await assertVisibility(page,key,true);
 
             await page.screenshot({ path: output, fullPage: true });
             if (width > 720) await page.screenshot({ path: 'visual-audit/form-invoice-desktop-1440.png', fullPage: true });
+            await invoiceToggle.uncheck();assert.deepEqual(await visibleLabels(page),expectedOrder,'Invoice OFF restores ordinary order');
+            assert.equal(await field(page,'recipientNip').isDisabled(),true);
             await context.close();
           }
 
           async function auditSubmitSuccess() {
-            const { context, page } = await preparePage(1440, 1100);
+            const { context, page, submissions } = await preparePage(1440, 1100);
             await page.locator('input[name="title"]').fill('Urodziny Zosi');
             await page.locator('input[name="rodzaj_wydarzenia"]').fill('Urodziny');
             await page.locator('input[name="data_wydarzenia"]').fill('2026-09-20');
@@ -188,14 +209,49 @@ jobs:
             const modalText=(await page.locator('#success-overlay').innerText()).replace(/\s+/g,' ').trim();
             if (!/Formularz wysłany pomyślnie/i.test(modalText)) throw new Error(`Brakuje komunikatu sukcesu: ${modalText}`);
             if (!/Oczekuj na potwierdzenie rezerwacji/i.test(modalText)) throw new Error(`Brakuje informacji o oczekiwaniu na potwierdzenie: ${modalText}`);
+            assert.equal(submissions.length,1);assert.equal(submissions[0].answers.invoice_billing,null);assert.equal(submissions[0].answers.faktura_nip,'');assert.equal(submissions[0].answers.faktura_dane,'');
             await page.screenshot({ path:'visual-audit/form-success-desktop-1440.png', fullPage:true });
             await context.close();
           }
 
-          await auditLayout(1440, 1100, 'visual-audit/form-desktop-1440.png');
-          await auditLayout(390, 844, 'visual-audit/form-mobile-390.png');
-          await auditSubmitSuccess();
-          await browser.close();
+          async function fillBase(page) {
+            await page.locator('input[name="title"]').fill('Urodziny Zosi');await page.locator('input[name="rodzaj_wydarzenia"]').fill('Urodziny');await page.locator('input[name="data_wydarzenia"]').fill('2026-09-20');await page.locator('select[name="godzina_start"]').selectOption('15:00');
+            const autoEnd=await page.locator('select[name="godzina_end"]').inputValue();if(autoEnd!=='17:00')throw Error(`Godzina zakończenia nie ustawiła się +2h. Otrzymano: ${autoEnd}`);
+            await page.locator('input[name="adres"]').fill('Bydgoszcz, ul. Testowa 1, 85-001');await page.locator('input[name="osoba_do_kontaktu"]').fill('Jan Kowalski');await page.locator('input[name="telefon_kontaktowy"]').fill('500000000');await page.locator('input[name="email_kontaktowy"]').fill('jan@example.com');
+          }
+          async function success(page) {
+            await page.locator('#success-overlay').waitFor({state:'visible'});const text=(await page.locator('#success-overlay').innerText()).replace(/\s+/g,' ').trim();
+            if(!/Formularz wysłany pomyślnie/i.test(text))throw Error(`Brakuje komunikatu sukcesu: ${text}`);
+            if(!/Oczekuj na potwierdzenie rezerwacji/i.test(text))throw Error(`Brakuje informacji o oczekiwaniu na potwierdzenie: ${text}`);
+          }
+          const billingKeys=['buyerName','buyerNip','buyerFirstName','buyerLastName','buyerStreet','buyerBuilding','buyerUnit','buyerPostalCode','buyerCity','recipientName','recipientNip','recipientStreet','recipientBuilding','recipientUnit','recipientPostalCode','recipientCity'];
+          const buyerAddress={buyerStreet:'Testowa',buyerBuilding:'1',buyerUnit:'2',buyerPostalCode:'00-001',buyerCity:'Warszawa'};
+          async function fillInvoice(page,values){for(const [key,value]of Object.entries(values))await field(page,key).fill(value);}
+          async function requiredFocus(page,submissions,key) {
+            const count=submissions.length;await page.locator('button.submit').click();await page.locator('#invoice-error').waitFor({state:'visible'});assert.equal(submissions.length,count,'Invalid invoice never submits');assert.equal(await field(page,key).getAttribute('aria-invalid'),'true');assert.equal(await field(page,key).evaluate(el=>el===document.activeElement),true,key+' receives focus');
+            const bounds=await field(page,key).evaluate(el=>{const r=el.getBoundingClientRect(),f=el.closest('form').getBoundingClientRect();return{left:r.left,right:r.right,formLeft:f.left,formRight:f.right};});assert.ok(bounds.left>=bounds.formLeft&&bounds.right<=bounds.formRight,'Focused invoice field stays inside form margins');
+          }
+          async function auditInvoiceSubmit(kind) {
+            const {context,page,submissions}=await preparePage(1440,1100);
+            try {
+              await fillBase(page);await page.locator('input[name="faktura_wymagana"]').check();let values;
+              if(kind==='person') {
+                await fillInvoice(page,{buyerName:'STALE COMPANY',buyerNip:'5261040828'});await field(page,'jst').check();await field(page,'recipientName').fill('STALE RECIPIENT');await field(page,'buyerType').selectOption('person');await requiredFocus(page,submissions,'buyerFirstName');values={buyerFirstName:'Jan',buyerLastName:'Testowy',...buyerAddress};await fillInvoice(page,values);
+              } else {
+                await field(page,'buyerType').selectOption('person');await fillInvoice(page,{buyerFirstName:'STALE',buyerLastName:'PERSON'});await field(page,'buyerType').selectOption('company');await requiredFocus(page,submissions,'buyerName');values={buyerName:kind==='jst'?'TEST Gmina':'TEST Firma',buyerNip:'5261040828',...buyerAddress};await fillInvoice(page,values);
+                if(kind==='company'){await field(page,'buyerNip').fill('123');await requiredFocus(page,submissions,'buyerNip');await field(page,'buyerNip').fill(values.buyerNip);await field(page,'buyerPostalCode').fill('bad');await requiredFocus(page,submissions,'buyerPostalCode');await field(page,'buyerPostalCode').fill(values.buyerPostalCode);}
+                if(kind==='jst'){await field(page,'jst').check();await requiredFocus(page,submissions,'recipientName');const recipient={recipientName:'TEST Szkoła',recipientNip:'5621808600',recipientStreet:'Szkolna',recipientBuilding:'2',recipientUnit:'',recipientPostalCode:'00-002',recipientCity:'Warszawa'};await fillInvoice(page,recipient);await field(page,'recipientNip').fill('123');await requiredFocus(page,submissions,'recipientNip');await field(page,'recipientNip').fill(recipient.recipientNip);values={...values,...recipient};}
+              }
+              await page.locator('button.submit').click();await success(page);assert.equal(submissions.length,1);const answers=submissions[0].answers,expected={version:1,buyerType:kind==='person'?'person':'company',jst:kind==='jst',...Object.fromEntries(billingKeys.map(key=>[key,''])),...values};assert.deepEqual(answers.invoice_billing,expected,'Exact structured buyer/JST payload with hidden data cleared');assert.equal(answers.faktura_wymagana,true);assert.equal(answers.faktura_nip,expected.buyerNip);assert.ok(answers.faktura_dane.includes(kind==='person'?'Jan Testowy':values.buyerName));assert.ok(!answers.faktura_dane.includes('STALE'));if(kind==='jst'){assert.ok(answers.faktura_dane.includes('Odbiorca JST: TEST Szkoła'));assert.ok(answers.faktura_dane.includes(expected.recipientNip));}
+              console.log('PASS structured invoice '+kind+': visibility/required/focus/exact payload, mocked submission only');
+            } finally {await context.close();}
+          }
+          try {
+            await auditLayout(1440, 1100, 'visual-audit/form-desktop-1440.png');
+            await auditLayout(390, 844, 'visual-audit/form-mobile-390.png');
+            await auditSubmitSuccess();
+            for(const kind of ['company','person','jst'])await auditInvoiceSubmit(kind);
+          } finally {await browser.close();}
           EOF
           node form-audit.mjs
 
