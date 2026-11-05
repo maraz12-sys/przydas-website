@@ -4,12 +4,13 @@ import {gusControl,wireInvoiceGus} from './invoice-gus.mjs';
 const invoiceEscape=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
 export function renderInvoiceFields(){
  const inputs=fields=>fields.map(([key,label,max,kind])=>`<label class="field" data-billing-kind="${kind}"><span>${invoiceEscape(label)}${kind.toLowerCase().includes('optional')?'':' <em>*</em>'}</span><input data-billing-field="${key}" name="invoice_${key}" maxlength="${max}"${key.endsWith('PostalCode')?' placeholder="00-000"':''}${key.endsWith('Nip')?' inputmode="numeric"':''} aria-describedby="invoice-error"></label>`).join('');
- return `<fieldset class="invoice-fields" id="invoice-fields" hidden disabled><legend>Dane do faktury</legend><label class="field"><span>Nabywca</span><select name="invoice_buyerType"><option value="company">Firma / JST</option><option value="person">Osoba prywatna</option></select></label><div class="invoice-grid">${inputs(BILLING_FIELDS.filter(([key])=>key.startsWith('buyer')))}</div><div data-billing-kind="company">${gusControl("buyer")}</div><label class="field check" data-billing-kind="company"><input type="checkbox" name="invoice_jst"><span>JST - osobny odbiorca (np. szkoła)</span></label><div class="invoice-recipient" data-billing-kind="jst"><p>Nabywca: np. gmina. Odbiorca: jednostka, dla której wykonano usługę.</p><div class="invoice-grid">${inputs(BILLING_FIELDS.filter(([key])=>key.startsWith('recipient')))}</div>${gusControl("recipient")}</div><p id="invoice-error" class="error" role="alert" hidden></p></fieldset>`;
+ return `<fieldset class="invoice-fields" id="invoice-fields" hidden disabled><legend>Dane do faktury</legend><label class="field"><span>Nabywca</span><select name="invoice_buyerType"><option value="company">Firma / JST</option><option value="person">Osoba prywatna</option></select></label><div class="invoice-grid">${inputs(BILLING_FIELDS.filter(([key])=>key.startsWith('buyer')))}</div><div data-billing-kind="company">${gusControl("buyer")}</div><label class="field check" data-billing-kind="company"><input type="checkbox" name="invoice_jst"><span>JST - osobny odbiorca (np. szkoła)</span></label><div class="invoice-recipient" data-billing-kind="jst"><label class="field"><span>Identyfikator odbiorcy</span><select name="invoice_recipientIdType"><option value="nip">NIP</option><option value="idwew">IDWew nadany w KSeF</option></select></label><p>Nabywca: np. gmina. Odbiorca: jednostka, dla której wykonano usługę.</p><div class="invoice-grid">${inputs(BILLING_FIELDS.filter(([key])=>key.startsWith('recipient')))}</div><div data-billing-kind="jstNip">${gusControl("recipient")}</div></div><p id="invoice-error" class="error" role="alert" hidden></p></fieldset>`;
 }
 function readBilling(form){
  const b=blankBilling();
  b.buyerType=form.elements.namedItem('invoice_buyerType')?.value||'company';
  b.jst=b.buyerType==='company'&&form.elements.namedItem('invoice_jst')?.checked===true;
+ b.recipientIdType=form.elements.namedItem('invoice_recipientIdType')?.value||'nip';
  for(const[key]of BILLING_FIELDS)b[key]=form.elements.namedItem('invoice_'+key)?.value||'';
  return b;
 }
@@ -34,6 +35,7 @@ export function wireInvoiceFields(form,lookup){
  toggle?.addEventListener('change',()=>{sync();clearError()});
  form.elements.namedItem('invoice_buyerType')?.addEventListener('change',sync);
  form.elements.namedItem('invoice_jst')?.addEventListener('change',sync);
+ form.elements.namedItem('invoice_recipientIdType')?.addEventListener('change',()=>{const inactive=readBilling(form).recipientIdType==='idwew'?'recipientNip':'recipientIdWew';const control=form.elements.namedItem('invoice_'+inactive);if(control)control.value='';sync();clearError()});
  box.addEventListener('input',clearError);
  sync();
  wireInvoiceGus(form,lookup);
