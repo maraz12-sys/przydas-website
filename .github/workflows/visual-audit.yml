@@ -100,7 +100,7 @@ jobs:
 
           const baseOrder = expectedOrder.slice(0,-1);
           const addressLabels = ['Ulica / miejscowość nabywcy','Numer budynku nabywcy','Numer lokalu nabywcy','Kod pocztowy nabywcy','Miejscowość nabywcy'];
-          const recipientLabels = ['Nazwa odbiorcy JST','NIP odbiorcy JST','Ulica / miejscowość odbiorcy JST','Numer budynku odbiorcy JST','Numer lokalu odbiorcy JST','Kod pocztowy odbiorcy JST','Miejscowość odbiorcy JST'];
+          const recipientLabels = ['Identyfikator odbiorcy','Nazwa odbiorcy JST','NIP odbiorcy JST','Ulica / miejscowość odbiorcy JST','Numer budynku odbiorcy JST','Numer lokalu odbiorcy JST','Kod pocztowy odbiorcy JST','Miejscowość odbiorcy JST'];
           const invoiceOrder = (buyerType,jst=false) => [...baseOrder,'Nabywca',...(buyerType==='person'?['Imię nabywcy','Nazwisko nabywcy']:['Nazwa nabywcy','NIP nabywcy']),...addressLabels,...(buyerType==='company'?['JST - osobny odbiorca (np. szkoła)']:[]),...(jst?recipientLabels:[]),'Uwagi'];
           const field = (page,key) => page.locator('[name="invoice_'+key+'"]');
           const visibleLabels = async page => (await page.locator('#reservation-form .field:visible > span').allTextContents()).map(text=>text.replace('*','').trim());
@@ -228,7 +228,7 @@ jobs:
             if(!/Formularz wysłany pomyślnie/i.test(text))throw Error(`Brakuje komunikatu sukcesu: ${text}`);
             if(!/Oczekuj na potwierdzenie rezerwacji/i.test(text))throw Error(`Brakuje informacji o oczekiwaniu na potwierdzenie: ${text}`);
           }
-          const billingKeys=['buyerName','buyerNip','buyerFirstName','buyerLastName','buyerStreet','buyerBuilding','buyerUnit','buyerPostalCode','buyerCity','recipientName','recipientNip','recipientStreet','recipientBuilding','recipientUnit','recipientPostalCode','recipientCity'];
+          const billingKeys=['buyerName','buyerNip','buyerFirstName','buyerLastName','buyerStreet','buyerBuilding','buyerUnit','buyerPostalCode','buyerCity','recipientName','recipientNip','recipientIdWew','recipientStreet','recipientBuilding','recipientUnit','recipientPostalCode','recipientCity'];
           const buyerAddress={buyerStreet:'Testowa',buyerBuilding:'1',buyerUnit:'2',buyerPostalCode:'00-001',buyerCity:'Warszawa'};
           async function fillInvoice(page,values){for(const [key,value]of Object.entries(values))await field(page,key).fill(value);}
           async function requiredFocus(page,submissions,key) {
@@ -246,7 +246,7 @@ jobs:
                 if(kind==='company'){await field(page,'buyerNip').fill('123');await requiredFocus(page,submissions,'buyerNip');await field(page,'buyerNip').fill(values.buyerNip);await field(page,'buyerPostalCode').fill('bad');await requiredFocus(page,submissions,'buyerPostalCode');await field(page,'buyerPostalCode').fill(values.buyerPostalCode);}
                 if(kind==='jst'){await field(page,'jst').check();await requiredFocus(page,submissions,'recipientName');const recipient={recipientName:'TEST Szkoła',recipientNip:'5621808600',recipientStreet:'Szkolna',recipientBuilding:'2',recipientUnit:'',recipientPostalCode:'00-002',recipientCity:'Warszawa'};await fillInvoice(page,recipient);await field(page,'recipientNip').fill('123');await requiredFocus(page,submissions,'recipientNip');await field(page,'recipientNip').fill(recipient.recipientNip);values={...values,...recipient};}
               }
-              await page.locator('button.submit').click();await success(page);assert.equal(submissions.length,1);const answers=submissions[0].answers,expected={version:1,buyerType:kind==='person'?'person':'company',jst:kind==='jst',...Object.fromEntries(billingKeys.map(key=>[key,''])),...values};assert.deepEqual(answers.invoice_billing,expected,'Exact structured buyer/JST payload with hidden data cleared');assert.equal(answers.faktura_wymagana,true);assert.equal(answers.faktura_nip,expected.buyerNip);assert.ok(answers.faktura_dane.includes(kind==='person'?'Jan Testowy':values.buyerName));assert.ok(!answers.faktura_dane.includes('STALE'));if(kind==='jst'){assert.ok(answers.faktura_dane.includes('Odbiorca JST: TEST Szkoła'));assert.ok(answers.faktura_dane.includes(expected.recipientNip));}
+              await page.locator('button.submit').click();await success(page);assert.equal(submissions.length,1);const answers=submissions[0].answers,expected={version:1,buyerType:kind==='person'?'person':'company',jst:kind==='jst',recipientIdType:'nip',...Object.fromEntries(billingKeys.map(key=>[key,''])),...values};assert.deepEqual(answers.invoice_billing,expected,'Exact structured buyer/JST payload with hidden data cleared');assert.equal(answers.faktura_wymagana,true);assert.equal(answers.faktura_nip,expected.buyerNip);assert.ok(answers.faktura_dane.includes(kind==='person'?'Jan Testowy':values.buyerName));assert.ok(!answers.faktura_dane.includes('STALE'));if(kind==='jst'){assert.ok(answers.faktura_dane.includes('Odbiorca JST: TEST Szkoła'));assert.ok(answers.faktura_dane.includes(expected.recipientNip));}
               console.log('PASS structured invoice '+kind+': visibility/required/focus/exact payload, mocked submission only');
             } finally {await context.close();}
           }

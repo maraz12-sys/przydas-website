@@ -8,8 +8,8 @@ export function wireInvoiceGus(form,lookup){
   const prefix=root.dataset.gus,button=root.querySelector('[data-gus-lookup]'),output=root.querySelector('[data-gus-output]');
   const input=key=>form.elements.namedItem('invoice_'+key);
   let sequence=0,loading=false,applied=false;
-  const identity=()=>[input(prefix+'Nip')?.value,input('buyerType')?.value,input('jst')?.checked,form.elements.namedItem('faktura_wymagana')?.checked].join(':');
-  const enabled=()=>form.getAttribute('aria-busy')!=='true'&&form.elements.namedItem('faktura_wymagana')?.checked===true&&input('buyerType')?.value==='company'&&(prefix==='buyer'||input('jst')?.checked===true)&&!input(prefix+'Nip')?.disabled;
+  const identity=()=>[input(prefix+'Nip')?.value,input('buyerType')?.value,input('jst')?.checked,input('recipientIdType')?.value,form.elements.namedItem('faktura_wymagana')?.checked].join(':');
+  const enabled=()=>form.getAttribute('aria-busy')!=='true'&&form.elements.namedItem('faktura_wymagana')?.checked===true&&input('buyerType')?.value==='company'&&(prefix==='buyer'||(input('jst')?.checked===true&&input('recipientIdType')?.value!=='idwew'))&&!input(prefix+'Nip')?.disabled;
   const sync=()=>{if(!applied){sequence++;loading=false;output.replaceChildren();}syncButton();};
   form.addEventListener('input',sync);form.addEventListener('change',sync);
   button.addEventListener('click',async()=>{
