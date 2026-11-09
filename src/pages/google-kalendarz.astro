@@ -1,4 +1,37 @@
 ---
 export const prerender=true;
 ---
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>Połączenie z Google — Przydaś</title><style>body{font:16px/1.6 system-ui,sans-serif;margin:0;background:#f5f9f7;color:#172b3a;display:grid;place-items:center;min-height:100vh}main{max-width:460px;margin:20px;padding:28px;background:white;border:1px solid #d8e3df;border-radius:18px}h1{font-size:25px;line-height:1.3}a{color:#087a42}button{font:inherit;background:#108d45;color:white;padding:10px 18px;border:0;border-radius:9px;cursor:pointer}@media(prefers-color-scheme:dark){body{background:#101a23;color:#eef3f7}main{background:#17212b;border-color:#3a4a56}a{color:#7ee1ac}}</style></head><body><main><h1 id="title">Połączenie z Kalendarzem Google</h1><p id="message">Wróć do ustawień Przydasia i sprawdź status integracji.</p><button id="close" type="button">Zamknij okno</button><p><a href="https://app.xn--przyda-8ib.pl/ustawienia/">Wróć do Przydasia</a></p></main><script>const status=new URLSearchParams(location.search).get('status');const texts={connected:['Kalendarz połączony','Możesz zamknąć to okno. Przydaś będzie automatycznie kopiować i aktualizować Twoje rezerwacje w Google.'],cancelled:['Połączenie anulowane','Nie włączono nowego połączenia. Możesz wrócić do ustawień i spróbować ponownie.'],error:['Nie udało się połączyć','Wróć do ustawień Przydasia i spróbuj ponownie. Upewnij się, że zatwierdzasz dostęp do kalendarza.']};const text=texts[status as keyof typeof texts];if(text){document.getElementById('title')!.textContent=text[0];document.getElementById('message')!.textContent=text[1];}document.getElementById('close')!.addEventListener('click',()=>window.close());history.replaceState(null,'',location.pathname);</script></body></html>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>Połączenie z Google — Przydaś</title><style>body{font:16px/1.6 system-ui,sans-serif;margin:0;background:#f5f9f7;color:#172b3a;display:grid;place-items:center;min-height:100vh}main{max-width:460px;margin:20px;padding:28px;background:white;border:1px solid #d8e3df;border-radius:18px}h1{font-size:25px;line-height:1.3}a{color:#087a42}button{font:inherit;background:#108d45;color:white;padding:10px 18px;border:0;border-radius:9px;cursor:pointer}@media(prefers-color-scheme:dark){body{background:#101a23;color:#eef3f7}main{background:#17212b;border-color:#3a4a56}a{color:#7ee1ac}}#message{padding:12px;border:1px solid;border-radius:10px;overflow-wrap:anywhere;background:#fff8dc;color:#715000;border-color:#d6b74a}#message[data-tone="success"]{background:#edf9f0;color:#146331;border-color:#7eb48c}#message[data-tone="error"]{background:#fff0f0;color:#a32129;border-color:#d18a90}#return-help{font-size:14px}@media(prefers-color-scheme:dark){#message{background:#382f14;color:#f5d878;border-color:#a88b36}#message[data-tone="success"]{background:#153423;color:#a1e2b3;border-color:#528965}#message[data-tone="error"]{background:#3b2025;color:#ffb5bb;border-color:#b96a75}}</style></head><body><main><h1 id="title">Połączenie z Kalendarzem Google</h1><p id="message">Wróć do ustawień Przydasia i sprawdź status integracji.</p><button id="close" type="button">Zamknij okno</button><p><a id="return" href="https://app.xn--przyda-8ib.pl/ustawienia/">Wróć do Przydasia</a></p><p id="return-help" hidden>Jeśli przycisk nie zamknie okna, użyj systemowego X lub „Gotowe” i zamknij kartę Safari. Wróć do już otwartego Przydasia z ikony na ekranie początkowym.</p></main><script>
+const query=new URLSearchParams(location.search);
+const employee=query.get('audience')==='employee';
+const status=query.get('status')||'';
+const texts={
+ connected:['Kalendarz połączony','Możesz zamknąć to okno. Przydaś będzie automatycznie kopiować i aktualizować Twoje rezerwacje w Google.'],
+ cancelled:['Połączenie anulowane','Nie włączono nowego połączenia. Możesz wrócić do ustawień i spróbować ponownie.'],
+ error:['Nie udało się połączyć','Wróć do ustawień Przydasia i spróbuj ponownie. Upewnij się, że zatwierdzasz dostęp do kalendarza.'],
+ reconciliation:['Sprawdź utworzenie kalendarza','Google mogło już utworzyć kalendarz, ale nie otrzymaliśmy pewnego potwierdzenia. Wstrzymaliśmy kolejne próby, aby nie utworzyć duplikatu. Nie usuwaj kalendarzy. Wróć do ustawień Przydasia i skontaktuj się z pomocą, podając nazwę organizacji. Pomożemy rozpoznać istniejący kalendarz i wznowić połączenie. Rezerwacje w Przydasiu pozostają bez zmian.']
+};
+const personal={
+ connected:['Kalendarz połączony','Możesz zamknąć to okno i wrócić do Mojego profilu w otwartym Przydasiu.'],
+ cancelled:['Połączenie anulowane','Nie włączono nowego połączenia. Zamknij to okno i wróć do Mojego profilu.'],
+ error:['Nie udało się potwierdzić połączenia','Wróć do Mojego profilu w otwartym Przydasiu i odśwież stan osobistego kalendarza.'],
+ reconciliation:['Sprawdź utworzenie kalendarza','Google mogło już utworzyć kalendarz, ale nie otrzymaliśmy pewnego potwierdzenia. Wstrzymaliśmy kolejne próby, aby nie utworzyć duplikatu. Nie usuwaj kalendarzy. Wróć do Mojego profilu i skontaktuj się z pomocą. Rezerwacje w Przydasiu pozostają bez zmian.']
+};
+const messages=employee?personal:texts;
+const text=Object.hasOwn(messages,status)?messages[status as keyof typeof messages]:undefined;
+history.replaceState(null,'',location.pathname);
+const message=document.getElementById('message')!;
+if(text){
+ document.getElementById('title')!.textContent=text[0];
+ message.textContent=text[1];
+ message.dataset.tone=status==='connected'?'success':status==='error'?'error':'warning';
+}
+if(employee){
+ if(!text)message.textContent='Wróć do Mojego profilu w Przydasiu i sprawdź stan osobistego kalendarza.';
+ const back=document.getElementById('return')! as HTMLAnchorElement;
+ back.href='https://app.xn--przyda-8ib.pl/moj-profil/';
+ back.textContent='Mój profil w Przydasiu';
+ document.getElementById('return-help')!.hidden=false;
+}
+document.getElementById('close')!.addEventListener('click',()=>window.close());
+</script></body></html>
