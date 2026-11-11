@@ -326,15 +326,25 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
             const categories=Array.isArray(item?.event_types)?item.event_types:[];
             return !eventControl||(Boolean(selected)&&((item.restricted!==true&&!categories.length)||categories.some(name=>normalize(name)===selected)));
           });
-          const previous=packageControl.value;
+          const previous=packageControl.value,previousChoice=packageControl._przydasPackageChoices?.get(packageControl.selectedOptions?.[0]);
           const prompt=eventControl&&!selected?'Najpierw wybierz rodzaj wydarzenia':'Wybierz pakiet';
+          const metadata=new WeakMap();
           packageControl.replaceChildren(new Option(prompt,''));
-          for(const item of choices)packageControl.add(new Option(String(item.label||item.value),String(item.value)));
-          packageControl.value=choices.some(item=>String(item.value)===previous)?previous:'';
+          for(const item of choices){const option=new Option(String(item.label||item.value),String(item.value));metadata.set(option,item);packageControl.add(option);}
+          packageControl._przydasPackageChoices=metadata;
+          const exact=previousChoice?choices.indexOf(previousChoice):-1;
+          const legacy=choices.findIndex(item=>!(typeof item.pakiet_id==='number'&&Number.isSafeInteger(item.pakiet_id)&&item.pakiet_id>0)&&String(item.value)===previous);
+          const retained=exact>=0?exact:previousChoice&&typeof previousChoice.pakiet_id==='number'&&Number.isSafeInteger(previousChoice.pakiet_id)&&previousChoice.pakiet_id>0?-1:legacy;
+          packageControl.value=retained>=0?String(choices[retained].value):'';
+          packageControl.selectedIndex=retained>=0?retained+1:0;
         };
         eventControl?.addEventListener('change',sync);
         eventControl?.addEventListener('input',sync);
         sync();
+      };
+      const readPackageIdentity = form => {
+        const input=form.elements.namedItem('pakiet'),choice=input?._przydasPackageChoices?.get(input.selectedOptions?.[0]);
+        return choice&&!input.disabled&&typeof choice.pakiet_id==='number'&&Number.isSafeInteger(choice.pakiet_id)&&choice.pakiet_id>0&&String(choice.value).trim()===String(input.value).trim()?{pakiet_id:choice.pakiet_id}:{};
       };
       const wireDatePickerAccess = form => {
         for(const input of form.querySelectorAll('input[type="date"],input[type="datetime-local"]')){
@@ -398,7 +408,7 @@ const apiUrl = "https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/formularz-
           if(input.disabled){if(invoiceDependentKeys.has(field.key))answers[field.key]='';continue;}
           answers[field.key]=field.type==='checkbox'?Boolean(input.checked):String(input.value||'').trim();
         }
-        Object.assign(answers,invoiceAnswers);
+        Object.assign(answers,invoiceAnswers,readPackageIdentity(form));
         button.disabled=true;button.textContent='Wysyłanie…';errorBox.innerHTML='';form.setAttribute('aria-busy','true');
         try{
           await callApi({action:'submit',token,answers});
