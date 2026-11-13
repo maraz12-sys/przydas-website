@@ -26,3 +26,13 @@ test('invalid NIP never calls server; outage and wrong NIP leave all entered fie
   try{change('invoice_buyerName','Ręczne dane');change('invoice_buyerNip',failure==='bad-nip'?'123':company.nip);form.querySelector('[data-gus=buyer] button').click();await tick();assert.equal(calls,failure==='bad-nip'?0:1);assert.equal(form.querySelector('article'),null);assert.equal(form.elements.invoice_buyerName.value,'Ręczne dane');assert.equal(form.querySelector('[data-gus=buyer] button').disabled,false);assert(form.querySelector('[data-gus-output]').textContent.length>0);}finally{dom.window.close();}
  }
 });
+
+
+test('buyer lookup is adjacent to its uniquely labeled NIP and results stay outside the input row',async()=>{
+ const {dom,form,change}=setup(async()=>({...result(),companies:[{...company},{...company,name:'Drugi wynik GUS'}]}));try{
+  const nip=form.elements.invoice_buyerNip,buyer=form.querySelector('[data-gus=buyer]'),button=buyer.querySelector('[data-gus-lookup]'),output=buyer.querySelector('[data-gus-output]');
+  assert.equal(form.querySelectorAll('[data-gus=buyer]').length,1);assert.equal(nip.labels.length,1);assert.match(nip.labels[0].textContent,/NIP nabywcy/);assert.equal(button.parentElement,nip.parentElement);assert.equal(button.type,'button');assert.equal(output.parentElement,buyer);assert.equal(nip.parentElement.contains(output),false);assert(buyer.parentElement.classList.contains('invoice-grid'));
+  change('invoice_buyerNip',company.nip);button.click();await tick();assert.equal(output.querySelectorAll('article').length,2);assert.equal(output.querySelectorAll('button').length,2);assert.match(output.textContent,/Drugi wynik GUS/);
+  change('invoice_buyerType','person','change');assert.equal(buyer.hidden,true);assert.equal(button.disabled,true);assert.equal(output.childElementCount,0);assert.equal(nip.disabled,true);
+ }finally{dom.window.close()}
+});
