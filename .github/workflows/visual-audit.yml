@@ -103,7 +103,7 @@ jobs:
           const recipientLabels = ['Identyfikator odbiorcy','Nazwa odbiorcy JST','NIP odbiorcy JST','Ulica / miejscowość odbiorcy JST','Numer budynku odbiorcy JST','Numer lokalu odbiorcy JST','Kod pocztowy odbiorcy JST','Miejscowość odbiorcy JST'];
           const invoiceOrder = (buyerType,jst=false) => [...baseOrder,'Nabywca',...(buyerType==='person'?['Imię nabywcy','Nazwisko nabywcy']:['Nazwa nabywcy','NIP nabywcy']),...addressLabels,...(buyerType==='company'?['JST - osobny odbiorca (np. szkoła)']:[]),...(jst?recipientLabels:[]),'Uwagi'];
           const field = (page,key) => page.locator('[name="invoice_'+key+'"]');
-          const visibleLabels = async page => (await page.locator('#reservation-form .field:visible > span').allTextContents()).map(text=>text.replace('*','').trim());
+          const visibleLabels = async page => (await page.locator('#reservation-form .field:visible > span, #reservation-form .invoice-buyer-nip:visible > label > span').allTextContents()).map(text=>text.replace('*','').trim());
 
           const browser = await chromium.launch({ headless: true });
 
@@ -138,7 +138,7 @@ jobs:
               const submit = document.querySelector('.submit');
               const head = document.querySelector('.head');
               const field = document.querySelector('.field');
-              const labels = Array.from(document.querySelectorAll('#reservation-form .field > span')).filter(el=>el.getClientRects().length>0).map(el => el.textContent.replace('*','').trim());
+              const labels = Array.from(document.querySelectorAll('#reservation-form .field > span, #reservation-form .invoice-buyer-nip > label > span')).filter(el=>el.getClientRects().length>0).map(el => el.textContent.replace('*','').trim());
               const processText = document.querySelector('.process-note')?.textContent.replace(/\s+/g,' ').trim() || '';
               const addressHint = document.querySelector('input[name="adres"]')?.parentElement?.querySelector('.field-hint')?.textContent.trim() || '';
               const startSelect = document.querySelector('select[name="godzina_start"]');
