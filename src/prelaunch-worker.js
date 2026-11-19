@@ -151,7 +151,7 @@ export default {
     }
 
     const response = await env.ASSETS.fetch(request);
-    if (url.pathname.replace(/\/$/, '') === '/formularz') {
+    if (['/formularz','/ankieta'].includes(url.pathname.replace(/\/$/, ''))) {
       const headers = new Headers(response.headers);
       const policy = headers.get('Content-Security-Policy');
       if (policy) headers.set('Content-Security-Policy', policy.replace(/img-src 'self' data:(?=;|$)/, "img-src 'self' data: https://jyzajgbgkqlczjpoxxzt.supabase.co"));

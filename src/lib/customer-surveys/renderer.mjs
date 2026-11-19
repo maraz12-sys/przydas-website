@@ -1,4 +1,23 @@
 import {visibleQuestions,validateAnswers} from './core.mjs';
+// Treat copy as text, with explicit HTTP(S) links. Never interpret customer copy as HTML.
+export function surveyCopy(doc,text,className='cs-copy'){
+  const copy=doc.createElement('p');copy.className=className;
+  const value=String(text??'');let offset=0;
+  for(const match of value.matchAll(/https?:\/\/[^\s<>"']+/giu)){
+    let candidate=match[0].replace(/[.,!?;:]+$/u,'');
+    for(const [open,close] of [['(',')'],['[',']'],['{','}']]){
+      while(candidate.endsWith(close)&&candidate.split(close).length>candidate.split(open).length)candidate=candidate.slice(0,-1);
+    }
+    copy.append(doc.createTextNode(value.slice(offset,match.index)));
+    let url;try{url=new URL(candidate)}catch{}
+    if(url&&['https:','http:'].includes(url.protocol)&&url.hostname&&!url.username&&!url.password){
+      const link=doc.createElement('a');link.href=url.href;link.textContent=candidate;
+      link.target='_blank';link.rel='noopener noreferrer';link.referrerPolicy='no-referrer';copy.append(link);
+    }else copy.append(doc.createTextNode(candidate));
+    offset=match.index+candidate.length;
+  }
+  copy.append(doc.createTextNode(value.slice(offset)));return copy;
+}
 // The editor preview and the public page use this exact renderer.
 export function mountSurvey(container,{schema,eventLabel='',privacy=null,onSubmit,preview=false}){
   const doc=container.ownerDocument,answers={},fields=new Map();let disposed=false,busy=false;
@@ -43,7 +62,7 @@ export function mountSurvey(container,{schema,eventLabel='',privacy=null,onSubmi
     if(!result.ok){status.textContent='Sprawdź wyróżnione pola.';const first=[...fields.values()].find(f=>f.error.textContent);first?.controls[0]?.focus();return;}
     if(preview){status.className='cs-success';status.textContent='Podgląd: odpowiedzi są poprawne. Niczego nie zapisano ani nie wysłano.';return;}
     busy=true;for(const f of fields.values())for(const control of f.controls)control.disabled=true;form.setAttribute('aria-busy','true');submit.disabled=true;submit.textContent='Zapisywanie…';status.textContent='';
-    try{await onSubmit(result.answers);if(disposed)return;form.replaceChildren(el('h3','','Dziękujemy za odpowiedź'),el('p','cs-copy',schema.thanks||'Twoja ankieta została zapisana.'));form.tabIndex=-1;form.focus();}
+    try{await onSubmit(result.answers);if(disposed)return;form.replaceChildren(el('h3','','Dziękujemy za odpowiedź'),surveyCopy(doc,schema.thanks||'Twoja ankieta została zapisana.'));form.tabIndex=-1;form.focus();}
     catch(e){if(!disposed)status.textContent=e?.message||'Nie udało się zapisać odpowiedzi. Spróbuj ponownie.';}
     finally{busy=false;form.removeAttribute('aria-busy');for(const f of fields.values())for(const control of f.controls)control.disabled=false;submit.disabled=false;submit.textContent='Wyślij odpowiedzi';}
   });

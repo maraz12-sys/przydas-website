@@ -12,5 +12,8 @@ test('npm 10 lockfile contains the optional native runtime dependency records', 
     assert.ok(entry.integrity.startsWith('sha512-'));
     assert.equal(entry.optional, true);
   }
-  assert.equal(lock.packages[''].dependencies.astro, '7.3.3');
+  const manifest = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+  assert.match(manifest.dependencies.astro, /^\d+\.\d+\.\d+$/);
+  assert.equal(lock.packages[''].dependencies.astro, manifest.dependencies.astro);
+  assert.equal(lock.packages['node_modules/astro'].version, manifest.dependencies.astro);
 });
