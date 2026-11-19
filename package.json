@@ -10,13 +10,13 @@
     "audit:subscription": "node scripts/normalize-subscription-signup.mjs && node scripts/audit-subscription-readiness.mjs"
   },
   "dependencies": {
-    "astro": "7.3.3"
+    "astro": "7.4.13"
   },
   "engines": {
     "node": ">=24.22.2 <25"
   },
   "overrides": {
-    "devalue": "5.9.3"
+    "devalue": "6.0.3"
   },
   "devDependencies": {
     "jsdom": "26.1.0"
