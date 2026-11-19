@@ -16,7 +16,7 @@
     "node": ">=24.22.2 <25"
   },
   "overrides": {
-    "devalue": "5.9.3"
+    "devalue": "6.0.3"
   },
   "devDependencies": {
     "jsdom": "26.1.0"
