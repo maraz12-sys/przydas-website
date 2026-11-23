@@ -100,3 +100,23 @@ test('empty or malformed fixed markers and fixed metadata on another field do no
     try{assert.equal(f.control('rodzaj_wydarzenia').tagName,'SELECT');assert.equal(f.control('rodzaj_wydarzenia').value,'');assert.equal(f.control('other').tagName,'SELECT')}finally{f.close()}
   }
 });
+
+test('payment uses the labelled two-option select even for older text-field links',async()=>{
+  const fixed=eventField({options:['Urodziny'],fixed_value:'Urodziny',event_type_id:7});
+  for(const [type,required,value] of [['text',true,'gotowka'],['select',false,'przelew'],['text',false,'']]){
+    const f=await fixture(fixed,[{key:'sposob_platnosci',label:'Sposób płatności',type,required,options:['Inna forma']}]);
+    try{
+      const payment=f.control('sposob_platnosci');
+      assert.equal(payment.tagName,'SELECT');
+      assert.match(payment.labels[0].textContent,/Sposób płatności/);
+      assert.equal(payment.required,required);
+      assert.deepEqual(Array.from(payment.options,o=>o.value),['','gotowka','przelew']);
+      f.control('pakiet').selectedIndex=1;f.control('custom_birthday').value='Próbne';
+      if(required) assert.equal(await f.submit(),undefined);
+      payment.value=value;
+      assert.equal((await f.submit()).answers.sposob_platnosci,value);
+    }finally{f.close()}
+  }
+  const omitted=await fixture(fixed);
+  try{assert.equal(omitted.control('sposob_platnosci'),null)}finally{omitted.close()}
+});
