@@ -1,0 +1,191 @@
+---
+interface Props {
+  action: 'activate' | 'unsubscribe';
+}
+
+const { action } = Astro.props;
+const activate = action === 'activate';
+const title = activate ? 'Odbierz dodatkowe 30 dni' : 'Wypisz się z wiadomości';
+const description = activate
+  ? 'Potwierdź, aby znów korzystać z Przydasia przez 30 dni za darmo. Nie potrzebujesz karty.'
+  : 'Potwierdź, jeśli chcesz wycofać zgodę na e-maile o Przydasiu i naszych ofertach.';
+const buttonLabel = activate ? 'Aktywuj 30 dni za darmo' : 'Potwierdź wypisanie';
+const endpoint = 'https://jyzajgbgkqlczjpoxxzt.supabase.co/functions/v1/trial-winback-links';
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{title} | Przydaś</title>
+    <link rel="icon" href="/przydas-mark.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main class="action-card" data-winback-action data-action={action} data-endpoint={endpoint}>
+      <div class="brand">
+        <span class="brand-mark"><img src="/przydas-mark.svg" width="27" height="27" alt="" /></span>
+        <strong>Przydaś</strong>
+      </div>
+      <h1>{title}</h1>
+      <p class="description">{description}</p>
+      <p class="status" data-winback-status role="status" tabindex="-1"></p>
+      <button type="button" class="primary" data-winback-submit disabled>{buttonLabel}</button>
+      {activate && <a class="primary" href="https://app.xn--przyda-8ib.pl/" data-winback-app hidden>Przejdź do Przydasia</a>}
+      <noscript><p>Włącz JavaScript, aby potwierdzić tę operację.</p></noscript>
+      <a class="support" href="/kontakt/">Kontakt z Przydasiem</a>
+    </main>
+  </body>
+</html>
+
+<script>
+  import { mountTrialWinbackAction } from '../lib/trial-winback-action.mjs';
+
+  const root = document.querySelector<HTMLElement>('[data-winback-action]');
+  if (root) mountTrialWinbackAction(root, window.location, (url, options) => fetch(url, options));
+</script>
+
+<style is:global>
+  :root {
+    color-scheme: light dark;
+    --background: #f4f8f6;
+    --surface: #fff;
+    --text: #14231b;
+    --muted: #4e6257;
+    --border: #d7e5dd;
+    --accent: #087f53;
+    --primary: #08754c;
+    --primary-hover: #07633f;
+    --success: #115938;
+    --success-background: #edf9f3;
+    --error: #a62727;
+    --error-background: #fff4f4;
+    --pending: #704a18;
+    --pending-background: #fff5de;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #131d18;
+      --surface: #1b2a22;
+      --text: #edf7f0;
+      --muted: #c2d1c8;
+      --border: #395147;
+      --accent: #9de1bd;
+      --primary: #19734f;
+      --primary-hover: #126142;
+      --success: #a9e9c1;
+      --success-background: #203c30;
+      --error: #ffc4c4;
+      --error-background: #482a2a;
+      --pending: #ffda99;
+      --pending-background: #49391f;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: clamp(16px, 5vw, 32px);
+    display: grid;
+    place-items: center;
+    color: var(--text);
+    background: var(--background);
+  }
+
+  .action-card {
+    width: min(100%, 480px);
+    padding: clamp(20px, 5vw, 36px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: 0 24px 60px rgba(25, 55, 42, .09);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 19px;
+    letter-spacing: -.03em;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    border: 1px solid #cfddd5;
+    background: #fff;
+  }
+
+  h1 {
+    margin: 24px 0 10px;
+    font-size: clamp(26px, 6vw, 38px);
+    line-height: 1.12;
+    letter-spacing: -.035em;
+  }
+
+  .description {
+    margin: 0 0 20px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .status { margin: 0; }
+
+  .status:not(:empty) {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .status[data-kind="pending"] { color: var(--pending); background: var(--pending-background); }
+  .status[data-kind="success"] { color: var(--success); background: var(--success-background); }
+  .status[data-kind="error"] { color: var(--error); background: var(--error-background); }
+
+  .primary {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #fff;
+    font: inherit;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .primary:hover:not(:disabled) { background: var(--primary-hover); }
+  .primary:disabled { opacity: .65; cursor: default; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .support {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 12px;
+    min-height: 44px;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    text-underline-offset: 3px;
+  }
+
+  [hidden] { display: none !important; }
+</style>

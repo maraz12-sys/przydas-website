@@ -151,7 +151,15 @@ export default {
     }
 
     const response = await env.ASSETS.fetch(request);
-    if (['/formularz','/ankieta'].includes(url.pathname.replace(/\/$/, ''))) {
+    const route = url.pathname.replace(/\/$/, '');
+    if (route === '/powrot' || route === '/wypisz') {
+      const headers = new Headers(response.headers);
+      headers.set('Referrer-Policy', 'no-referrer');
+      headers.set('Cache-Control', 'no-store');
+      headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+      return new Response(response.body, { status: response.status, headers });
+    }
+    if (['/formularz','/ankieta'].includes(route)) {
       const headers = new Headers(response.headers);
       const policy = headers.get('Content-Security-Policy');
       if (policy) headers.set('Content-Security-Policy', policy.replace(/img-src 'self' data:(?=;|$)/, "img-src 'self' data: https://jyzajgbgkqlczjpoxxzt.supabase.co"));
